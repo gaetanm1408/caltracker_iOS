@@ -1,0 +1,82 @@
+name: Build et tests iOS
+
+on:
+  push:
+    branches: [main, 'claude/**']
+    paths-ignore:
+      - '**.md'
+      - '.gitignore'
+  workflow_dispatch:
+
+# Une seule exécution par branche : les minutes macOS sont comptées au décuple
+# sur un dépôt privé, une exécution obsolète est annulée plutôt que poursuivie.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Compilation et tests
+    runs-on: macos-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Environnement de build
+        run: |
+          xcodebuild -version
+          swift --version
+
+      - name: Choisir un simulateur iPhone
+        id: simulator
+        run: |
+          udid=$(xcrun simctl list devices available --json \
+            | jq -r '.devices
+                | to_entries[]
+                | select(.key | test("iOS"))
+                | .value[]
+                | select(.name | startswith("iPhone"))
+                | .udid' \
+            | head -1)
+          if [ -z "$udid" ]; then
+            echo "Aucun simulateur iPhone disponible sur ce runner." >&2
+            xcrun simctl list devices available
+            exit 1
+          fi
+          echo "udid=$udid" >> "$GITHUB_OUTPUT"
+          xcrun simctl list devices available | grep "$udid"
+
+      - name: Compiler et lancer les tests
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -project CalTracker.xcodeproj \
+            -scheme CalTracker \
+            -destination "id=${{ steps.simulator.outputs.udid }}" \
+            -resultBundlePath TestResults.xcresult \
+            -skipMacroValidation \
+            CODE_SIGNING_ALLOWED=NO \
+            | tee xcodebuild.log
+
+      - name: Résumer les erreurs
+        if: failure()
+        run: |
+          {
+            echo '## Erreurs remontées par le compilateur'
+            echo
+            echo '```'
+            grep -E '(error|warning): ' xcodebuild.log | sort -u | head -60 || echo 'Aucune ligne error/warning : voir le journal complet.'
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Conserver le journal et les résultats
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: resultats-build
+          path: |
+            xcodebuild.log
+            TestResults.xcresult
+          retention-days: 7
+          if-no-files-found: ignore
