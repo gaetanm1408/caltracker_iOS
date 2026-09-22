@@ -1,25 +1,97 @@
 import Foundation
 
-/// Wire format returned by the Open Food Facts search endpoint.
-struct OFFSearchResponse: Decodable {
+/// Wire format of the modern full-text search service
+/// (`search.openfoodfacts.org`), which replaces the chronically overloaded
+/// `cgi/search.pl`. Results live under `hits`, and `nutriments` carries the
+/// same field names as the historical API.
+struct OFFSearchHitsResponse: Decodable {
+    let hits: [OFFSearchHit]
     let count: Int?
     let page: Int?
-    let pageSize: Int?
-    let products: [OFFProduct]
 
     enum CodingKeys: String, CodingKey {
+        case hits
         case count
         case page
-        case pageSize = "page_size"
-        case products
     }
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        hits = try container.decodeIfPresent([OFFSearchHit].self, forKey: .hits) ?? []
         count = try container.decodeIfPresent(FlexibleNumber.self, forKey: .count)?.intValue
         page = try container.decodeIfPresent(FlexibleNumber.self, forKey: .page)?.intValue
-        pageSize = try container.decodeIfPresent(FlexibleNumber.self, forKey: .pageSize)?.intValue
-        products = try container.decodeIfPresent([OFFProduct].self, forKey: .products) ?? []
+    }
+}
+
+struct OFFSearchHit: Decodable {
+    let code: String?
+    let productName: String?
+    let genericName: String?
+    let brands: [String]
+    let imageURL: String?
+    let servingQuantity: Double?
+    let nutriments: OFFNutriments?
+
+    enum CodingKeys: String, CodingKey {
+        case code
+        case productName = "product_name"
+        case genericName = "generic_name"
+        case brands
+        case imageURL = "image_url"
+        case servingQuantity = "serving_quantity"
+        case nutriments
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        code = try container.decodeIfPresent(FlexibleNumber.self, forKey: .code)?.stringValue
+        productName = try container.decodeIfPresent(LocalizedText.self, forKey: .productName)?.value
+        genericName = try container.decodeIfPresent(LocalizedText.self, forKey: .genericName)?.value
+        brands = try container.decodeIfPresent(FlexibleStringList.self, forKey: .brands)?.values ?? []
+        imageURL = try container.decodeIfPresent(String.self, forKey: .imageURL)
+        servingQuantity = try container.decodeIfPresent(FlexibleNumber.self, forKey: .servingQuantity)?.doubleValue
+        nutriments = try container.decodeIfPresent(OFFNutriments.self, forKey: .nutriments)
+    }
+}
+
+/// `product_name` arrives flat when the request projects it through `fields`,
+/// but the index stores one entry per language; both shapes are accepted.
+struct LocalizedText: Decodable {
+    let value: String?
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let text = try? container.decode(String.self) {
+            value = text
+        } else if let byLanguage = try? container.decode([String: String].self) {
+            let candidates = byLanguage.filter { !$0.value.isEmpty }
+            // Tri alphabétique sur la langue à défaut de français ou d'anglais,
+            // pour que deux exécutions retiennent le même libellé.
+            value = candidates["fr"] ?? candidates["en"]
+                ?? candidates.sorted { $0.key < $1.key }.first?.value
+        } else {
+            value = nil
+        }
+    }
+}
+
+/// `brands` est un tableau sur le service de recherche, une chaîne séparée par
+/// des virgules sur l'API historique.
+struct FlexibleStringList: Decodable {
+    let values: [String]
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let list = try? container.decode([String].self) {
+            values = list.map { $0.trimmingCharacters(in: .whitespaces) }.filter { !$0.isEmpty }
+        } else if let joined = try? container.decode(String.self) {
+            values = joined
+                .split(separator: ",")
+                .map { $0.trimmingCharacters(in: .whitespaces) }
+                .filter { !$0.isEmpty }
+        } else {
+            values = []
+        }
     }
 }
 

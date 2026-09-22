@@ -59,6 +59,32 @@ extension OFFProduct {
     }
 }
 
+extension OFFSearchHit {
+    /// Même contrat que `OFFProduct.toRemoteFood()` : une fiche sans nom ou
+    /// sans nutriments exploitables n'atteint pas l'interface.
+    func toRemoteFood() -> RemoteFood? {
+        guard let barcode = code?.trimmingCharacters(in: .whitespacesAndNewlines), !barcode.isEmpty else {
+            return nil
+        }
+
+        guard let name = [productName, genericName]
+            .compactMap({ $0?.trimmingCharacters(in: .whitespacesAndNewlines) })
+            .first(where: { !$0.isEmpty })
+        else { return nil }
+
+        guard let nutriments, let facts = nutriments.toNutritionFacts() else { return nil }
+
+        return RemoteFood(
+            barcode: barcode,
+            name: name,
+            brand: brands.first,
+            imageURLString: imageURL,
+            servingSizeInGrams: servingQuantity.flatMap { $0 > 0 ? $0 : nil },
+            nutritionPer100g: facts
+        )
+    }
+}
+
 extension OFFNutriments {
     /// `nil` when the contributor filled in nothing usable; a product with only
     /// zeros everywhere would otherwise show up as a valid 0 kcal food.

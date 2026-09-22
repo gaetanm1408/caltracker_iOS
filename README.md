@@ -108,6 +108,14 @@ Deux choix structurants :
 
 `OpenFoodFactsClient` implémente le protocole `FoodDatabaseClient`, ce qui
 permet de substituer `StubFoodDatabaseClient` dans les tests et les aperçus.
+
+Deux services sont interrogés : la recherche plein texte passe par
+`search.openfoodfacts.org`, la consultation par code-barres par l'API produit
+historique. Ce découpage vient d'une panne observée en production — l'ancien
+`cgi/search.pl` répondait 503 alors que le scanner continuait de fonctionner.
+Les pannes passagères (5xx, 429, expiration) sont réessayées avec une attente
+doublée à chaque tour ; une requête malformée ou une réponse illisible
+échouerait à l'identique et n'est pas rejouée.
 Les DTO absorbent les irrégularités d'une base collaborative : un même champ
 peut arriver en nombre ou en texte (`FlexibleNumber`), l'énergie peut être
 absente (recalculée depuis les macros) ou exprimée en kilojoules (convertie),

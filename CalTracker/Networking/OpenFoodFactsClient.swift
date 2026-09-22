@@ -2,17 +2,23 @@ import Foundation
 
 /// Talks to the public Open Food Facts REST API.
 ///
+/// Deux services distincts : la recherche plein texte passe par
+/// `search.openfoodfacts.org`, le remplaçant de `cgi/search.pl` dont les
+/// pannes rendaient la recherche inutilisable ; la consultation par
+/// code-barres reste sur l'API produit historique.
+///
 /// Open Food Facts asks every client to identify itself with a descriptive
 /// User-Agent; requests without one are throttled.
 final class OpenFoodFactsClient: FoodDatabaseClient {
     private let session: URLSession
     private let baseURL: URL
+    private let searchBaseURL: URL
     private let userAgent: String
     private let pageSize: Int
     private let maxAttempts: Int
 
     /// Only the fields the app actually reads, which keeps responses small.
-    private static let requestedFields = [
+    private static let productFields = [
         "code",
         "product_name",
         "product_name_fr",
@@ -24,9 +30,21 @@ final class OpenFoodFactsClient: FoodDatabaseClient {
         "nutriments"
     ].joined(separator: ",")
 
+    /// Le service de recherche n'expose pas les mêmes champs que l'API produit.
+    private static let searchFields = [
+        "code",
+        "product_name",
+        "generic_name",
+        "brands",
+        "serving_quantity",
+        "image_url",
+        "nutriments"
+    ].joined(separator: ",")
+
     init(
         session: URLSession = .shared,
         baseURL: URL = URL(string: "https://world.openfoodfacts.org")!,
+        searchBaseURL: URL = URL(string: "https://search.openfoodfacts.org")!,
         // Open Food Facts limite le débit des clients qui ne s'identifient pas.
         // L'URL du dépôt sert de point de contact sans exposer d'adresse
         // personnelle dans un dépôt public.
@@ -36,6 +54,7 @@ final class OpenFoodFactsClient: FoodDatabaseClient {
     ) {
         self.session = session
         self.baseURL = baseURL
+        self.searchBaseURL = searchBaseURL
         self.userAgent = userAgent
         self.pageSize = pageSize
         self.maxAttempts = max(1, maxAttempts)
@@ -46,22 +65,19 @@ final class OpenFoodFactsClient: FoodDatabaseClient {
         guard trimmed.count >= 2 else { throw FoodDatabaseError.emptyQuery }
 
         var components = URLComponents(
-            url: baseURL.appendingPathComponent("cgi/search.pl"),
+            url: searchBaseURL.appendingPathComponent("search"),
             resolvingAgainstBaseURL: false
         )
         components?.queryItems = [
-            URLQueryItem(name: "search_terms", value: trimmed),
-            URLQueryItem(name: "search_simple", value: "1"),
-            URLQueryItem(name: "action", value: "process"),
-            URLQueryItem(name: "json", value: "1"),
+            URLQueryItem(name: "q", value: trimmed),
             URLQueryItem(name: "page", value: String(max(1, page))),
             URLQueryItem(name: "page_size", value: String(pageSize)),
-            URLQueryItem(name: "fields", value: Self.requestedFields)
+            URLQueryItem(name: "fields", value: Self.searchFields)
         ]
         guard let url = components?.url else { throw FoodDatabaseError.invalidURL }
 
-        let response: OFFSearchResponse = try await fetch(url)
-        return response.products.compactMap { $0.toRemoteFood() }
+        let response: OFFSearchHitsResponse = try await fetch(url)
+        return response.hits.compactMap { $0.toRemoteFood() }
     }
 
     func product(barcode: String) async throws -> RemoteFood? {
@@ -74,7 +90,7 @@ final class OpenFoodFactsClient: FoodDatabaseClient {
             url: baseURL.appendingPathComponent("api/v2/product/\(trimmed).json"),
             resolvingAgainstBaseURL: false
         )
-        components?.queryItems = [URLQueryItem(name: "fields", value: Self.requestedFields)]
+        components?.queryItems = [URLQueryItem(name: "fields", value: Self.productFields)]
         guard let url = components?.url else { throw FoodDatabaseError.invalidURL }
 
         let response: OFFProductResponse = try await fetch(url)

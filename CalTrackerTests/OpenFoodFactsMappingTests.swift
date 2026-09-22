@@ -5,8 +5,14 @@ import Testing
 
 @Suite("Décodage Open Food Facts")
 struct OpenFoodFactsMappingTests {
-    private func decodeSearch(_ json: String) throws -> OFFSearchResponse {
-        try JSONDecoder().decode(OFFSearchResponse.self, from: Data(json.utf8))
+    /// L'API produit ne renvoie qu'une fiche à la fois ; ce conteneur permet
+    /// d'en décoder plusieurs d'un coup pour couvrir les cas de mapping.
+    private struct ProductsPayload: Decodable {
+        let products: [OFFProduct]
+    }
+
+    private func decodeSearch(_ json: String) throws -> ProductsPayload {
+        try JSONDecoder().decode(ProductsPayload.self, from: Data(json.utf8))
     }
 
     @Test("Une réponse de recherche est convertie en produits exploitables")
@@ -169,6 +175,98 @@ struct OpenFoodFactsMappingTests {
 
         #expect(response.status == 0)
         #expect(response.product == nil)
+    }
+}
+
+@Suite("Décodage du service de recherche")
+struct OFFSearchHitsTests {
+    private func decode(_ json: String) throws -> OFFSearchHitsResponse {
+        try JSONDecoder().decode(OFFSearchHitsResponse.self, from: Data(json.utf8))
+    }
+
+    @Test("Une réponse réelle du service de recherche est exploitable")
+    func decodesRealResponse() throws {
+        // Relevé sur search.openfoodfacts.org le 22/09/2026.
+        let response = try decode(
+            """
+            {"hits":[{"code":"0009800800049","brands":["Nutella"],"nutriments":\
+            {"energy-kcal_100g":519.23,"proteins_100g":7.6899999999999995,\
+            "sodium_100g":0.23448000000000002,"saturated-fat_100g":9.62,\
+            "salt_100g":0.5862,"sugars_100g":44.23,"carbohydrates_100g":63.46,\
+            "fat_100g":25,"fiber_100g":3.8},\
+            "product_name":"Nutella & go! hazelnut spread + breadsticks",\
+            "image_url":"https://images.openfoodfacts.org/images/products/000/980/080/0049/front_en.5.400.jpg"}],\
+            "aggregations":null,"facets":{},"charts":{},"page":1,"page_size":1,\
+            "page_count":631,"took":4,"timed_out":false,"count":631,\
+            "is_count_exact":true,"warnings":null}
+            """
+        )
+
+        #expect(response.count == 631)
+        #expect(response.page == 1)
+
+        let food = try #require(response.hits.compactMap { $0.toRemoteFood() }.first)
+        #expect(food.barcode == "0009800800049")
+        #expect(food.name == "Nutella & go! hazelnut spread + breadsticks")
+        // `brands` est un tableau sur ce service : seule la première est gardée.
+        #expect(food.brand == "Nutella")
+        #expect(food.nutritionPer100g.calories == 519.23)
+        #expect(abs(food.nutritionPer100g.proteins - 7.69) < 0.01)
+        #expect(food.nutritionPer100g.fibers == 3.8)
+        #expect(food.imageURL != nil)
+        // Absent de la réponse : l'app doit s'en accommoder.
+        #expect(food.servingSizeInGrams == nil)
+    }
+
+    @Test("Un nom indexé par langue privilégie le français")
+    func decodesLocalizedName() throws {
+        let response = try decode(
+            """
+            {"hits":[{"code":"123","product_name":{"en":"Oat flakes","fr":"Flocons d'avoine"},
+              "nutriments":{"energy-kcal_100g":372}}]}
+            """
+        )
+
+        #expect(response.hits.first?.toRemoteFood()?.name == "Flocons d'avoine")
+    }
+
+    @Test("Les marques sont acceptées en tableau comme en chaîne")
+    func decodesBothBrandShapes() throws {
+        let asList = try decode(
+            """
+            {"hits":[{"code":"1","product_name":"A","brands":["Bjorg","Distriborg"],
+              "nutriments":{"energy-kcal_100g":100}}]}
+            """
+        )
+        let asString = try decode(
+            """
+            {"hits":[{"code":"2","product_name":"B","brands":"Bjorg, Distriborg",
+              "nutriments":{"energy-kcal_100g":100}}]}
+            """
+        )
+
+        #expect(asList.hits.first?.toRemoteFood()?.brand == "Bjorg")
+        #expect(asString.hits.first?.toRemoteFood()?.brand == "Bjorg")
+    }
+
+    @Test("Les fiches inexploitables sont écartées comme sur l'API produit")
+    func dropsUnusableHits() throws {
+        let response = try decode(
+            """
+            {"hits":[
+              {"code":"1","nutriments":{"energy-kcal_100g":100}},
+              {"code":"2","product_name":"Sans nutriments"},
+              {"product_name":"Sans code-barres","nutriments":{"energy-kcal_100g":50}}
+            ]}
+            """
+        )
+
+        #expect(response.hits.compactMap { $0.toRemoteFood() }.isEmpty)
+    }
+
+    @Test("Une réponse sans résultat ne casse rien")
+    func decodesEmptyResponse() throws {
+        #expect(try decode(#"{"hits":[],"count":0}"#).hits.isEmpty)
     }
 }
 
