@@ -29,8 +29,10 @@ xcodebuild test -scheme CalTracker -destination 'platform=iOS Simulator,name=iPh
 ## Fonctionnalités
 
 - **Recherche de produits** — interrogation d'Open Food Facts avec anti-rebond,
-  annulation des requêtes obsolètes, recherche par code-barres et repli sur les
-  produits déjà utilisés.
+  annulation des requêtes obsolètes et repli sur les produits déjà utilisés.
+- **Scanner de code-barres** — lecture EAN-13 / EAN-8 / UPC-E via VisionKit, qui
+  enchaîne directement sur la fiche du produit trouvé. L'écran gère le refus
+  d'accès à la caméra et les appareils sans scanner (Simulateur).
 - **Journal quotidien** — saisie par repas (petit-déjeuner, déjeuner, dîner,
   collation), navigation jour par jour, modification et suppression des lignes.
 - **Macros** — anneau de calories, barres de progression par macro face aux
@@ -103,6 +105,7 @@ et les fiches trop incomplètes sont écartées avant d'atteindre l'interface.
   noms, mise à l'échelle par portions, produits de placard
 - `OpenFoodFactsMappingTests` — décodage tolérant, conversion kJ → kcal, rejet
   des fiches inexploitables
+- `FoodSearchViewModelTests` — recherche et résolution d'un code-barres scanné
 - `JournalServiceTests` — journal sur conteneur SwiftData en mémoire
 - `ShoppingListServiceTests` / `RecipeServiceTests` — persistance et calculs de
   recettes

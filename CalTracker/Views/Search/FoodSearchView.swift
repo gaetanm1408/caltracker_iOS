@@ -11,6 +11,8 @@ struct FoodSearchView: View {
 
     @State private var viewModel: FoodSearchViewModel?
     @State private var selectedFood: RemoteFood?
+    @State private var isPresentingScanner = false
+    @State private var scannedBarcode: String?
 
     var body: some View {
         Group {
@@ -37,6 +39,21 @@ struct FoodSearchView: View {
                     Button("Fermer") { dismiss() }
                 }
             }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    isPresentingScanner = true
+                } label: {
+                    Label("Scanner un code-barres", systemImage: "barcode.viewfinder")
+                }
+            }
+        }
+        .sheet(isPresented: $isPresentingScanner, onDismiss: lookupScannedBarcode) {
+            NavigationStack {
+                BarcodeScannerSheet { barcode in
+                    scannedBarcode = barcode
+                    isPresentingScanner = false
+                }
+            }
         }
         .sheet(item: $selectedFood) { food in
             NavigationStack {
@@ -50,6 +67,16 @@ struct FoodSearchView: View {
             if viewModel == nil {
                 viewModel = FoodSearchViewModel(client: client)
             }
+        }
+    }
+
+    /// Runs once the scanner sheet is gone, so the logging sheet is presented
+    /// on a free presentation slot rather than over a dismissing one.
+    private func lookupScannedBarcode() {
+        guard let barcode = scannedBarcode, let viewModel else { return }
+        scannedBarcode = nil
+        Task {
+            selectedFood = await viewModel.lookup(barcode: barcode)
         }
     }
 

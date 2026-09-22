@@ -79,4 +79,25 @@ final class FoodSearchViewModel {
             state = .failed(message: message)
         }
     }
+
+    /// Looks a scanned barcode up. Returns the product so the caller can open
+    /// the logging sheet straight away; the state carries the failure otherwise.
+    func lookup(barcode: String) async -> RemoteFood? {
+        searchTask?.cancel()
+        state = .searching
+        do {
+            guard let food = try await client.product(barcode: barcode) else {
+                state = .empty(query: barcode)
+                return nil
+            }
+            query = food.name
+            state = .results([food])
+            return food
+        } catch {
+            let message = (error as? LocalizedError)?.errorDescription
+                ?? "Aucun produit ne correspond à ce code-barres."
+            state = .failed(message: message)
+            return nil
+        }
+    }
 }
