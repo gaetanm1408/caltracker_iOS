@@ -9,6 +9,7 @@ final class OpenFoodFactsClient: FoodDatabaseClient {
     private let baseURL: URL
     private let userAgent: String
     private let pageSize: Int
+    private let maxAttempts: Int
 
     /// Only the fields the app actually reads, which keeps responses small.
     private static let requestedFields = [
@@ -26,13 +27,18 @@ final class OpenFoodFactsClient: FoodDatabaseClient {
     init(
         session: URLSession = .shared,
         baseURL: URL = URL(string: "https://world.openfoodfacts.org")!,
-        userAgent: String = "CalTracker/1.0 (iOS; contact@caltracker.app)",
-        pageSize: Int = 25
+        // Open Food Facts limite le débit des clients qui ne s'identifient pas.
+        // L'URL du dépôt sert de point de contact sans exposer d'adresse
+        // personnelle dans un dépôt public.
+        userAgent: String = "CalTracker/1.0 (iOS; +https://github.com/gaetanm1408/caltracker_iOS)",
+        pageSize: Int = 25,
+        maxAttempts: Int = 3
     ) {
         self.session = session
         self.baseURL = baseURL
         self.userAgent = userAgent
         self.pageSize = pageSize
+        self.maxAttempts = max(1, maxAttempts)
     }
 
     func searchProducts(query: String, page: Int) async throws -> [RemoteFood] {
@@ -76,7 +82,21 @@ final class OpenFoodFactsClient: FoodDatabaseClient {
         return response.product?.toRemoteFood()
     }
 
+    /// Réessaie les pannes passagères avec une attente doublée à chaque tour.
+    /// Un 503 revient immédiatement, donc le coût réel se limite à l'attente.
     private func fetch<T: Decodable>(_ url: URL) async throws -> T {
+        for attempt in 1...maxAttempts {
+            do {
+                return try await performRequest(url)
+            } catch let error as FoodDatabaseError {
+                guard error.isRetryable, attempt < maxAttempts else { throw error }
+                try await Task.sleep(for: .seconds(pow(2, Double(attempt - 1))))
+            }
+        }
+        throw FoodDatabaseError.timedOut
+    }
+
+    private func performRequest<T: Decodable>(_ url: URL) async throws -> T {
         var request = URLRequest(url: url)
         request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
         request.setValue("application/json", forHTTPHeaderField: "Accept")

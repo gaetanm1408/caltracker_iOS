@@ -198,4 +198,29 @@ struct FoodDatabaseClientTests {
         #expect(FoodDatabaseError.from(URLError(.timedOut)) == .timedOut)
         #expect(FoodDatabaseError.offline.errorDescription?.isEmpty == false)
     }
+
+    @Test("Seules les pannes passagères sont réessayées")
+    func classifiesRetryableErrors() {
+        #expect(FoodDatabaseError.http(status: 503).isRetryable)
+        #expect(FoodDatabaseError.http(status: 500).isRetryable)
+        #expect(FoodDatabaseError.http(status: 429).isRetryable)
+        #expect(FoodDatabaseError.timedOut.isRetryable)
+
+        // Réessayer ne changerait rien à ces cas.
+        #expect(!FoodDatabaseError.http(status: 404).isRetryable)
+        #expect(!FoodDatabaseError.decoding.isRetryable)
+        #expect(!FoodDatabaseError.emptyQuery.isRetryable)
+        #expect(!FoodDatabaseError.invalidURL.isRetryable)
+        #expect(!FoodDatabaseError.offline.isRetryable)
+    }
+
+    @Test("Une panne du moteur de recherche renvoie l'utilisateur vers le scanner")
+    func explainsSearchOutage() throws {
+        let message = try #require(FoodDatabaseError.http(status: 503).errorDescription)
+
+        #expect(message.contains("code-barres"))
+        #expect(try #require(FoodDatabaseError.http(status: 429).errorDescription).contains("Trop de requêtes"))
+        // Les autres codes gardent le message générique, avec le numéro.
+        #expect(try #require(FoodDatabaseError.http(status: 404).errorDescription).contains("404"))
+    }
 }
