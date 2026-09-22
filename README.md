@@ -26,6 +26,21 @@ Les tests s'exécutent avec le framework Swift Testing :
 xcodebuild test -scheme CalTracker -destination 'platform=iOS Simulator,name=iPhone 16'
 ```
 
+## Installation sans Mac
+
+La CI (`.github/workflows/ci.yml`) compile, teste et produit à chaque push un
+`.ipa` **non signé**, déposé en artefact sous le nom `CalTracker-ipa-non-signe`.
+
+Pour l'installer sur un iPhone depuis Windows ou Linux : télécharge l'artefact
+depuis l'onglet Actions, puis signe-le avec ton propre identifiant Apple via
+[Sideloadly](https://sideloadly.io) ou [AltStore](https://altstore.io). Avec un
+compte Apple gratuit, la signature expire au bout de 7 jours et l'opération est
+à refaire ; AltStore peut s'en charger automatiquement en Wi-Fi.
+
+La signature n'est volontairement pas faite en CI : elle demanderait d'y
+déposer un certificat de développeur, alors qu'elle appartient à la machine de
+celui qui installe l'app.
+
 ## Fonctionnalités
 
 - **Recherche de produits** — interrogation d'Open Food Facts avec anti-rebond,

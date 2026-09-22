@@ -1,4 +1,4 @@
-name: Build et tests iOS
+name: Build, tests et .ipa
 
 on:
   push:
@@ -8,15 +8,15 @@ on:
       - '.gitignore'
   workflow_dispatch:
 
-# Une seule exécution par branche : les minutes macOS sont comptées au décuple
-# sur un dépôt privé, une exécution obsolète est annulée plutôt que poursuivie.
+# Une seule exécution par branche : une exécution rendue obsolète par un push
+# plus récent est annulée plutôt que menée à son terme.
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   build:
-    name: Compilation et tests
+    name: Compilation, tests et empaquetage
     runs-on: macos-latest
     timeout-minutes: 30
 
@@ -59,6 +59,44 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             | tee xcodebuild.log
 
+      # Build appareil sans signature : la signature est apposée sur le PC de
+      # l'utilisateur (Sideloadly, AltStore) avec son propre identifiant Apple.
+      - name: Construire l'app pour appareil, non signée
+        run: |
+          set -o pipefail
+          xcodebuild build \
+            -project CalTracker.xcodeproj \
+            -scheme CalTracker \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath build \
+            -skipMacroValidation \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            | tee build-appareil.log
+
+      - name: Empaqueter en .ipa
+        run: |
+          app="build/Build/Products/Release-iphoneos/CalTracker.app"
+          if [ ! -d "$app" ]; then
+            echo "Application introuvable à $app" >&2
+            find build/Build/Products -maxdepth 2 -name '*.app' >&2 || true
+            exit 1
+          fi
+          mkdir -p Payload
+          cp -R "$app" Payload/
+          # Un .ipa n'est qu'une archive zip contenant un dossier Payload.
+          zip -qry CalTracker-non-signe.ipa Payload
+          ls -lh CalTracker-non-signe.ipa
+
+      - name: Publier le .ipa
+        uses: actions/upload-artifact@v4
+        with:
+          name: CalTracker-ipa-non-signe
+          path: CalTracker-non-signe.ipa
+          retention-days: 30
+
       - name: Résumer les erreurs
         if: failure()
         run: |
@@ -66,7 +104,8 @@ jobs:
             echo '## Erreurs remontées par le compilateur'
             echo
             echo '```'
-            grep -E '(error|warning): ' xcodebuild.log | sort -u | head -60 || echo 'Aucune ligne error/warning : voir le journal complet.'
+            grep -hE '(error|warning): ' xcodebuild.log build-appareil.log 2>/dev/null | sort -u | head -60 \
+              || echo 'Aucune ligne error/warning : voir le journal complet en artefact.'
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
@@ -77,6 +116,7 @@ jobs:
           name: resultats-build
           path: |
             xcodebuild.log
+            build-appareil.log
             TestResults.xcresult
           retention-days: 7
           if-no-files-found: ignore
