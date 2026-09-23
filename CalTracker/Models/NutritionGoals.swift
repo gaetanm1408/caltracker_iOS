@@ -8,10 +8,27 @@ import SwiftData
 @Model
 final class UserProfile {
     @Attribute(.unique) var id: UUID
+
+    // Objectifs saisis à la main, utilisés tant que le calcul automatique
+    // n'est pas activé.
     var dailyCalorieGoal: Double
     var proteinPercentage: Double
     var carbohydratePercentage: Double
     var fatPercentage: Double
+
+    // Mesures corporelles. Valeurs par défaut hors bornes plausibles : elles
+    // signalent un profil que l'utilisateur n'a pas encore renseigné.
+    var weightInKilograms: Double = 0
+    var heightInCentimeters: Double = 0
+    var age: Int = 0
+    var sexRawValue: String = BiologicalSex.female.rawValue
+    var activityLevelRawValue: String = ActivityLevel.moderate.rawValue
+    var weightGoalRawValue: String = WeightGoal.maintenance.rawValue
+
+    /// Faux par défaut, pour que la mise à jour ne change rien aux objectifs
+    /// déjà en place.
+    var usesCalculatedGoal: Bool = false
+
     var updatedAt: Date
 
     init(
@@ -30,12 +47,64 @@ final class UserProfile {
         self.updatedAt = updatedAt
     }
 
+    var sex: BiologicalSex {
+        get { BiologicalSex(rawValue: sexRawValue) ?? .female }
+        set { sexRawValue = newValue.rawValue }
+    }
+
+    var activityLevel: ActivityLevel {
+        get { ActivityLevel(rawValue: activityLevelRawValue) ?? .moderate }
+        set { activityLevelRawValue = newValue.rawValue }
+    }
+
+    var weightGoal: WeightGoal {
+        get { WeightGoal(rawValue: weightGoalRawValue) ?? .maintenance }
+        set { weightGoalRawValue = newValue.rawValue }
+    }
+
+    var measurements: BodyMeasurements {
+        get {
+            BodyMeasurements(
+                weightInKilograms: weightInKilograms,
+                heightInCentimeters: heightInCentimeters,
+                age: age,
+                sex: sex
+            )
+        }
+        set {
+            weightInKilograms = newValue.weightInKilograms
+            heightInCentimeters = newValue.heightInCentimeters
+            age = newValue.age
+            sex = newValue.sex
+        }
+    }
+
+    /// Le calcul n'est possible qu'une fois les mesures renseignées.
+    var canCalculateGoal: Bool { measurements.isComplete }
+
+    var basalMetabolicRate: Double {
+        EnergyCalculator.basalMetabolicRate(for: measurements)
+    }
+
+    var totalDailyEnergyExpenditure: Double {
+        EnergyCalculator.totalDailyEnergyExpenditure(for: measurements, activity: activityLevel)
+    }
+
+    /// Objectifs effectifs : calculés à partir du profil quand c'est demandé et
+    /// possible, saisis à la main sinon.
     var goals: NutritionGoals {
-        NutritionGoals(
-            calories: dailyCalorieGoal,
-            proteinPercentage: proteinPercentage,
-            carbohydratePercentage: carbohydratePercentage,
-            fatPercentage: fatPercentage
+        guard usesCalculatedGoal, canCalculateGoal else {
+            return NutritionGoals(
+                calories: dailyCalorieGoal,
+                proteinPercentage: proteinPercentage,
+                carbohydratePercentage: carbohydratePercentage,
+                fatPercentage: fatPercentage
+            )
+        }
+        return EnergyCalculator.goals(
+            for: measurements,
+            activity: activityLevel,
+            goal: weightGoal
         )
     }
 }
