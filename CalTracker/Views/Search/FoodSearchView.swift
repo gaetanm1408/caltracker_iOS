@@ -109,27 +109,27 @@ struct FoodSearchView: View {
                     )
                 } else {
                     List(viewModel.visibleResults) { food in
-                        Button {
-                            selectedFood = food
-                        } label: {
-                            RemoteFoodRow(food: food)
-                        }
-                        .buttonStyle(.plain)
-                        .swipeActions(edge: .leading) {
-                            Button {
-                                productForList = food
-                            } label: {
-                                Label("Courses ou recette", systemImage: "cart.badge.plus")
+                        // Une ligne simple plutôt qu'un bouton : un Button en
+                        // style « plain » capte les gestes horizontaux et prive
+                        // la liste de son balayage.
+                        RemoteFoodRow(food: food)
+                            .contentShape(Rectangle())
+                            .onTapGesture { selectedFood = food }
+                            .swipeActions(edge: .leading) {
+                                Button {
+                                    productForList = food
+                                } label: {
+                                    Label("Courses ou recette", systemImage: "cart.badge.plus")
+                                }
+                                .tint(.green)
                             }
-                            .tint(.green)
-                        }
-                        .contextMenu {
-                            Button {
-                                productForList = food
-                            } label: {
-                                Label("Ajouter aux courses ou à une recette", systemImage: "cart.badge.plus")
+                            .contextMenu {
+                                Button {
+                                    productForList = food
+                                } label: {
+                                    Label("Ajouter aux courses ou à une recette", systemImage: "cart.badge.plus")
+                                }
                             }
-                        }
                     }
                     .listStyle(.plain)
                     .sheet(item: $productForList) { food in
