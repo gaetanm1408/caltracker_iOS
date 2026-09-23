@@ -10,6 +10,7 @@ struct JournalView: View {
     @State private var isPresentingGoals = false
     @State private var activeEnergyBurned: Double?
     @State private var didRequestHealthAccess = false
+    @State private var hasHealthAccess = false
 
     private var goals: NutritionGoals {
         profiles.first?.goals ?? .default
@@ -59,13 +60,17 @@ struct JournalView: View {
     }
 
     /// Lit la dépense du jour dans Apple Santé. L'autorisation n'est demandée
-    /// qu'une fois, et un refus se traduit simplement par l'absence de ligne.
+    /// qu'une fois, et son échec se traduit par l'absence de ligne.
+    ///
+    /// Sans l'entitlement HealthKit — que seul un compte développeur payant
+    /// accorde — la demande échoue et aucune requête n'est tentée.
     private func loadActiveEnergy() async {
         guard activitySource.isAvailable else { return }
         if !didRequestHealthAccess {
             didRequestHealthAccess = true
-            _ = await activitySource.requestAuthorization()
+            hasHealthAccess = await activitySource.requestAuthorization()
         }
+        guard hasHealthAccess else { return }
         activeEnergyBurned = await activitySource.activeEnergyBurned(on: selectedDate)
     }
 }

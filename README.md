@@ -41,6 +41,23 @@ La signature n'est volontairement pas faite en CI : elle demanderait d'y
 déposer un certificat de développeur, alors qu'elle appartient à la machine de
 celui qui installe l'app.
 
+### Apple Santé, en sommeil
+
+La lecture des dépenses énergétiques est écrite et branchée, mais désactivée :
+l'entitlement HealthKit n'est pas accordé aux comptes Apple gratuits, et sa
+présence fait échouer la signature au moment du sideload. Sans lui, la demande
+d'autorisation échoue et la ligne « kcal brûlées » ne s'affiche simplement pas.
+
+Avec un compte développeur payant, il suffit de rétablir deux réglages sur la
+cible `CalTracker`, dans les deux configurations :
+
+```
+CODE_SIGN_ENTITLEMENTS = CalTracker.entitlements;
+INFOPLIST_KEY_NSHealthShareUsageDescription = "…";
+```
+
+Le fichier `CalTracker.entitlements` est conservé à la racine pour cela.
+
 ## Fonctionnalités
 
 - **Recherche de produits** — interrogation d'Open Food Facts avec anti-rebond,
