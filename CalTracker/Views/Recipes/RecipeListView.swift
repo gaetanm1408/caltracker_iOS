@@ -118,7 +118,7 @@ struct RecipeListView: View {
                 NavigationStack {
                     RecipeFilterSheet(
                         criteria: $criteria,
-                        selectableIngredients: RecipeFilter.selectableIngredients(in: recipes),
+                        ingredientGroups: RecipeFilter.groupedSelectableIngredients(in: recipes),
                         matchCount: RecipeFilter.eligible(recipes, matching: criteria).count
                     )
                 }
@@ -159,7 +159,7 @@ struct RecipeListView: View {
 /// Les critères de sélection, présentés en feuille depuis la liste.
 private struct RecipeFilterSheet: View {
     @Binding var criteria: RecipeCriteria
-    let selectableIngredients: [String]
+    let ingredientGroups: [IngredientGroup]
     let matchCount: Int
     @Environment(\.dismiss) private var dismiss
 
@@ -167,7 +167,7 @@ private struct RecipeFilterSheet: View {
         Form {
             RecipeCriteriaSections(
                 criteria: $criteria,
-                selectableIngredients: selectableIngredients,
+                ingredientGroups: ingredientGroups,
                 showsCategoryPicker: true,
                 matchSummary: "\(matchCount) recette(s) passent tes critères."
             )

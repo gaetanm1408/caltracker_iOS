@@ -81,7 +81,11 @@ Swift ne peut pas rattraper. L'app se terminait au lancement du journal.
   (avec leurs macros), calcul des apports par portion, duplication, ajout d'une
   recette au journal. La liste se filtre par type, calories et protéines par
   assiette, matériel disponible et aliments écartés — les mêmes critères que
-  l'assistant menus, servis par les mêmes sections de formulaire.
+  l'assistant menus, servis par les mêmes sections de formulaire. Les aliments
+  qu'on peut écarter sont rangés par famille (légumes, viandes, produits de la
+  mer, œufs et laitages, légumineuses, féculents, fruits, oléagineux,
+  épicerie), déduite du nom pour couvrir aussi les ingrédients saisis à la
+  main.
 - **Catalogue livré** — soixante-dix-neuf recettes protéinées (cinquante-cinq
   repas, vingt-quatre collations) décrites dans `Resources/RecipeCatalogue.json`,
   bâties sur une table de 86 ingrédients de référence, installées au
@@ -180,7 +184,9 @@ et les fiches trop incomplètes sont écartées avant d'atteindre l'interface.
   chaque recette, installation idempotente, et vivier restant pour chaque
   combinaison de filtres
 - `RecipeFilterTests` — fourchettes de calories, plancher de protéines,
-  aliments écartés, matériel réclamé
+  aliments écartés, matériel réclamé, type de recette
+- `IngredientFamilyTests` — classement des aliments par famille, noms trompeurs
+  compris, et couverture de tout le catalogue livré
 - `MealPlannerTests` — répartition des recettes sur les jours, couverture d'une
   préparation, reproductibilité du tirage
 - `EnergyCalculatorTests` — métabolisme de base, dépense totale et objectif

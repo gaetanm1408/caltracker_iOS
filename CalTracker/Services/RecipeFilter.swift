@@ -105,6 +105,20 @@ enum RecipeFilter {
     /// La proposer depuis les recettes elles-mêmes évite d'entretenir un
     /// catalogue d'aliments à part, et n'offre que des choix qui changent
     /// réellement quelque chose.
+    /// Les mêmes aliments, rangés par famille et dans l'ordre d'affichage.
+    ///
+    /// Quatre-vingts noms dans une seule liste alphabétique se parcourent mal :
+    /// on cherche « les légumes que je n'aime pas », pas un mot précis.
+    static func groupedSelectableIngredients(in recipes: [Recipe]) -> [IngredientGroup] {
+        let byFamily = Dictionary(grouping: selectableIngredients(in: recipes)) {
+            IngredientFamily.of($0)
+        }
+        return IngredientFamily.displayOrder.compactMap { family in
+            guard let names = byFamily[family], !names.isEmpty else { return nil }
+            return IngredientGroup(family: family, names: names)
+        }
+    }
+
     static func selectableIngredients(in recipes: [Recipe]) -> [String] {
         var byNormalized: [String: String] = [:]
         for recipe in recipes {

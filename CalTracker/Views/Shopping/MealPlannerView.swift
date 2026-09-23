@@ -35,7 +35,7 @@ struct MealPlannerView: View {
 
             RecipeCriteriaSections(
                 criteria: $viewModel.request.criteria,
-                selectableIngredients: viewModel.selectableIngredients,
+                ingredientGroups: viewModel.ingredientGroups,
                 matchSummary: "\(viewModel.eligibleMeals.count) repas et "
                     + "\(viewModel.eligibleSnacks.count) collations passent tes critères."
             )

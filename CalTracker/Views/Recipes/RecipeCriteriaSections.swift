@@ -7,7 +7,7 @@ import SwiftUI
 /// endroit à corriger, et deux écrans qui ne peuvent pas diverger.
 struct RecipeCriteriaSections: View {
     @Binding var criteria: RecipeCriteria
-    let selectableIngredients: [String]
+    let ingredientGroups: [IngredientGroup]
     /// Le planning tire repas et collations dans des viviers séparés : le choix
     /// du type ne lui sert à rien.
     var showsCategoryPicker = false
@@ -63,7 +63,7 @@ struct RecipeCriteriaSections: View {
         Section {
             NavigationLink {
                 ExcludedIngredientsView(
-                    ingredients: selectableIngredients,
+                    groups: ingredientGroups,
                     excluded: $criteria.excludedIngredients
                 )
             } label: {
@@ -140,50 +140,41 @@ enum CategoryScope: String, CaseIterable, Identifiable {
     }
 }
 
-/// Choix des aliments à ne pas voir proposer, pris dans les ingrédients des
-/// recettes existantes.
+/// Choix des aliments à ne pas voir proposer, rangés par famille.
 struct ExcludedIngredientsView: View {
-    let ingredients: [String]
+    let groups: [IngredientGroup]
     @Binding var excluded: Set<String>
 
     @State private var search = ""
 
-    private var visible: [String] {
-        guard !search.isEmpty else { return ingredients }
-        return ingredients.filter { $0.localizedCaseInsensitiveContains(search) }
+    /// Les familles où il reste quelque chose à montrer après la recherche.
+    private var visibleGroups: [IngredientGroup] {
+        guard !search.isEmpty else { return groups }
+        return groups.compactMap { group in
+            let names = group.names.filter { $0.localizedCaseInsensitiveContains(search) }
+            return names.isEmpty ? nil : IngredientGroup(family: group.family, names: names)
+        }
     }
 
     var body: some View {
         List {
-            if ingredients.isEmpty {
+            if groups.isEmpty {
                 ContentUnavailableView(
                     "Aucun ingrédient",
                     systemImage: "carrot",
                     description: Text("Les aliments proposés ici viennent de tes recettes.")
                 )
+            } else if visibleGroups.isEmpty {
+                ContentUnavailableView.search(text: search)
             } else {
-                ForEach(visible, id: \.self) { ingredient in
-                    let key = ShoppingListBuilder.normalize(ingredient)
-                    Button {
-                        if excluded.contains(key) {
-                            excluded.remove(key)
-                        } else {
-                            excluded.insert(key)
+                ForEach(visibleGroups) { group in
+                    Section {
+                        ForEach(group.names, id: \.self) { ingredient in
+                            row(for: ingredient)
                         }
-                    } label: {
-                        HStack {
-                            Text(ingredient)
-                                .foregroundStyle(excluded.contains(key) ? .secondary : .primary)
-                                .strikethrough(excluded.contains(key))
-                            Spacer()
-                            if excluded.contains(key) {
-                                Image(systemName: "xmark.circle.fill")
-                                    .foregroundStyle(.red)
-                            }
-                        }
-                        .contentShape(Rectangle())
+                    } header: {
+                        Label(group.family.localizedName, systemImage: group.family.systemImageName)
                     }
-                    .buttonStyle(.plain)
                 }
             }
         }
@@ -197,5 +188,30 @@ struct ExcludedIngredientsView: View {
                 }
             }
         }
+    }
+
+    private func row(for ingredient: String) -> some View {
+        let key = ShoppingListBuilder.normalize(ingredient)
+        let isExcluded = excluded.contains(key)
+        return Button {
+            if isExcluded {
+                excluded.remove(key)
+            } else {
+                excluded.insert(key)
+            }
+        } label: {
+            HStack {
+                Text(ingredient)
+                    .foregroundStyle(isExcluded ? .secondary : .primary)
+                    .strikethrough(isExcluded)
+                Spacer()
+                if isExcluded {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundStyle(.red)
+                }
+            }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
     }
 }

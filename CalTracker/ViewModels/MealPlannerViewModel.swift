@@ -31,9 +31,10 @@ final class MealPlannerViewModel {
         RecipeFilter.eligible(snacks, matching: request.criteria)
     }
 
-    /// Aliments qu'on peut écarter, tirés des recettes elles-mêmes.
-    var selectableIngredients: [String] {
-        RecipeFilter.selectableIngredients(in: recipes)
+    /// Aliments qu'on peut écarter, tirés des recettes elles-mêmes et rangés
+    /// par famille.
+    var ingredientGroups: [IngredientGroup] {
+        RecipeFilter.groupedSelectableIngredients(in: recipes)
     }
 
     /// Ce qui manque pour composer, le cas échéant.
