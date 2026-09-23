@@ -10,6 +10,8 @@ struct RemoteFood: Identifiable, Hashable, Sendable {
     let imageURLString: String?
     let servingSizeInGrams: Double?
     let nutritionPer100g: NutritionFacts
+    /// Libellés de catégorie déjà traduits, du plus général au plus précis.
+    var categories: [String] = []
 
     var id: String { barcode }
 
@@ -81,7 +83,8 @@ extension OFFSearchHit {
             brand: brands.first?.capitalizedFirstLetter,
             imageURLString: imageThumbURL ?? imageURL,
             servingSizeInGrams: servingQuantity.flatMap { $0 > 0 ? $0 : nil },
-            nutritionPer100g: facts
+            nutritionPer100g: facts,
+            categories: categories
         )
     }
 }

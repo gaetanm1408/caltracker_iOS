@@ -31,6 +31,7 @@ struct OFFSearchHit: Decodable {
     let imageURL: String?
     let imageThumbURL: String?
     let servingQuantity: Double?
+    let categories: [String]
     let nutriments: OFFNutriments?
 
     enum CodingKeys: String, CodingKey {
@@ -41,6 +42,7 @@ struct OFFSearchHit: Decodable {
         case imageURL = "image_url"
         case imageThumbURL = "image_front_small_url"
         case servingQuantity = "serving_quantity"
+        case categories
         case nutriments
     }
 
@@ -53,6 +55,9 @@ struct OFFSearchHit: Decodable {
         imageURL = try container.decodeIfPresent(String.self, forKey: .imageURL)
         imageThumbURL = try container.decodeIfPresent(String.self, forKey: .imageThumbURL)
         servingQuantity = try container.decodeIfPresent(FlexibleNumber.self, forKey: .servingQuantity)?.doubleValue
+        // Libellés déjà traduits dans la langue demandée, séparés par des
+        // virgules — rien à traduire nous-mêmes.
+        categories = try container.decodeIfPresent(FlexibleStringList.self, forKey: .categories)?.values ?? []
         nutriments = try container.decodeIfPresent(OFFNutriments.self, forKey: .nutriments)
     }
 }

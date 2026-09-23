@@ -16,6 +16,43 @@ final class FoodSearchViewModel {
 
     private(set) var query: String = ""
     private(set) var state: State = .idle
+    private(set) var selectedCategory: String?
+
+    private var foundFoods: [RemoteFood] {
+        if case .results(let foods) = state { return foods }
+        return []
+    }
+
+    /// Catégories les plus représentées dans les résultats.
+    ///
+    /// Celles d'Open Food Facts sont hiérarchiques et verbeuses — un pot de
+    /// pâte à tartiner en porte sept. Les plus fréquentes sont aussi les plus
+    /// générales, donc celles qui découpent utilement une liste.
+    var availableCategories: [String] {
+        var counts: [String: Int] = [:]
+        for food in foundFoods {
+            for category in Set(food.categories) {
+                counts[category, default: 0] += 1
+            }
+        }
+        return counts
+            // Une catégorie portée par un seul produit ne filtre rien d'utile.
+            .filter { $0.value >= 2 }
+            .sorted {
+                $0.value == $1.value ? $0.key < $1.key : $0.value > $1.value
+            }
+            .prefix(8)
+            .map(\.key)
+    }
+
+    var visibleResults: [RemoteFood] {
+        guard let selectedCategory else { return foundFoods }
+        return foundFoods.filter { $0.categories.contains(selectedCategory) }
+    }
+
+    func toggleCategory(_ category: String) {
+        selectedCategory = selectedCategory == category ? nil : category
+    }
 
     private let client: FoodDatabaseClient
     private let debounce: Duration
@@ -65,6 +102,9 @@ final class FoodSearchViewModel {
     }
 
     private func performSearch(_ trimmed: String) async {
+        // Un filtre hérité de la recherche précédente masquerait les nouveaux
+        // résultats sans que rien ne l'explique.
+        selectedCategory = nil
         state = .searching
         do {
             let foods = try await client.searchProducts(query: trimmed, page: 1)

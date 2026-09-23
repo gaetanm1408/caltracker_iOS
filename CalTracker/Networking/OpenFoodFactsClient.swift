@@ -40,6 +40,7 @@ final class OpenFoodFactsClient: FoodDatabaseClient {
         "serving_quantity",
         "image_front_small_url",
         "image_url",
+        "categories",
         "nutriments"
     ].joined(separator: ",")
 

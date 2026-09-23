@@ -52,3 +52,74 @@ struct FoodSearchViewModelTests {
         #expect(viewModel.state == .idle)
     }
 }
+
+@MainActor
+@Suite("Filtre par catégorie")
+struct FoodSearchCategoryTests {
+    private func food(_ name: String, categories: [String]) -> RemoteFood {
+        RemoteFood(
+            barcode: name,
+            name: name,
+            brand: nil,
+            imageURLString: nil,
+            servingSizeInGrams: nil,
+            nutritionPer100g: NutritionFacts(calories: 100, proteins: 5, carbohydrates: 10, fats: 2),
+            categories: categories
+        )
+    }
+
+    private func searched() async -> FoodSearchViewModel {
+        let client = StubFoodDatabaseClient(foods: [
+            food("Nutella", categories: ["Petit-déjeuners", "Pâtes à tartiner"]),
+            food("Confiture", categories: ["Petit-déjeuners", "Pâtes à tartiner"]),
+            food("Céréales", categories: ["Petit-déjeuners"]),
+            food("Jambon", categories: ["Charcuteries"])
+        ])
+        let viewModel = FoodSearchViewModel(client: client)
+        viewModel.updateQuery("petit")
+        viewModel.searchNow()
+        // Laisse la tâche de recherche se terminer.
+        try? await Task.sleep(for: .milliseconds(50))
+        return viewModel
+    }
+
+    @Test("Les catégories sont classées par fréquence, les isolées écartées")
+    func ranksCategoriesByFrequency() async {
+        let viewModel = await searched()
+
+        // « Charcuteries » ne porte qu'un produit : elle ne découperait rien.
+        #expect(viewModel.availableCategories == ["Petit-déjeuners", "Pâtes à tartiner"])
+    }
+
+    @Test("Choisir une catégorie restreint les résultats")
+    func filtersBySelectedCategory() async {
+        let viewModel = await searched()
+
+        viewModel.toggleCategory("Pâtes à tartiner")
+
+        #expect(viewModel.visibleResults.map(\.name) == ["Nutella", "Confiture"])
+    }
+
+    @Test("Toucher deux fois la même catégorie retire le filtre")
+    func togglesCategoryOff() async {
+        let viewModel = await searched()
+
+        viewModel.toggleCategory("Pâtes à tartiner")
+        viewModel.toggleCategory("Pâtes à tartiner")
+
+        #expect(viewModel.selectedCategory == nil)
+        #expect(viewModel.visibleResults.count == 4)
+    }
+
+    @Test("Une nouvelle recherche repart sans filtre")
+    func clearsFilterOnNewSearch() async {
+        let viewModel = await searched()
+        viewModel.toggleCategory("Charcuteries")
+
+        viewModel.updateQuery("autre chose")
+        viewModel.searchNow()
+        try? await Task.sleep(for: .milliseconds(50))
+
+        #expect(viewModel.selectedCategory == nil)
+    }
+}

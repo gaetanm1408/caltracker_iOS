@@ -90,16 +90,34 @@ struct FoodSearchView: View {
         case .searching:
             ProgressView("Recherche en cours…")
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-        case .results(let foods):
-            List(foods) { food in
-                Button {
-                    selectedFood = food
-                } label: {
-                    RemoteFoodRow(food: food)
+        case .results:
+            VStack(spacing: 0) {
+                if !viewModel.availableCategories.isEmpty {
+                    CategoryFilterBar(
+                        categories: viewModel.availableCategories,
+                        selected: viewModel.selectedCategory,
+                        onSelect: { viewModel.toggleCategory($0) }
+                    )
                 }
-                .buttonStyle(.plain)
+
+                if viewModel.visibleResults.isEmpty {
+                    ContentUnavailableView(
+                        "Aucun produit dans cette catégorie",
+                        systemImage: "line.3.horizontal.decrease.circle",
+                        description: Text("Touche à nouveau la catégorie pour retirer le filtre.")
+                    )
+                } else {
+                    List(viewModel.visibleResults) { food in
+                        Button {
+                            selectedFood = food
+                        } label: {
+                            RemoteFoodRow(food: food)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    .listStyle(.plain)
+                }
             }
-            .listStyle(.plain)
         case .empty(let query):
             ContentUnavailableView.search(text: query)
         case .failed(let message):
@@ -112,6 +130,44 @@ struct FoodSearchView: View {
                     .buttonStyle(.borderedProminent)
             }
         }
+    }
+}
+
+/// Bandeau de catégories issu des résultats affichés : les libellés viennent
+/// d'Open Food Facts, déjà traduits.
+private struct CategoryFilterBar: View {
+    let categories: [String]
+    let selected: String?
+    let onSelect: (String) -> Void
+
+    var body: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 8) {
+                ForEach(categories, id: \.self) { category in
+                    let isSelected = category == selected
+                    Button {
+                        onSelect(category)
+                    } label: {
+                        Text(category)
+                            .font(.caption)
+                            .lineLimit(1)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 6)
+                            .background(
+                                Capsule().fill(
+                                    isSelected ? Color.accentColor : Color.secondary.opacity(0.15)
+                                )
+                            )
+                            .foregroundStyle(isSelected ? Color.white : Color.primary)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityAddTraits(isSelected ? .isSelected : [])
+                }
+            }
+            .padding(.horizontal)
+            .padding(.vertical, 8)
+        }
+        .background(.bar)
     }
 }
 
