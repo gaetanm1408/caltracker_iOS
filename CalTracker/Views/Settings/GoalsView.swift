@@ -198,7 +198,7 @@ struct GoalsView: View {
                     Text("Total : 100 %")
                 } else {
                     Text("Le total doit faire 100 % (actuellement \(Int(manualTotalPercent.rounded())) %).")
-                        .foregroundStyle(.orange)
+                        .foregroundStyle(Color.alert)
                 }
             }
         }

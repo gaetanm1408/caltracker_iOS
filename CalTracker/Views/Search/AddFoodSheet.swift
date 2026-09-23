@@ -132,7 +132,7 @@ struct AddFoodSheet: View {
             if let errorMessage {
                 Section {
                     Text(errorMessage)
-                        .foregroundStyle(.red)
+                        .foregroundStyle(Color.alert)
                 }
             }
         }

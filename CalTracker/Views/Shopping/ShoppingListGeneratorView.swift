@@ -73,7 +73,7 @@ struct ShoppingListGeneratorView: View {
                 Text("Aperçu (\(viewModel.preview.count) articles)")
             } footer: {
                 if let errorMessage = viewModel.errorMessage {
-                    Text(errorMessage).foregroundStyle(.red)
+                    Text(errorMessage).foregroundStyle(Color.alert)
                 }
             }
         }

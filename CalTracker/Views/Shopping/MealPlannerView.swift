@@ -58,7 +58,7 @@ struct MealPlannerView: View {
                 .disabled(!viewModel.canCompose)
             } footer: {
                 if let blocking = viewModel.blockingMessage {
-                    Text(blocking).foregroundStyle(.orange)
+                    Text(blocking).foregroundStyle(Color.alert)
                 }
             }
 
@@ -148,7 +148,7 @@ struct MealPlannerView: View {
             Text("Liste de courses (\(viewModel.previewItems.count) articles)")
         } footer: {
             if let errorMessage = viewModel.errorMessage {
-                Text(errorMessage).foregroundStyle(.red)
+                Text(errorMessage).foregroundStyle(Color.alert)
             }
         }
     }

@@ -56,7 +56,7 @@ struct SettingsView: View {
         Section {
             LabeledContent {
                 Text(activitySource.isAvailable ? "Actif" : "Indisponible")
-                    .foregroundStyle(activitySource.isAvailable ? .green : .secondary)
+                    .foregroundStyle(activitySource.isAvailable ? Color.accentColor : Color.secondary)
             } label: {
                 Label("Apple Santé", systemImage: "heart")
             }

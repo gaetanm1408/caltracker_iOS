@@ -207,7 +207,7 @@ struct ExcludedIngredientsView: View {
                 Spacer()
                 if isExcluded {
                     Image(systemName: "xmark.circle.fill")
-                        .foregroundStyle(.red)
+                        .foregroundStyle(Color.alert)
                 }
             }
             .contentShape(Rectangle())

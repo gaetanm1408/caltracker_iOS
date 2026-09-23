@@ -36,7 +36,7 @@ struct RemoteFoodRow: View {
                         .imageScale(.large)
                 }
                 .buttonStyle(.borderless)
-                .tint(.green)
+                .tint(Color.accentColor)
                 .accessibilityLabel("Ajouter aux courses ou à une recette")
             } else {
                 Image(systemName: "plus.circle.fill")

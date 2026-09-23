@@ -121,7 +121,7 @@ struct FoodSearchView: View {
                                 } label: {
                                     Label("Courses ou recette", systemImage: "cart.badge.plus")
                                 }
-                                .tint(.green)
+                                .tint(Color.accentColor)
                             }
                             .contextMenu {
                                 Button {

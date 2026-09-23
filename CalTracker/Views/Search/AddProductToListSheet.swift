@@ -117,7 +117,7 @@ struct AddProductToListSheet: View {
 
             if let errorMessage {
                 Section {
-                    Text(errorMessage).foregroundStyle(.red)
+                    Text(errorMessage).foregroundStyle(Color.alert)
                 }
             }
         }
