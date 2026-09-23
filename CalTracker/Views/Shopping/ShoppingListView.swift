@@ -7,6 +7,7 @@ struct ShoppingListView: View {
     @Query(sort: [SortDescriptor(\Recipe.name)]) private var recipes: [Recipe]
 
     @State private var isPresentingGenerator = false
+    @State private var isPresentingPlanner = false
     @State private var isPresentingManualItem = false
 
     private var pending: [ShoppingListItem] { items.filter { !$0.isChecked } }
@@ -25,8 +26,8 @@ struct ShoppingListView: View {
                     } description: {
                         Text("Génère ta liste à partir de tes recettes : les ingrédients identiques sont regroupés automatiquement.")
                     } actions: {
-                        Button("Générer depuis mes recettes") {
-                            isPresentingGenerator = true
+                        Button("Composer un menu") {
+                            isPresentingPlanner = true
                         }
                         .buttonStyle(.borderedProminent)
                         .disabled(recipes.isEmpty)
@@ -78,8 +79,17 @@ struct ShoppingListView: View {
                     } label: {
                         Label("Ajouter un article", systemImage: "plus")
                     }
-                    Button {
-                        isPresentingGenerator = true
+                    Menu {
+                        Button {
+                            isPresentingPlanner = true
+                        } label: {
+                            Label("Composer un menu", systemImage: "calendar")
+                        }
+                        Button {
+                            isPresentingGenerator = true
+                        } label: {
+                            Label("Choisir mes recettes", systemImage: "checklist")
+                        }
                     } label: {
                         Label("Générer", systemImage: "wand.and.stars")
                     }
@@ -89,6 +99,11 @@ struct ShoppingListView: View {
             .sheet(isPresented: $isPresentingGenerator) {
                 NavigationStack {
                     ShoppingListGeneratorView(recipes: recipes)
+                }
+            }
+            .sheet(isPresented: $isPresentingPlanner) {
+                NavigationStack {
+                    MealPlannerView(recipes: recipes)
                 }
             }
             .sheet(isPresented: $isPresentingManualItem) {
