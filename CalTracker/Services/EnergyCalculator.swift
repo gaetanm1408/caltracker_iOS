@@ -55,22 +55,4 @@ enum EnergyCalculator {
         )
     }
 
-    /// Objectif du jour rehaussé de l'énergie réellement dépensée en activité.
-    ///
-    /// Le niveau d'activité déclaré couvre déjà une part de l'exercice ; seule
-    /// la dépense au-delà de ce forfait est ajoutée, sans quoi une sortie
-    /// longue serait comptée deux fois.
-    static func adjustedCalorieTarget(
-        base: NutritionGoals,
-        activeEnergyBurned: Double,
-        activity: ActivityLevel,
-        measurements: BodyMeasurements
-    ) -> Double {
-        guard activeEnergyBurned > 0 else { return base.calories }
-
-        let basal = basalMetabolicRate(for: measurements)
-        let alreadyCounted = basal * (activity.multiplier - 1)
-        let surplus = max(activeEnergyBurned - alreadyCounted, 0)
-        return ((base.calories + surplus) / 10).rounded() * 10
-    }
 }

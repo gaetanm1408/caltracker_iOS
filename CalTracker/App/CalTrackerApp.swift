@@ -5,6 +5,7 @@ import SwiftUI
 struct CalTrackerApp: App {
     private let container: ModelContainer
     private let foodClient: FoodDatabaseClient
+    private let activitySource: ActivityEnergySource = HealthKitActivitySource()
 
     init() {
         do {
@@ -19,6 +20,7 @@ struct CalTrackerApp: App {
         WindowGroup {
             RootView()
                 .environment(\.foodDatabaseClient, foodClient)
+                .environment(\.activityEnergySource, activitySource)
         }
         .modelContainer(container)
     }
@@ -50,9 +52,18 @@ private struct FoodDatabaseClientKey: EnvironmentKey {
     static let defaultValue: FoodDatabaseClient = OpenFoodFactsClient()
 }
 
+private struct ActivityEnergySourceKey: EnvironmentKey {
+    static let defaultValue: ActivityEnergySource = HealthKitActivitySource()
+}
+
 extension EnvironmentValues {
     var foodDatabaseClient: FoodDatabaseClient {
         get { self[FoodDatabaseClientKey.self] }
         set { self[FoodDatabaseClientKey.self] = newValue }
+    }
+
+    var activityEnergySource: ActivityEnergySource {
+        get { self[ActivityEnergySourceKey.self] }
+        set { self[ActivityEnergySourceKey.self] = newValue }
     }
 }

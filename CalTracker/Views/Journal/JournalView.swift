@@ -2,11 +2,14 @@ import SwiftData
 import SwiftUI
 
 struct JournalView: View {
+    @Environment(\.activityEnergySource) private var activitySource
     @Query private var profiles: [UserProfile]
 
     @State private var selectedDate: Date = Date.now.startOfDay()
     @State private var isPresentingSearch = false
     @State private var isPresentingGoals = false
+    @State private var activeEnergyBurned: Double?
+    @State private var didRequestHealthAccess = false
 
     private var goals: NutritionGoals {
         profiles.first?.goals ?? .default
@@ -14,7 +17,12 @@ struct JournalView: View {
 
     var body: some View {
         NavigationStack {
-            JournalDayView(day: selectedDate, goals: goals)
+            JournalDayView(
+                day: selectedDate,
+                goals: goals,
+                activeEnergyBurned: activeEnergyBurned
+            )
+                .task(id: selectedDate) { await loadActiveEnergy() }
                 .navigationTitle(selectedDate.journalTitle())
                 .navigationBarTitleDisplayMode(.inline)
                 .safeAreaInset(edge: .top) {
@@ -48,6 +56,17 @@ struct JournalView: View {
                     .presentationDetents([.medium, .large])
                 }
         }
+    }
+
+    /// Lit la dépense du jour dans Apple Santé. L'autorisation n'est demandée
+    /// qu'une fois, et un refus se traduit simplement par l'absence de ligne.
+    private func loadActiveEnergy() async {
+        guard activitySource.isAvailable else { return }
+        if !didRequestHealthAccess {
+            didRequestHealthAccess = true
+            _ = await activitySource.requestAuthorization()
+        }
+        activeEnergyBurned = await activitySource.activeEnergyBurned(on: selectedDate)
     }
 }
 
@@ -102,14 +121,16 @@ private struct DayNavigationBar: View {
 private struct JournalDayView: View {
     let day: Date
     let goals: NutritionGoals
+    let activeEnergyBurned: Double?
 
     @Environment(\.modelContext) private var context
     @Query private var entries: [FoodEntry]
     @State private var entryBeingEdited: FoodEntry?
 
-    init(day: Date, goals: NutritionGoals) {
+    init(day: Date, goals: NutritionGoals, activeEnergyBurned: Double?) {
         self.day = day
         self.goals = goals
+        self.activeEnergyBurned = activeEnergyBurned
         let startOfDay = day.startOfDay()
         _entries = Query(
             filter: #Predicate<FoodEntry> { $0.day == startOfDay },
@@ -124,7 +145,7 @@ private struct JournalDayView: View {
     var body: some View {
         List {
             Section {
-                DailySummaryCard(summary: summary)
+                DailySummaryCard(summary: summary, activeEnergyBurned: activeEnergyBurned)
                     .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
             }
 
@@ -209,4 +230,5 @@ private struct MealSection: View {
 #Preview {
     JournalView()
         .modelContainer(PreviewData.container())
+        .environment(\.activityEnergySource, StubActivityEnergySource(defaultEnergy: 620))
 }

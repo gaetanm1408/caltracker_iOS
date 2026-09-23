@@ -97,32 +97,6 @@ struct EnergyCalculatorTests {
         #expect(gain.isBalanced)
     }
 
-    @Test("Seule la dépense au-delà du forfait d'activité rehausse la cible")
-    func addsOnlySurplusActivity() {
-        let base = EnergyCalculator.goals(for: man, activity: .moderate, goal: .maintenance)
-        // Le niveau « modéré » couvre déjà 1780 × 0,55 = 979 kcal d'activité.
-        let withinBudget = EnergyCalculator.adjustedCalorieTarget(
-            base: base, activeEnergyBurned: 500, activity: .moderate, measurements: man
-        )
-        let beyondBudget = EnergyCalculator.adjustedCalorieTarget(
-            base: base, activeEnergyBurned: 1479, activity: .moderate, measurements: man
-        )
-
-        // Une sortie déjà comprise dans le forfait ne compte pas deux fois.
-        #expect(withinBudget == base.calories)
-        #expect(abs(beyondBudget - (base.calories + 500)) < 10)
-    }
-
-    @Test("Sans dépense enregistrée, la cible reste celle du profil")
-    func keepsBaseTargetWithoutActivityData() {
-        let base = EnergyCalculator.goals(for: woman, activity: .light, goal: .deficit)
-
-        let adjusted = EnergyCalculator.adjustedCalorieTarget(
-            base: base, activeEnergyBurned: 0, activity: .light, measurements: woman
-        )
-
-        #expect(adjusted == base.calories)
-    }
 }
 
 @Suite("Profil utilisateur")

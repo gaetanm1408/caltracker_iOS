@@ -3,6 +3,9 @@ import SwiftUI
 /// Calorie ring, macro targets and macro split for the selected day.
 struct DailySummaryCard: View {
     let summary: DailyNutritionSummary
+    /// Dépense lue dans Apple Santé. `nil` quand la donnée n'est pas lisible :
+    /// la ligne disparaît alors plutôt que d'afficher un zéro trompeur.
+    var activeEnergyBurned: Double?
 
     var body: some View {
         VStack(spacing: 16) {
@@ -21,7 +24,19 @@ struct DailySummaryCard: View {
                 }
             }
 
-            remainingLabel
+            HStack(spacing: 12) {
+                remainingLabel
+                if let activeEnergyBurned {
+                    Text("·").foregroundStyle(.tertiary)
+                    Label(
+                        "\(Int(activeEnergyBurned.rounded())) kcal brûlées",
+                        systemImage: "figure.run"
+                    )
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .monospacedDigit()
+                }
+            }
 
             if summary.consumed.calories > 0 {
                 Divider()
@@ -58,7 +73,8 @@ struct DailySummaryCard: View {
             consumed: NutritionFacts(calories: 1420, proteins: 88, carbohydrates: 150, fats: 48),
             goals: .default,
             entryCount: 5
-        )
+        ),
+        activeEnergyBurned: 620
     )
     .padding()
 }
