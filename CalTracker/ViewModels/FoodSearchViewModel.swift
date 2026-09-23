@@ -35,9 +35,11 @@ final class FoodSearchViewModel {
                 counts[category, default: 0] += 1
             }
         }
+        // Pas de seuil de fréquence : n'afficher que les catégories partagées
+        // par plusieurs produits faisait disparaître le bandeau entier dès que
+        // les résultats étaient trop dispersés. Le classement par fréquence et
+        // la coupe à huit suffisent à le garder lisible.
         return counts
-            // Une catégorie portée par un seul produit ne filtre rien d'utile.
-            .filter { $0.value >= 2 }
             .sorted {
                 $0.value == $1.value ? $0.key < $1.key : $0.value > $1.value
             }

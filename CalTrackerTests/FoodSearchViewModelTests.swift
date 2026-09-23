@@ -87,8 +87,9 @@ struct FoodSearchCategoryTests {
     func ranksCategoriesByFrequency() async {
         let viewModel = await searched()
 
-        // « Charcuteries » ne porte qu'un produit : elle ne découperait rien.
-        #expect(viewModel.availableCategories == ["Petit-déjeuners", "Pâtes à tartiner"])
+        // Les plus fréquentes d'abord ; « Charcuteries » ne porte qu'un produit
+        // mais reste proposée, elle permet de le retrouver.
+        #expect(viewModel.availableCategories == ["Petit-déjeuners", "Pâtes à tartiner", "Charcuteries"])
     }
 
     @Test("Choisir une catégorie restreint les résultats")
