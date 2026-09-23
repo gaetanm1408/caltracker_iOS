@@ -24,16 +24,18 @@ enum CalorieBand: String, Codable, CaseIterable, Identifiable, Sendable {
     var detail: String? {
         switch self {
         case .any: return nil
-        case .light: return "400 à 600 kcal"
+        case .light: return "jusqu'à 600 kcal"
         case .balanced: return "600 à 800 kcal"
         case .hearty: return "plus de 800 kcal"
         }
     }
 
+    /// La borne basse est ouverte : demander « léger » ne doit pas écarter les
+    /// assiettes les plus légères. Seul le plafond compte.
     func accepts(_ caloriesPerServing: Double) -> Bool {
         switch self {
         case .any: return true
-        case .light: return (400...600).contains(caloriesPerServing)
+        case .light: return caloriesPerServing <= 600
         case .balanced: return (600...800).contains(caloriesPerServing)
         case .hearty: return caloriesPerServing > 800
         }

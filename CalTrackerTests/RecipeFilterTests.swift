@@ -80,6 +80,22 @@ struct RecipeFilterTests {
         #expect(RecipeFilter.eligible(recipes, matching: criteria).map(\.name) == ["Costaud"])
     }
 
+    @Test("« Léger » garde les assiettes les plus légères")
+    func lightBandHasNoFloor() {
+        // Une omelette à 330 kcal est plus légère que « léger » : l'écarter
+        // quand on demande léger n'aurait aucun sens.
+        let recipes = [
+            makeRecipe("Très léger", caloriesPerServing: 330, proteinsPerServing: 50),
+            makeRecipe("Léger", caloriesPerServing: 450, proteinsPerServing: 30),
+            makeRecipe("Équilibré", caloriesPerServing: 700, proteinsPerServing: 40)
+        ]
+
+        var criteria = RecipeCriteria()
+        criteria.calorieBand = .light
+
+        #expect(RecipeFilter.eligible(recipes, matching: criteria).map(\.name) == ["Très léger", "Léger"])
+    }
+
     @Test("Le plancher de protéines écarte les assiettes trop pauvres")
     func filtersByProteinFloor() {
         let recipes = [

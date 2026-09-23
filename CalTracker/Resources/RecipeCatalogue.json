@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "recipes": [
     {
       "name": "Poulet grillé, quinoa et brocoli",
@@ -9,10 +9,54 @@
       "preparationMinutes": 25,
       "instructions": "Cuire le quinoa 12 minutes dans deux fois son volume d'eau.\nSaisir le poulet 6 minutes par face, saler, poivrer.\nCuire le brocoli à la vapeur 8 minutes.\nAssembler et arroser d'huile d'olive.",
       "ingredients": [
-        { "name": "Blanc de poulet", "quantity": 300, "unit": "g", "per100g": { "calories": 121, "proteins": 25, "carbohydrates": 0, "fats": 2.3 } },
-        { "name": "Quinoa cuit", "quantity": 300, "unit": "g", "per100g": { "calories": 120, "proteins": 4.4, "carbohydrates": 18, "fats": 1.9 } },
-        { "name": "Brocoli", "quantity": 300, "unit": "g", "per100g": { "calories": 34, "proteins": 2.8, "carbohydrates": 4, "fats": 0.4 } },
-        { "name": "Huile d'olive", "quantity": 1, "unit": "c. à soupe", "pantryStaple": true, "per100g": { "calories": 900, "proteins": 0, "carbohydrates": 0, "fats": 100 } }
+        {
+          "name": "Blanc de poulet",
+          "quantity": 300,
+          "unit": "g",
+          "per100g": {
+            "calories": 121,
+            "proteins": 25,
+            "carbohydrates": 0,
+            "fats": 2.3
+          }
+        },
+        {
+          "name": "Quinoa cuit",
+          "quantity": 300,
+          "unit": "g",
+          "per100g": {
+            "calories": 120,
+            "proteins": 4.4,
+            "carbohydrates": 18,
+            "fats": 1.9
+          }
+        },
+        {
+          "name": "Brocoli",
+          "quantity": 300,
+          "unit": "g",
+          "per100g": {
+            "calories": 34,
+            "proteins": 2.8,
+            "carbohydrates": 4,
+            "fats": 0.4
+          }
+        },
+        {
+          "name": "Huile d'olive",
+          "quantity": 1,
+          "unit": "c. à soupe",
+          "pantryStaple": true,
+          "per100g": {
+            "calories": 900,
+            "proteins": 0,
+            "carbohydrates": 0,
+            "fats": 100
+          }
+        }
+      ],
+      "equipment": [
+        "stovetop"
       ]
     },
     {
@@ -23,11 +67,65 @@
       "preparationMinutes": 10,
       "instructions": "Égoutter le thon et les pois chiches.\nMélanger avec les tomates coupées et la feta émiettée.\nAssaisonner d'huile d'olive et de citron.",
       "ingredients": [
-        { "name": "Thon au naturel égoutté", "quantity": 280, "unit": "g", "per100g": { "calories": 116, "proteins": 26, "carbohydrates": 0, "fats": 1 } },
-        { "name": "Pois chiches cuits", "quantity": 240, "unit": "g", "per100g": { "calories": 139, "proteins": 7.4, "carbohydrates": 18, "fats": 2.6 } },
-        { "name": "Feta", "quantity": 80, "unit": "g", "per100g": { "calories": 264, "proteins": 14, "carbohydrates": 4, "fats": 21 } },
-        { "name": "Tomates cerises", "quantity": 200, "unit": "g", "per100g": { "calories": 18, "proteins": 0.9, "carbohydrates": 3, "fats": 0.2 } },
-        { "name": "Huile d'olive", "quantity": 1, "unit": "c. à soupe", "pantryStaple": true, "per100g": { "calories": 900, "proteins": 0, "carbohydrates": 0, "fats": 100 } }
+        {
+          "name": "Thon au naturel égoutté",
+          "quantity": 280,
+          "unit": "g",
+          "per100g": {
+            "calories": 116,
+            "proteins": 26,
+            "carbohydrates": 0,
+            "fats": 1
+          }
+        },
+        {
+          "name": "Pois chiches cuits",
+          "quantity": 240,
+          "unit": "g",
+          "per100g": {
+            "calories": 139,
+            "proteins": 7.4,
+            "carbohydrates": 18,
+            "fats": 2.6
+          }
+        },
+        {
+          "name": "Feta",
+          "quantity": 80,
+          "unit": "g",
+          "per100g": {
+            "calories": 264,
+            "proteins": 14,
+            "carbohydrates": 4,
+            "fats": 21
+          }
+        },
+        {
+          "name": "Tomates cerises",
+          "quantity": 200,
+          "unit": "g",
+          "per100g": {
+            "calories": 18,
+            "proteins": 0.9,
+            "carbohydrates": 3,
+            "fats": 0.2
+          }
+        },
+        {
+          "name": "Huile d'olive",
+          "quantity": 1,
+          "unit": "c. à soupe",
+          "pantryStaple": true,
+          "per100g": {
+            "calories": 900,
+            "proteins": 0,
+            "carbohydrates": 0,
+            "fats": 100
+          }
+        }
+      ],
+      "equipment": [
+        "none"
       ]
     },
     {
@@ -38,10 +136,54 @@
       "preparationMinutes": 10,
       "instructions": "Faire tomber les épinards à la poêle.\nVerser les blancs battus, cuire à feu doux.\nParsemer de parmesan et plier.",
       "ingredients": [
-        { "name": "Blancs d'œufs", "quantity": 300, "unit": "g", "per100g": { "calories": 48, "proteins": 10.9, "carbohydrates": 0.7, "fats": 0.2 } },
-        { "name": "Œufs entiers", "quantity": 1, "unit": "pièce", "gramsPerPiece": 50, "per100g": { "calories": 143, "proteins": 12.7, "carbohydrates": 0.7, "fats": 9.8 } },
-        { "name": "Épinards frais", "quantity": 150, "unit": "g", "per100g": { "calories": 23, "proteins": 2.9, "carbohydrates": 1.4, "fats": 0.4 } },
-        { "name": "Parmesan", "quantity": 20, "unit": "g", "per100g": { "calories": 402, "proteins": 35, "carbohydrates": 0, "fats": 28 } }
+        {
+          "name": "Blancs d'œufs",
+          "quantity": 300,
+          "unit": "g",
+          "per100g": {
+            "calories": 48,
+            "proteins": 10.9,
+            "carbohydrates": 0.7,
+            "fats": 0.2
+          }
+        },
+        {
+          "name": "Œufs entiers",
+          "quantity": 1,
+          "unit": "pièce",
+          "gramsPerPiece": 50,
+          "per100g": {
+            "calories": 143,
+            "proteins": 12.7,
+            "carbohydrates": 0.7,
+            "fats": 9.8
+          }
+        },
+        {
+          "name": "Épinards frais",
+          "quantity": 150,
+          "unit": "g",
+          "per100g": {
+            "calories": 23,
+            "proteins": 2.9,
+            "carbohydrates": 1.4,
+            "fats": 0.4
+          }
+        },
+        {
+          "name": "Parmesan",
+          "quantity": 20,
+          "unit": "g",
+          "per100g": {
+            "calories": 402,
+            "proteins": 35,
+            "carbohydrates": 0,
+            "fats": 28
+          }
+        }
+      ],
+      "equipment": [
+        "stovetop"
       ]
     },
     {
@@ -52,10 +194,54 @@
       "preparationMinutes": 35,
       "instructions": "Rôtir les patates douces en cubes 25 minutes à 200 °C.\nAjouter le saumon les 12 dernières minutes.\nCuire les haricots verts à la vapeur.",
       "ingredients": [
-        { "name": "Pavé de saumon", "quantity": 300, "unit": "g", "per100g": { "calories": 180, "proteins": 20, "carbohydrates": 0, "fats": 11 } },
-        { "name": "Patate douce", "quantity": 400, "unit": "g", "per100g": { "calories": 86, "proteins": 1.6, "carbohydrates": 20, "fats": 0.1 } },
-        { "name": "Haricots verts", "quantity": 300, "unit": "g", "per100g": { "calories": 31, "proteins": 1.8, "carbohydrates": 5, "fats": 0.2 } },
-        { "name": "Huile d'olive", "quantity": 1, "unit": "c. à soupe", "pantryStaple": true, "per100g": { "calories": 900, "proteins": 0, "carbohydrates": 0, "fats": 100 } }
+        {
+          "name": "Pavé de saumon",
+          "quantity": 300,
+          "unit": "g",
+          "per100g": {
+            "calories": 180,
+            "proteins": 20,
+            "carbohydrates": 0,
+            "fats": 11
+          }
+        },
+        {
+          "name": "Patate douce",
+          "quantity": 400,
+          "unit": "g",
+          "per100g": {
+            "calories": 86,
+            "proteins": 1.6,
+            "carbohydrates": 20,
+            "fats": 0.1
+          }
+        },
+        {
+          "name": "Haricots verts",
+          "quantity": 300,
+          "unit": "g",
+          "per100g": {
+            "calories": 31,
+            "proteins": 1.8,
+            "carbohydrates": 5,
+            "fats": 0.2
+          }
+        },
+        {
+          "name": "Huile d'olive",
+          "quantity": 1,
+          "unit": "c. à soupe",
+          "pantryStaple": true,
+          "per100g": {
+            "calories": 900,
+            "proteins": 0,
+            "carbohydrates": 0,
+            "fats": 100
+          }
+        }
+      ],
+      "equipment": [
+        "oven"
       ]
     },
     {
@@ -66,11 +252,65 @@
       "preparationMinutes": 40,
       "instructions": "Faire revenir l'oignon puis la dinde hachée.\nAjouter les tomates concassées, les haricots et les épices.\nLaisser mijoter 25 minutes à couvert.",
       "ingredients": [
-        { "name": "Dinde hachée", "quantity": 500, "unit": "g", "per100g": { "calories": 111, "proteins": 24, "carbohydrates": 0, "fats": 1.5 } },
-        { "name": "Haricots rouges cuits", "quantity": 400, "unit": "g", "per100g": { "calories": 127, "proteins": 8.7, "carbohydrates": 20, "fats": 0.5 } },
-        { "name": "Tomates concassées", "quantity": 400, "unit": "g", "per100g": { "calories": 24, "proteins": 1.2, "carbohydrates": 4, "fats": 0.2 } },
-        { "name": "Oignon", "quantity": 150, "unit": "g", "per100g": { "calories": 40, "proteins": 1.1, "carbohydrates": 9, "fats": 0.1 } },
-        { "name": "Huile d'olive", "quantity": 1, "unit": "c. à soupe", "pantryStaple": true, "per100g": { "calories": 900, "proteins": 0, "carbohydrates": 0, "fats": 100 } }
+        {
+          "name": "Dinde hachée",
+          "quantity": 500,
+          "unit": "g",
+          "per100g": {
+            "calories": 111,
+            "proteins": 24,
+            "carbohydrates": 0,
+            "fats": 1.5
+          }
+        },
+        {
+          "name": "Haricots rouges cuits",
+          "quantity": 400,
+          "unit": "g",
+          "per100g": {
+            "calories": 127,
+            "proteins": 8.7,
+            "carbohydrates": 20,
+            "fats": 0.5
+          }
+        },
+        {
+          "name": "Tomates concassées",
+          "quantity": 400,
+          "unit": "g",
+          "per100g": {
+            "calories": 24,
+            "proteins": 1.2,
+            "carbohydrates": 4,
+            "fats": 0.2
+          }
+        },
+        {
+          "name": "Oignon",
+          "quantity": 150,
+          "unit": "g",
+          "per100g": {
+            "calories": 40,
+            "proteins": 1.1,
+            "carbohydrates": 9,
+            "fats": 0.1
+          }
+        },
+        {
+          "name": "Huile d'olive",
+          "quantity": 1,
+          "unit": "c. à soupe",
+          "pantryStaple": true,
+          "per100g": {
+            "calories": 900,
+            "proteins": 0,
+            "carbohydrates": 0,
+            "fats": 100
+          }
+        }
+      ],
+      "equipment": [
+        "stovetop"
       ]
     },
     {
@@ -81,10 +321,53 @@
       "preparationMinutes": 30,
       "instructions": "Dorer le tofu en cubes.\nCuire les lentilles corail 15 minutes avec le lait de coco et le curry.\nRéunir le tout et servir avec du riz.",
       "ingredients": [
-        { "name": "Tofu ferme", "quantity": 400, "unit": "g", "per100g": { "calories": 145, "proteins": 16, "carbohydrates": 2, "fats": 8.7 } },
-        { "name": "Lentilles corail cuites", "quantity": 500, "unit": "g", "per100g": { "calories": 116, "proteins": 9, "carbohydrates": 17, "fats": 0.4 } },
-        { "name": "Lait de coco allégé", "quantity": 200, "unit": "ml", "per100g": { "calories": 73, "proteins": 0.8, "carbohydrates": 3, "fats": 6.5 } },
-        { "name": "Épinards frais", "quantity": 200, "unit": "g", "per100g": { "calories": 23, "proteins": 2.9, "carbohydrates": 1.4, "fats": 0.4 } }
+        {
+          "name": "Tofu ferme",
+          "quantity": 400,
+          "unit": "g",
+          "per100g": {
+            "calories": 145,
+            "proteins": 16,
+            "carbohydrates": 2,
+            "fats": 8.7
+          }
+        },
+        {
+          "name": "Lentilles corail cuites",
+          "quantity": 500,
+          "unit": "g",
+          "per100g": {
+            "calories": 116,
+            "proteins": 9,
+            "carbohydrates": 17,
+            "fats": 0.4
+          }
+        },
+        {
+          "name": "Lait de coco allégé",
+          "quantity": 200,
+          "unit": "ml",
+          "per100g": {
+            "calories": 73,
+            "proteins": 0.8,
+            "carbohydrates": 3,
+            "fats": 6.5
+          }
+        },
+        {
+          "name": "Épinards frais",
+          "quantity": 200,
+          "unit": "g",
+          "per100g": {
+            "calories": 23,
+            "proteins": 2.9,
+            "carbohydrates": 1.4,
+            "fats": 0.4
+          }
+        }
+      ],
+      "equipment": [
+        "stovetop"
       ]
     },
     {
@@ -95,10 +378,54 @@
       "preparationMinutes": 20,
       "instructions": "Cuire le riz.\nPoêler les poivrons en lanières.\nSaisir les steaks 3 minutes par face.",
       "ingredients": [
-        { "name": "Steak haché 5 %", "quantity": 300, "unit": "g", "per100g": { "calories": 137, "proteins": 21, "carbohydrates": 0, "fats": 5 } },
-        { "name": "Riz basmati cuit", "quantity": 300, "unit": "g", "per100g": { "calories": 130, "proteins": 2.7, "carbohydrates": 28, "fats": 0.3 } },
-        { "name": "Poivrons", "quantity": 250, "unit": "g", "per100g": { "calories": 26, "proteins": 1, "carbohydrates": 4.6, "fats": 0.3 } },
-        { "name": "Huile d'olive", "quantity": 1, "unit": "c. à soupe", "pantryStaple": true, "per100g": { "calories": 900, "proteins": 0, "carbohydrates": 0, "fats": 100 } }
+        {
+          "name": "Steak haché 5 %",
+          "quantity": 300,
+          "unit": "g",
+          "per100g": {
+            "calories": 137,
+            "proteins": 21,
+            "carbohydrates": 0,
+            "fats": 5
+          }
+        },
+        {
+          "name": "Riz basmati cuit",
+          "quantity": 300,
+          "unit": "g",
+          "per100g": {
+            "calories": 130,
+            "proteins": 2.7,
+            "carbohydrates": 28,
+            "fats": 0.3
+          }
+        },
+        {
+          "name": "Poivrons",
+          "quantity": 250,
+          "unit": "g",
+          "per100g": {
+            "calories": 26,
+            "proteins": 1,
+            "carbohydrates": 4.6,
+            "fats": 0.3
+          }
+        },
+        {
+          "name": "Huile d'olive",
+          "quantity": 1,
+          "unit": "c. à soupe",
+          "pantryStaple": true,
+          "per100g": {
+            "calories": 900,
+            "proteins": 0,
+            "carbohydrates": 0,
+            "fats": 100
+          }
+        }
+      ],
+      "equipment": [
+        "stovetop"
       ]
     },
     {
@@ -109,10 +436,54 @@
       "preparationMinutes": 15,
       "instructions": "Couper le concombre et l'avocat.\nMélanger aux crevettes décortiquées.\nAssaisonner de citron et d'huile d'olive.",
       "ingredients": [
-        { "name": "Crevettes cuites décortiquées", "quantity": 300, "unit": "g", "per100g": { "calories": 99, "proteins": 24, "carbohydrates": 0.2, "fats": 0.3 } },
-        { "name": "Avocat", "quantity": 150, "unit": "g", "per100g": { "calories": 160, "proteins": 2, "carbohydrates": 9, "fats": 15 } },
-        { "name": "Concombre", "quantity": 300, "unit": "g", "per100g": { "calories": 15, "proteins": 0.7, "carbohydrates": 3.6, "fats": 0.1 } },
-        { "name": "Huile d'olive", "quantity": 1, "unit": "c. à soupe", "pantryStaple": true, "per100g": { "calories": 900, "proteins": 0, "carbohydrates": 0, "fats": 100 } }
+        {
+          "name": "Crevettes cuites décortiquées",
+          "quantity": 300,
+          "unit": "g",
+          "per100g": {
+            "calories": 99,
+            "proteins": 24,
+            "carbohydrates": 0.2,
+            "fats": 0.3
+          }
+        },
+        {
+          "name": "Avocat",
+          "quantity": 150,
+          "unit": "g",
+          "per100g": {
+            "calories": 160,
+            "proteins": 2,
+            "carbohydrates": 9,
+            "fats": 15
+          }
+        },
+        {
+          "name": "Concombre",
+          "quantity": 300,
+          "unit": "g",
+          "per100g": {
+            "calories": 15,
+            "proteins": 0.7,
+            "carbohydrates": 3.6,
+            "fats": 0.1
+          }
+        },
+        {
+          "name": "Huile d'olive",
+          "quantity": 1,
+          "unit": "c. à soupe",
+          "pantryStaple": true,
+          "per100g": {
+            "calories": 900,
+            "proteins": 0,
+            "carbohydrates": 0,
+            "fats": 100
+          }
+        }
+      ],
+      "equipment": [
+        "none"
       ]
     },
     {
@@ -123,9 +494,42 @@
       "preparationMinutes": 2,
       "instructions": "Mélanger le tout dans un bol.",
       "ingredients": [
-        { "name": "Skyr nature", "quantity": 200, "unit": "g", "per100g": { "calories": 63, "proteins": 11, "carbohydrates": 4, "fats": 0.2 } },
-        { "name": "Myrtilles", "quantity": 80, "unit": "g", "per100g": { "calories": 57, "proteins": 0.7, "carbohydrates": 12, "fats": 0.3 } },
-        { "name": "Amandes", "quantity": 15, "unit": "g", "per100g": { "calories": 634, "proteins": 21, "carbohydrates": 7, "fats": 53 } }
+        {
+          "name": "Skyr nature",
+          "quantity": 200,
+          "unit": "g",
+          "per100g": {
+            "calories": 63,
+            "proteins": 11,
+            "carbohydrates": 4,
+            "fats": 0.2
+          }
+        },
+        {
+          "name": "Myrtilles",
+          "quantity": 80,
+          "unit": "g",
+          "per100g": {
+            "calories": 57,
+            "proteins": 0.7,
+            "carbohydrates": 12,
+            "fats": 0.3
+          }
+        },
+        {
+          "name": "Amandes",
+          "quantity": 15,
+          "unit": "g",
+          "per100g": {
+            "calories": 634,
+            "proteins": 21,
+            "carbohydrates": 7,
+            "fats": 53
+          }
+        }
+      ],
+      "equipment": [
+        "none"
       ]
     },
     {
@@ -136,9 +540,43 @@
       "preparationMinutes": 3,
       "instructions": "Écraser la banane dans le fromage blanc.\nAjouter le beurre de cacahuète.",
       "ingredients": [
-        { "name": "Fromage blanc 0 %", "quantity": 250, "unit": "g", "per100g": { "calories": 47, "proteins": 8, "carbohydrates": 4, "fats": 0.2 } },
-        { "name": "Banane", "quantity": 1, "unit": "pièce", "gramsPerPiece": 120, "per100g": { "calories": 90, "proteins": 1.1, "carbohydrates": 20, "fats": 0.3 } },
-        { "name": "Beurre de cacahuète", "quantity": 15, "unit": "g", "per100g": { "calories": 600, "proteins": 25, "carbohydrates": 12, "fats": 50 } }
+        {
+          "name": "Fromage blanc 0 %",
+          "quantity": 250,
+          "unit": "g",
+          "per100g": {
+            "calories": 47,
+            "proteins": 8,
+            "carbohydrates": 4,
+            "fats": 0.2
+          }
+        },
+        {
+          "name": "Banane",
+          "quantity": 1,
+          "unit": "pièce",
+          "gramsPerPiece": 120,
+          "per100g": {
+            "calories": 90,
+            "proteins": 1.1,
+            "carbohydrates": 20,
+            "fats": 0.3
+          }
+        },
+        {
+          "name": "Beurre de cacahuète",
+          "quantity": 15,
+          "unit": "g",
+          "per100g": {
+            "calories": 600,
+            "proteins": 25,
+            "carbohydrates": 12,
+            "fats": 50
+          }
+        }
+      ],
+      "equipment": [
+        "none"
       ]
     },
     {
@@ -149,8 +587,32 @@
       "preparationMinutes": 12,
       "instructions": "Cuire les œufs 9 minutes.\nÉcaler, saler, accompagner des tomates.",
       "ingredients": [
-        { "name": "Œufs entiers", "quantity": 2, "unit": "pièce", "gramsPerPiece": 50, "per100g": { "calories": 143, "proteins": 12.7, "carbohydrates": 0.7, "fats": 9.8 } },
-        { "name": "Tomates cerises", "quantity": 150, "unit": "g", "per100g": { "calories": 18, "proteins": 0.9, "carbohydrates": 3, "fats": 0.2 } }
+        {
+          "name": "Œufs entiers",
+          "quantity": 2,
+          "unit": "pièce",
+          "gramsPerPiece": 50,
+          "per100g": {
+            "calories": 143,
+            "proteins": 12.7,
+            "carbohydrates": 0.7,
+            "fats": 9.8
+          }
+        },
+        {
+          "name": "Tomates cerises",
+          "quantity": 150,
+          "unit": "g",
+          "per100g": {
+            "calories": 18,
+            "proteins": 0.9,
+            "carbohydrates": 3,
+            "fats": 0.2
+          }
+        }
+      ],
+      "equipment": [
+        "stovetop"
       ]
     },
     {
@@ -161,9 +623,42 @@
       "preparationMinutes": 5,
       "instructions": "Mélanger les graines de chia au lait et à la whey.\nLaisser prendre une nuit au réfrigérateur.",
       "ingredients": [
-        { "name": "Graines de chia", "quantity": 25, "unit": "g", "per100g": { "calories": 486, "proteins": 17, "carbohydrates": 42, "fats": 31 } },
-        { "name": "Lait demi-écrémé", "quantity": 200, "unit": "ml", "per100g": { "calories": 46, "proteins": 3.3, "carbohydrates": 4.8, "fats": 1.6 } },
-        { "name": "Protéine whey", "quantity": 30, "unit": "g", "per100g": { "calories": 380, "proteins": 75, "carbohydrates": 8, "fats": 5 } }
+        {
+          "name": "Graines de chia",
+          "quantity": 25,
+          "unit": "g",
+          "per100g": {
+            "calories": 486,
+            "proteins": 17,
+            "carbohydrates": 42,
+            "fats": 31
+          }
+        },
+        {
+          "name": "Lait demi-écrémé",
+          "quantity": 200,
+          "unit": "ml",
+          "per100g": {
+            "calories": 46,
+            "proteins": 3.3,
+            "carbohydrates": 4.8,
+            "fats": 1.6
+          }
+        },
+        {
+          "name": "Protéine whey",
+          "quantity": 30,
+          "unit": "g",
+          "per100g": {
+            "calories": 380,
+            "proteins": 75,
+            "carbohydrates": 8,
+            "fats": 5
+          }
+        }
+      ],
+      "equipment": [
+        "none"
       ]
     },
     {
@@ -174,9 +669,42 @@
       "preparationMinutes": 5,
       "instructions": "Griller le pain.\nTartiner de cottage cheese et couvrir de blanc de dinde.",
       "ingredients": [
-        { "name": "Pain complet", "quantity": 60, "unit": "g", "per100g": { "calories": 247, "proteins": 9, "carbohydrates": 41, "fats": 3.5 } },
-        { "name": "Cottage cheese", "quantity": 120, "unit": "g", "per100g": { "calories": 98, "proteins": 11, "carbohydrates": 3.4, "fats": 4.3 } },
-        { "name": "Blanc de dinde", "quantity": 60, "unit": "g", "per100g": { "calories": 104, "proteins": 22, "carbohydrates": 1, "fats": 1.5 } }
+        {
+          "name": "Pain complet",
+          "quantity": 60,
+          "unit": "g",
+          "per100g": {
+            "calories": 247,
+            "proteins": 9,
+            "carbohydrates": 41,
+            "fats": 3.5
+          }
+        },
+        {
+          "name": "Cottage cheese",
+          "quantity": 120,
+          "unit": "g",
+          "per100g": {
+            "calories": 98,
+            "proteins": 11,
+            "carbohydrates": 3.4,
+            "fats": 4.3
+          }
+        },
+        {
+          "name": "Blanc de dinde",
+          "quantity": 60,
+          "unit": "g",
+          "per100g": {
+            "calories": 104,
+            "proteins": 22,
+            "carbohydrates": 1,
+            "fats": 1.5
+          }
+        }
+      ],
+      "equipment": [
+        "none"
       ]
     },
     {
@@ -187,9 +715,1737 @@
       "preparationMinutes": 3,
       "instructions": "Verser le miel sur le yaourt.\nRâper le chocolat par-dessus.",
       "ingredients": [
-        { "name": "Yaourt grec 2 %", "quantity": 200, "unit": "g", "per100g": { "calories": 73, "proteins": 9, "carbohydrates": 4, "fats": 2 } },
-        { "name": "Miel", "quantity": 10, "unit": "g", "per100g": { "calories": 304, "proteins": 0.3, "carbohydrates": 82, "fats": 0 } },
-        { "name": "Chocolat noir 70 %", "quantity": 15, "unit": "g", "per100g": { "calories": 598, "proteins": 7.8, "carbohydrates": 46, "fats": 43 } }
+        {
+          "name": "Yaourt grec 2 %",
+          "quantity": 200,
+          "unit": "g",
+          "per100g": {
+            "calories": 73,
+            "proteins": 9,
+            "carbohydrates": 4,
+            "fats": 2
+          }
+        },
+        {
+          "name": "Miel",
+          "quantity": 10,
+          "unit": "g",
+          "per100g": {
+            "calories": 304,
+            "proteins": 0.3,
+            "carbohydrates": 82,
+            "fats": 0
+          }
+        },
+        {
+          "name": "Chocolat noir 70 %",
+          "quantity": 15,
+          "unit": "g",
+          "per100g": {
+            "calories": 598,
+            "proteins": 7.8,
+            "carbohydrates": 46,
+            "fats": 43
+          }
+        }
+      ],
+      "equipment": [
+        "none"
+      ]
+    },
+    {
+      "name": "Poulet au curry et riz complet",
+      "summary": "Le curry se fait pendant que le riz cuit.",
+      "category": "meal",
+      "servings": 2,
+      "preparationMinutes": 25,
+      "instructions": "Dorer le poulet en morceaux avec l'oignon.\nAjouter le curry et le lait de coco, laisser réduire 10 minutes.\nServir sur le riz.",
+      "equipment": [
+        "stovetop"
+      ],
+      "ingredients": [
+        {
+          "name": "Blanc de poulet",
+          "quantity": 300,
+          "unit": "g",
+          "per100g": {
+            "calories": 121,
+            "proteins": 25,
+            "carbohydrates": 0,
+            "fats": 2.3
+          }
+        },
+        {
+          "name": "Riz complet cuit",
+          "quantity": 300,
+          "unit": "g",
+          "per100g": {
+            "calories": 123,
+            "proteins": 2.6,
+            "carbohydrates": 26,
+            "fats": 1
+          }
+        },
+        {
+          "name": "Lait de coco allégé",
+          "quantity": 150,
+          "unit": "ml",
+          "per100g": {
+            "calories": 73,
+            "proteins": 0.8,
+            "carbohydrates": 3,
+            "fats": 6.5
+          }
+        },
+        {
+          "name": "Oignon",
+          "quantity": 100,
+          "unit": "g",
+          "per100g": {
+            "calories": 40,
+            "proteins": 1.1,
+            "carbohydrates": 9,
+            "fats": 0.1
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cabillaud, boulgour et courgettes",
+      "summary": "Un poisson blanc qui ne pèse rien.",
+      "category": "meal",
+      "servings": 2,
+      "preparationMinutes": 20,
+      "instructions": "Cuire le boulgour 10 minutes.\nPoêler les courgettes en rondelles.\nPoser le cabillaud dessus, couvrir 8 minutes.",
+      "equipment": [
+        "stovetop"
+      ],
+      "ingredients": [
+        {
+          "name": "Dos de cabillaud",
+          "quantity": 320,
+          "unit": "g",
+          "per100g": {
+            "calories": 82,
+            "proteins": 18,
+            "carbohydrates": 0,
+            "fats": 0.7
+          }
+        },
+        {
+          "name": "Boulgour cuit",
+          "quantity": 450,
+          "unit": "g",
+          "per100g": {
+            "calories": 83,
+            "proteins": 3,
+            "carbohydrates": 15,
+            "fats": 0.2
+          }
+        },
+        {
+          "name": "Courgettes",
+          "quantity": 300,
+          "unit": "g",
+          "per100g": {
+            "calories": 17,
+            "proteins": 1.2,
+            "carbohydrates": 2.1,
+            "fats": 0.3
+          }
+        },
+        {
+          "name": "Huile d'olive",
+          "quantity": 1,
+          "unit": "c. à soupe",
+          "per100g": {
+            "calories": 900,
+            "proteins": 0,
+            "carbohydrates": 0,
+            "fats": 100
+          },
+          "pantryStaple": true
+        }
+      ]
+    },
+    {
+      "name": "Salade de lentilles, feta et œuf dur",
+      "summary": "Froide, prête d'avance, et bien plus protéinée qu'elle n'en a l'air.",
+      "category": "meal",
+      "servings": 2,
+      "preparationMinutes": 15,
+      "instructions": "Cuire les œufs 9 minutes, les refroidir et les écaler. Mélanger les lentilles, le concombre en dés et les tomates coupées en deux. Émietter la feta, ajouter les œufs en quartiers.",
+      "equipment": [
+        "stovetop"
+      ],
+      "ingredients": [
+        {
+          "name": "Lentilles vertes cuites",
+          "quantity": 400,
+          "unit": "g",
+          "per100g": {
+            "calories": 116,
+            "proteins": 9,
+            "carbohydrates": 17,
+            "fats": 0.4
+          }
+        },
+        {
+          "name": "Feta",
+          "quantity": 150,
+          "unit": "g",
+          "per100g": {
+            "calories": 264,
+            "proteins": 14,
+            "carbohydrates": 4,
+            "fats": 21
+          }
+        },
+        {
+          "name": "Concombre",
+          "quantity": 200,
+          "unit": "g",
+          "per100g": {
+            "calories": 15,
+            "proteins": 0.7,
+            "carbohydrates": 3.6,
+            "fats": 0.1
+          }
+        },
+        {
+          "name": "Tomates cerises",
+          "quantity": 150,
+          "unit": "g",
+          "per100g": {
+            "calories": 18,
+            "proteins": 0.9,
+            "carbohydrates": 3,
+            "fats": 0.2
+          }
+        },
+        {
+          "name": "Œufs entiers",
+          "quantity": 2,
+          "unit": "pièce",
+          "gramsPerPiece": 50,
+          "per100g": {
+            "calories": 143,
+            "proteins": 12.7,
+            "carbohydrates": 0.7,
+            "fats": 9.8
+          }
+        }
+      ]
+    },
+    {
+      "name": "Wok de bœuf et brocoli",
+      "summary": "Quinze minutes montre en main.",
+      "category": "meal",
+      "servings": 2,
+      "preparationMinutes": 15,
+      "instructions": "Saisir le bœuf à feu vif.\nAjouter le brocoli et la sauce soja, sauter 5 minutes.\nServir sur le riz.",
+      "equipment": [
+        "stovetop"
+      ],
+      "ingredients": [
+        {
+          "name": "Steak haché 5 %",
+          "quantity": 300,
+          "unit": "g",
+          "per100g": {
+            "calories": 137,
+            "proteins": 21,
+            "carbohydrates": 0,
+            "fats": 5
+          }
+        },
+        {
+          "name": "Brocoli",
+          "quantity": 300,
+          "unit": "g",
+          "per100g": {
+            "calories": 34,
+            "proteins": 2.8,
+            "carbohydrates": 4,
+            "fats": 0.4
+          }
+        },
+        {
+          "name": "Riz basmati cuit",
+          "quantity": 250,
+          "unit": "g",
+          "per100g": {
+            "calories": 130,
+            "proteins": 2.7,
+            "carbohydrates": 28,
+            "fats": 0.3
+          }
+        },
+        {
+          "name": "Sauce soja",
+          "quantity": 2,
+          "unit": "c. à soupe",
+          "per100g": {
+            "calories": 53,
+            "proteins": 8,
+            "carbohydrates": 5,
+            "fats": 0.1
+          }
+        },
+        {
+          "name": "Huile d'olive",
+          "quantity": 1,
+          "unit": "c. à soupe",
+          "per100g": {
+            "calories": 900,
+            "proteins": 0,
+            "carbohydrates": 0,
+            "fats": 100
+          },
+          "pantryStaple": true
+        }
+      ]
+    },
+    {
+      "name": "Tortilla au thon et crudités",
+      "summary": "Sans cuisson, à rouler et emporter.",
+      "category": "meal",
+      "servings": 2,
+      "preparationMinutes": 10,
+      "instructions": "Mélanger le thon au fromage blanc.\nGarnir les tortillas, ajouter les crudités, rouler.",
+      "equipment": [
+        "none"
+      ],
+      "ingredients": [
+        {
+          "name": "Tortilla de blé",
+          "quantity": 200,
+          "unit": "g",
+          "per100g": {
+            "calories": 300,
+            "proteins": 8,
+            "carbohydrates": 47,
+            "fats": 8
+          }
+        },
+        {
+          "name": "Thon au naturel égoutté",
+          "quantity": 200,
+          "unit": "g",
+          "per100g": {
+            "calories": 116,
+            "proteins": 26,
+            "carbohydrates": 0,
+            "fats": 1
+          }
+        },
+        {
+          "name": "Fromage blanc 0 %",
+          "quantity": 100,
+          "unit": "g",
+          "per100g": {
+            "calories": 47,
+            "proteins": 8,
+            "carbohydrates": 4,
+            "fats": 0.2
+          }
+        },
+        {
+          "name": "Concombre",
+          "quantity": 150,
+          "unit": "g",
+          "per100g": {
+            "calories": 15,
+            "proteins": 0.7,
+            "carbohydrates": 3.6,
+            "fats": 0.1
+          }
+        },
+        {
+          "name": "Poivrons",
+          "quantity": 100,
+          "unit": "g",
+          "per100g": {
+            "calories": 26,
+            "proteins": 1,
+            "carbohydrates": 4.6,
+            "fats": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "name": "Poulet rôti, pommes de terre et haricots verts",
+      "summary": "Tout part au four dans le même plat.",
+      "category": "meal",
+      "servings": 2,
+      "preparationMinutes": 45,
+      "instructions": "Enfourner poulet et pommes de terre 35 minutes à 200 °C.\nCuire les haricots verts à la vapeur.",
+      "equipment": [
+        "oven"
+      ],
+      "ingredients": [
+        {
+          "name": "Cuisse de poulet sans peau",
+          "quantity": 400,
+          "unit": "g",
+          "per100g": {
+            "calories": 121,
+            "proteins": 20,
+            "carbohydrates": 0,
+            "fats": 4.5
+          }
+        },
+        {
+          "name": "Pommes de terre",
+          "quantity": 500,
+          "unit": "g",
+          "per100g": {
+            "calories": 87,
+            "proteins": 2,
+            "carbohydrates": 20,
+            "fats": 0.1
+          }
+        },
+        {
+          "name": "Haricots verts",
+          "quantity": 300,
+          "unit": "g",
+          "per100g": {
+            "calories": 31,
+            "proteins": 1.8,
+            "carbohydrates": 5,
+            "fats": 0.2
+          }
+        },
+        {
+          "name": "Huile d'olive",
+          "quantity": 2,
+          "unit": "c. à soupe",
+          "per100g": {
+            "calories": 900,
+            "proteins": 0,
+            "carbohydrates": 0,
+            "fats": 100
+          },
+          "pantryStaple": true
+        }
+      ]
+    },
+    {
+      "name": "Pâtes complètes au saumon et épinards",
+      "summary": "Crémeux sans être lourd.",
+      "category": "meal",
+      "servings": 2,
+      "preparationMinutes": 20,
+      "instructions": "Cuire les pâtes.\nFaire tomber les épinards, ajouter le saumon en morceaux puis la crème.\nMélanger aux pâtes.",
+      "equipment": [
+        "stovetop"
+      ],
+      "ingredients": [
+        {
+          "name": "Pâtes complètes cuites",
+          "quantity": 500,
+          "unit": "g",
+          "per100g": {
+            "calories": 124,
+            "proteins": 5,
+            "carbohydrates": 25,
+            "fats": 0.6
+          }
+        },
+        {
+          "name": "Pavé de saumon",
+          "quantity": 250,
+          "unit": "g",
+          "per100g": {
+            "calories": 180,
+            "proteins": 20,
+            "carbohydrates": 0,
+            "fats": 11
+          }
+        },
+        {
+          "name": "Épinards frais",
+          "quantity": 200,
+          "unit": "g",
+          "per100g": {
+            "calories": 23,
+            "proteins": 2.9,
+            "carbohydrates": 1.4,
+            "fats": 0.4
+          }
+        },
+        {
+          "name": "Crème fraîche 15 %",
+          "quantity": 100,
+          "unit": "g",
+          "per100g": {
+            "calories": 155,
+            "proteins": 2.5,
+            "carbohydrates": 3,
+            "fats": 15
+          }
+        }
+      ]
+    },
+    {
+      "name": "Chili con carne au bœuf",
+      "summary": "Mijoté long, meilleur réchauffé.",
+      "category": "meal",
+      "servings": 3,
+      "preparationMinutes": 45,
+      "instructions": "Revenir l'oignon puis le bœuf.\nAjouter tomates, haricots, maïs et épices.\nMijoter 30 minutes.",
+      "equipment": [
+        "stovetop"
+      ],
+      "ingredients": [
+        {
+          "name": "Steak haché 5 %",
+          "quantity": 600,
+          "unit": "g",
+          "per100g": {
+            "calories": 137,
+            "proteins": 21,
+            "carbohydrates": 0,
+            "fats": 5
+          }
+        },
+        {
+          "name": "Haricots rouges cuits",
+          "quantity": 600,
+          "unit": "g",
+          "per100g": {
+            "calories": 127,
+            "proteins": 8.7,
+            "carbohydrates": 20,
+            "fats": 0.5
+          }
+        },
+        {
+          "name": "Tomates concassées",
+          "quantity": 400,
+          "unit": "g",
+          "per100g": {
+            "calories": 24,
+            "proteins": 1.2,
+            "carbohydrates": 4,
+            "fats": 0.2
+          }
+        },
+        {
+          "name": "Maïs doux",
+          "quantity": 250,
+          "unit": "g",
+          "per100g": {
+            "calories": 96,
+            "proteins": 3.4,
+            "carbohydrates": 19,
+            "fats": 1.5
+          }
+        },
+        {
+          "name": "Oignon",
+          "quantity": 150,
+          "unit": "g",
+          "per100g": {
+            "calories": 40,
+            "proteins": 1.1,
+            "carbohydrates": 9,
+            "fats": 0.1
+          }
+        },
+        {
+          "name": "Huile d'olive",
+          "quantity": 1,
+          "unit": "c. à soupe",
+          "per100g": {
+            "calories": 900,
+            "proteins": 0,
+            "carbohydrates": 0,
+            "fats": 100
+          },
+          "pantryStaple": true
+        }
+      ]
+    },
+    {
+      "name": "Buddha bowl tofu, quinoa et avocat",
+      "summary": "Végan et complet.",
+      "category": "meal",
+      "servings": 2,
+      "preparationMinutes": 25,
+      "instructions": "Dorer le tofu en cubes.\nCuire le quinoa et les édamames.\nAssembler avec l'avocat et la carotte râpée.",
+      "equipment": [
+        "stovetop"
+      ],
+      "ingredients": [
+        {
+          "name": "Tofu ferme",
+          "quantity": 450,
+          "unit": "g",
+          "per100g": {
+            "calories": 145,
+            "proteins": 16,
+            "carbohydrates": 2,
+            "fats": 8.7
+          }
+        },
+        {
+          "name": "Quinoa cuit",
+          "quantity": 300,
+          "unit": "g",
+          "per100g": {
+            "calories": 120,
+            "proteins": 4.4,
+            "carbohydrates": 18,
+            "fats": 1.9
+          }
+        },
+        {
+          "name": "Avocat",
+          "quantity": 100,
+          "unit": "g",
+          "per100g": {
+            "calories": 160,
+            "proteins": 2,
+            "carbohydrates": 9,
+            "fats": 15
+          }
+        },
+        {
+          "name": "Édamame",
+          "quantity": 200,
+          "unit": "g",
+          "per100g": {
+            "calories": 121,
+            "proteins": 11,
+            "carbohydrates": 9,
+            "fats": 5
+          }
+        },
+        {
+          "name": "Carottes",
+          "quantity": 150,
+          "unit": "g",
+          "per100g": {
+            "calories": 36,
+            "proteins": 0.9,
+            "carbohydrates": 7.6,
+            "fats": 0.2
+          }
+        }
+      ]
+    },
+    {
+      "name": "Gratin de chou-fleur au jambon",
+      "summary": "Réconfortant, et bien plus protéiné qu'il n'en a l'air.",
+      "category": "meal",
+      "servings": 2,
+      "preparationMinutes": 40,
+      "instructions": "Cuire le chou-fleur à la vapeur.\nAlterner chou-fleur et jambon, napper de crème et de lait.\nCouvrir de comté, gratiner 20 minutes.",
+      "equipment": [
+        "oven"
+      ],
+      "ingredients": [
+        {
+          "name": "Chou-fleur",
+          "quantity": 800,
+          "unit": "g",
+          "per100g": {
+            "calories": 25,
+            "proteins": 1.9,
+            "carbohydrates": 3,
+            "fats": 0.3
+          }
+        },
+        {
+          "name": "Jambon blanc",
+          "quantity": 300,
+          "unit": "g",
+          "per100g": {
+            "calories": 110,
+            "proteins": 20,
+            "carbohydrates": 1,
+            "fats": 3
+          }
+        },
+        {
+          "name": "Comté",
+          "quantity": 150,
+          "unit": "g",
+          "per100g": {
+            "calories": 410,
+            "proteins": 27,
+            "carbohydrates": 0,
+            "fats": 33
+          }
+        },
+        {
+          "name": "Crème fraîche 15 %",
+          "quantity": 200,
+          "unit": "g",
+          "per100g": {
+            "calories": 155,
+            "proteins": 2.5,
+            "carbohydrates": 3,
+            "fats": 15
+          }
+        },
+        {
+          "name": "Lait demi-écrémé",
+          "quantity": 200,
+          "unit": "ml",
+          "per100g": {
+            "calories": 46,
+            "proteins": 3.3,
+            "carbohydrates": 4.8,
+            "fats": 1.6
+          }
+        }
+      ]
+    },
+    {
+      "name": "Poulet air fryer, patate douce et brocoli",
+      "summary": "Croustillant sans friture.",
+      "category": "meal",
+      "servings": 2,
+      "preparationMinutes": 30,
+      "instructions": "Enfourner poulet et patate douce en cubes 20 minutes à 190 °C.\nAjouter le brocoli les 8 dernières minutes.",
+      "equipment": [
+        "airFryer"
+      ],
+      "ingredients": [
+        {
+          "name": "Blanc de poulet",
+          "quantity": 400,
+          "unit": "g",
+          "per100g": {
+            "calories": 121,
+            "proteins": 25,
+            "carbohydrates": 0,
+            "fats": 2.3
+          }
+        },
+        {
+          "name": "Patate douce",
+          "quantity": 700,
+          "unit": "g",
+          "per100g": {
+            "calories": 86,
+            "proteins": 1.6,
+            "carbohydrates": 20,
+            "fats": 0.1
+          }
+        },
+        {
+          "name": "Brocoli",
+          "quantity": 250,
+          "unit": "g",
+          "per100g": {
+            "calories": 34,
+            "proteins": 2.8,
+            "carbohydrates": 4,
+            "fats": 0.4
+          }
+        },
+        {
+          "name": "Huile d'olive",
+          "quantity": 2,
+          "unit": "c. à soupe",
+          "per100g": {
+            "calories": 900,
+            "proteins": 0,
+            "carbohydrates": 0,
+            "fats": 100
+          },
+          "pantryStaple": true
+        }
+      ]
+    },
+    {
+      "name": "Curry de pois chiches et épinards",
+      "summary": "Végétarien, et rassasiant pour longtemps.",
+      "category": "meal",
+      "servings": 3,
+      "preparationMinutes": 30,
+      "instructions": "Dorer le tofu.\nAjouter pois chiches, tomates, lait de coco et curry.\nMijoter 15 minutes, incorporer les épinards.\nServir avec le riz.",
+      "equipment": [
+        "stovetop"
+      ],
+      "ingredients": [
+        {
+          "name": "Pois chiches cuits",
+          "quantity": 450,
+          "unit": "g",
+          "per100g": {
+            "calories": 139,
+            "proteins": 7.4,
+            "carbohydrates": 18,
+            "fats": 2.6
+          }
+        },
+        {
+          "name": "Tofu ferme",
+          "quantity": 600,
+          "unit": "g",
+          "per100g": {
+            "calories": 145,
+            "proteins": 16,
+            "carbohydrates": 2,
+            "fats": 8.7
+          }
+        },
+        {
+          "name": "Épinards frais",
+          "quantity": 300,
+          "unit": "g",
+          "per100g": {
+            "calories": 23,
+            "proteins": 2.9,
+            "carbohydrates": 1.4,
+            "fats": 0.4
+          }
+        },
+        {
+          "name": "Lait de coco allégé",
+          "quantity": 200,
+          "unit": "ml",
+          "per100g": {
+            "calories": 73,
+            "proteins": 0.8,
+            "carbohydrates": 3,
+            "fats": 6.5
+          }
+        },
+        {
+          "name": "Tomates concassées",
+          "quantity": 300,
+          "unit": "g",
+          "per100g": {
+            "calories": 24,
+            "proteins": 1.2,
+            "carbohydrates": 4,
+            "fats": 0.2
+          }
+        },
+        {
+          "name": "Riz complet cuit",
+          "quantity": 250,
+          "unit": "g",
+          "per100g": {
+            "calories": 123,
+            "proteins": 2.6,
+            "carbohydrates": 26,
+            "fats": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "Bœuf braisé, purée et carottes",
+      "summary": "Le plat du dimanche, deux heures de patience.",
+      "category": "meal",
+      "servings": 3,
+      "preparationMinutes": 120,
+      "instructions": "Saisir le bœuf, mouiller et braiser 1 h 30 avec les carottes.\nÉcraser les pommes de terre avec la crème.",
+      "equipment": [
+        "stovetop"
+      ],
+      "ingredients": [
+        {
+          "name": "Paleron de bœuf",
+          "quantity": 750,
+          "unit": "g",
+          "per100g": {
+            "calories": 150,
+            "proteins": 21,
+            "carbohydrates": 0,
+            "fats": 7
+          }
+        },
+        {
+          "name": "Pommes de terre",
+          "quantity": 900,
+          "unit": "g",
+          "per100g": {
+            "calories": 87,
+            "proteins": 2,
+            "carbohydrates": 20,
+            "fats": 0.1
+          }
+        },
+        {
+          "name": "Carottes",
+          "quantity": 300,
+          "unit": "g",
+          "per100g": {
+            "calories": 36,
+            "proteins": 0.9,
+            "carbohydrates": 7.6,
+            "fats": 0.2
+          }
+        },
+        {
+          "name": "Crème fraîche 15 %",
+          "quantity": 200,
+          "unit": "g",
+          "per100g": {
+            "calories": 155,
+            "proteins": 2.5,
+            "carbohydrates": 3,
+            "fats": 15
+          }
+        },
+        {
+          "name": "Huile d'olive",
+          "quantity": 1,
+          "unit": "c. à soupe",
+          "per100g": {
+            "calories": 900,
+            "proteins": 0,
+            "carbohydrates": 0,
+            "fats": 100
+          },
+          "pantryStaple": true
+        }
+      ]
+    },
+    {
+      "name": "Saumon, riz complet et avocat",
+      "summary": "Le bol qui tient jusqu'au soir.",
+      "category": "meal",
+      "servings": 2,
+      "preparationMinutes": 30,
+      "instructions": "Rôtir le saumon 15 minutes à 180 °C.\nAssembler avec le riz, les édamames et l'avocat.",
+      "equipment": [
+        "oven"
+      ],
+      "ingredients": [
+        {
+          "name": "Pavé de saumon",
+          "quantity": 450,
+          "unit": "g",
+          "per100g": {
+            "calories": 180,
+            "proteins": 20,
+            "carbohydrates": 0,
+            "fats": 11
+          }
+        },
+        {
+          "name": "Riz complet cuit",
+          "quantity": 450,
+          "unit": "g",
+          "per100g": {
+            "calories": 123,
+            "proteins": 2.6,
+            "carbohydrates": 26,
+            "fats": 1
+          }
+        },
+        {
+          "name": "Avocat",
+          "quantity": 120,
+          "unit": "g",
+          "per100g": {
+            "calories": 160,
+            "proteins": 2,
+            "carbohydrates": 9,
+            "fats": 15
+          }
+        },
+        {
+          "name": "Édamame",
+          "quantity": 250,
+          "unit": "g",
+          "per100g": {
+            "calories": 121,
+            "proteins": 11,
+            "carbohydrates": 9,
+            "fats": 5
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pâtes au poulet, parmesan et crème",
+      "summary": "Généreux, à réserver aux jours d'entraînement.",
+      "category": "meal",
+      "servings": 2,
+      "preparationMinutes": 25,
+      "instructions": "Dorer le poulet et les champignons.\nAjouter la crème, puis les pâtes et le parmesan.",
+      "equipment": [
+        "stovetop"
+      ],
+      "ingredients": [
+        {
+          "name": "Pâtes complètes cuites",
+          "quantity": 500,
+          "unit": "g",
+          "per100g": {
+            "calories": 124,
+            "proteins": 5,
+            "carbohydrates": 25,
+            "fats": 0.6
+          }
+        },
+        {
+          "name": "Blanc de poulet",
+          "quantity": 350,
+          "unit": "g",
+          "per100g": {
+            "calories": 121,
+            "proteins": 25,
+            "carbohydrates": 0,
+            "fats": 2.3
+          }
+        },
+        {
+          "name": "Crème fraîche 15 %",
+          "quantity": 200,
+          "unit": "g",
+          "per100g": {
+            "calories": 155,
+            "proteins": 2.5,
+            "carbohydrates": 3,
+            "fats": 15
+          }
+        },
+        {
+          "name": "Parmesan",
+          "quantity": 60,
+          "unit": "g",
+          "per100g": {
+            "calories": 402,
+            "proteins": 35,
+            "carbohydrates": 0,
+            "fats": 28
+          }
+        },
+        {
+          "name": "Champignons de Paris",
+          "quantity": 200,
+          "unit": "g",
+          "per100g": {
+            "calories": 22,
+            "proteins": 3.1,
+            "carbohydrates": 0.4,
+            "fats": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "name": "Burrito bowl bœuf, haricots rouges et maïs",
+      "summary": "Tout dans un bol, rien à rouler.",
+      "category": "meal",
+      "servings": 2,
+      "preparationMinutes": 25,
+      "instructions": "Saisir le bœuf avec les épices.\nRéchauffer haricots et maïs.\nDresser sur le riz, ajouter l'avocat.",
+      "equipment": [
+        "stovetop"
+      ],
+      "ingredients": [
+        {
+          "name": "Steak haché 5 %",
+          "quantity": 350,
+          "unit": "g",
+          "per100g": {
+            "calories": 137,
+            "proteins": 21,
+            "carbohydrates": 0,
+            "fats": 5
+          }
+        },
+        {
+          "name": "Riz basmati cuit",
+          "quantity": 350,
+          "unit": "g",
+          "per100g": {
+            "calories": 130,
+            "proteins": 2.7,
+            "carbohydrates": 28,
+            "fats": 0.3
+          }
+        },
+        {
+          "name": "Haricots rouges cuits",
+          "quantity": 300,
+          "unit": "g",
+          "per100g": {
+            "calories": 127,
+            "proteins": 8.7,
+            "carbohydrates": 20,
+            "fats": 0.5
+          }
+        },
+        {
+          "name": "Maïs doux",
+          "quantity": 200,
+          "unit": "g",
+          "per100g": {
+            "calories": 96,
+            "proteins": 3.4,
+            "carbohydrates": 19,
+            "fats": 1.5
+          }
+        },
+        {
+          "name": "Avocat",
+          "quantity": 100,
+          "unit": "g",
+          "per100g": {
+            "calories": 160,
+            "proteins": 2,
+            "carbohydrates": 9,
+            "fats": 15
+          }
+        },
+        {
+          "name": "Huile d'olive",
+          "quantity": 1,
+          "unit": "c. à soupe",
+          "per100g": {
+            "calories": 900,
+            "proteins": 0,
+            "carbohydrates": 0,
+            "fats": 100
+          },
+          "pantryStaple": true
+        }
+      ]
+    },
+    {
+      "name": "Cottage cheese, graines de courge et framboises",
+      "summary": "Salé-sucré, très rentable en protéines.",
+      "category": "snack",
+      "servings": 1,
+      "preparationMinutes": 3,
+      "instructions": "Mélanger et parsemer de graines.",
+      "equipment": [
+        "none"
+      ],
+      "ingredients": [
+        {
+          "name": "Cottage cheese",
+          "quantity": 200,
+          "unit": "g",
+          "per100g": {
+            "calories": 98,
+            "proteins": 11,
+            "carbohydrates": 3.4,
+            "fats": 4.3
+          }
+        },
+        {
+          "name": "Graines de courge",
+          "quantity": 20,
+          "unit": "g",
+          "per100g": {
+            "calories": 559,
+            "proteins": 30,
+            "carbohydrates": 11,
+            "fats": 49
+          }
+        },
+        {
+          "name": "Framboises",
+          "quantity": 100,
+          "unit": "g",
+          "per100g": {
+            "calories": 52,
+            "proteins": 1.2,
+            "carbohydrates": 12,
+            "fats": 0.7
+          }
+        }
+      ]
+    },
+    {
+      "name": "Wrap dinde et fromage frais",
+      "summary": "Se prépare en trois minutes.",
+      "category": "snack",
+      "servings": 1,
+      "preparationMinutes": 5,
+      "instructions": "Tartiner la tortilla, garnir de dinde et de roquette, rouler.",
+      "equipment": [
+        "none"
+      ],
+      "ingredients": [
+        {
+          "name": "Tortilla de blé",
+          "quantity": 60,
+          "unit": "g",
+          "per100g": {
+            "calories": 300,
+            "proteins": 8,
+            "carbohydrates": 47,
+            "fats": 8
+          }
+        },
+        {
+          "name": "Blanc de dinde",
+          "quantity": 80,
+          "unit": "g",
+          "per100g": {
+            "calories": 104,
+            "proteins": 22,
+            "carbohydrates": 1,
+            "fats": 1.5
+          }
+        },
+        {
+          "name": "Fromage blanc 0 %",
+          "quantity": 60,
+          "unit": "g",
+          "per100g": {
+            "calories": 47,
+            "proteins": 8,
+            "carbohydrates": 4,
+            "fats": 0.2
+          }
+        },
+        {
+          "name": "Roquette",
+          "quantity": 30,
+          "unit": "g",
+          "per100g": {
+            "calories": 25,
+            "proteins": 2.6,
+            "carbohydrates": 2,
+            "fats": 0.7
+          }
+        }
+      ]
+    },
+    {
+      "name": "Smoothie banane, whey et beurre de cacahuète",
+      "summary": "La collation d'après-séance.",
+      "category": "snack",
+      "servings": 1,
+      "preparationMinutes": 3,
+      "instructions": "Mixer le tout jusqu'à obtenir une texture lisse.",
+      "equipment": [
+        "none"
+      ],
+      "ingredients": [
+        {
+          "name": "Lait demi-écrémé",
+          "quantity": 250,
+          "unit": "ml",
+          "per100g": {
+            "calories": 46,
+            "proteins": 3.3,
+            "carbohydrates": 4.8,
+            "fats": 1.6
+          }
+        },
+        {
+          "name": "Protéine whey",
+          "quantity": 30,
+          "unit": "g",
+          "per100g": {
+            "calories": 380,
+            "proteins": 75,
+            "carbohydrates": 8,
+            "fats": 5
+          }
+        },
+        {
+          "name": "Banane",
+          "quantity": 1,
+          "unit": "pièce",
+          "per100g": {
+            "calories": 90,
+            "proteins": 1.1,
+            "carbohydrates": 20,
+            "fats": 0.3
+          },
+          "gramsPerPiece": 120
+        },
+        {
+          "name": "Beurre de cacahuète",
+          "quantity": 15,
+          "unit": "g",
+          "per100g": {
+            "calories": 600,
+            "proteins": 25,
+            "carbohydrates": 12,
+            "fats": 50
+          }
+        }
+      ]
+    },
+    {
+      "name": "Édamames et amandes",
+      "summary": "À grignoter sans culpabiliser.",
+      "category": "snack",
+      "servings": 1,
+      "preparationMinutes": 8,
+      "instructions": "Cuire les édamames 5 minutes à l'eau bouillante salée.",
+      "equipment": [
+        "stovetop"
+      ],
+      "ingredients": [
+        {
+          "name": "Édamame",
+          "quantity": 200,
+          "unit": "g",
+          "per100g": {
+            "calories": 121,
+            "proteins": 11,
+            "carbohydrates": 9,
+            "fats": 5
+          }
+        },
+        {
+          "name": "Amandes",
+          "quantity": 20,
+          "unit": "g",
+          "per100g": {
+            "calories": 634,
+            "proteins": 21,
+            "carbohydrates": 7,
+            "fats": 53
+          }
+        }
+      ]
+    },
+    {
+      "name": "Blanc de poulet air fryer, haricots verts et pommes de terre",
+      "summary": "Le repas complet de l'air fryer : tout cuit dans le même panier.",
+      "category": "meal",
+      "servings": 2,
+      "preparationMinutes": 30,
+      "instructions": "Couper les pommes de terre en cubes, les huiler et les lancer 20 minutes à 190 °C. Ajouter les blancs de poulet assaisonnés, poursuivre 15 minutes en retournant à mi-cuisson. Cuire les haricots verts à la vapeur pendant ce temps.",
+      "equipment": [
+        "airFryer"
+      ],
+      "ingredients": [
+        {
+          "name": "Blanc de poulet",
+          "quantity": 400,
+          "unit": "g",
+          "per100g": {
+            "calories": 121,
+            "proteins": 25,
+            "carbohydrates": 0,
+            "fats": 2.3
+          }
+        },
+        {
+          "name": "Pommes de terre",
+          "quantity": 400,
+          "unit": "g",
+          "per100g": {
+            "calories": 87,
+            "proteins": 2,
+            "carbohydrates": 20,
+            "fats": 0.1
+          }
+        },
+        {
+          "name": "Haricots verts",
+          "quantity": 300,
+          "unit": "g",
+          "per100g": {
+            "calories": 31,
+            "proteins": 1.8,
+            "carbohydrates": 5,
+            "fats": 0.2
+          }
+        },
+        {
+          "name": "Huile d'olive",
+          "quantity": 1,
+          "unit": "c. à soupe",
+          "pantryStaple": true,
+          "per100g": {
+            "calories": 900,
+            "proteins": 0,
+            "carbohydrates": 0,
+            "fats": 100
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cabillaud pané air fryer et frites de patate douce",
+      "summary": "Le croustillant du pané sans la friture.",
+      "category": "meal",
+      "servings": 2,
+      "preparationMinutes": 35,
+      "instructions": "Passer les dos de cabillaud dans l'œuf battu puis la chapelure. Tailler la patate douce en frites, les huiler et les cuire 20 minutes à 200 °C. Réserver au chaud, cuire le poisson 12 minutes à 190 °C.",
+      "equipment": [
+        "airFryer"
+      ],
+      "ingredients": [
+        {
+          "name": "Dos de cabillaud",
+          "quantity": 400,
+          "unit": "g",
+          "per100g": {
+            "calories": 82,
+            "proteins": 18,
+            "carbohydrates": 0,
+            "fats": 0.7
+          }
+        },
+        {
+          "name": "Chapelure",
+          "quantity": 60,
+          "unit": "g",
+          "per100g": {
+            "calories": 350,
+            "proteins": 12,
+            "carbohydrates": 70,
+            "fats": 3
+          }
+        },
+        {
+          "name": "Œufs entiers",
+          "quantity": 1,
+          "unit": "pièce",
+          "gramsPerPiece": 50,
+          "per100g": {
+            "calories": 143,
+            "proteins": 12.7,
+            "carbohydrates": 0.7,
+            "fats": 9.8
+          }
+        },
+        {
+          "name": "Patate douce",
+          "quantity": 500,
+          "unit": "g",
+          "per100g": {
+            "calories": 86,
+            "proteins": 1.6,
+            "carbohydrates": 20,
+            "fats": 0.1
+          }
+        },
+        {
+          "name": "Huile d'olive",
+          "quantity": 2,
+          "unit": "c. à soupe",
+          "pantryStaple": true,
+          "per100g": {
+            "calories": 900,
+            "proteins": 0,
+            "carbohydrates": 0,
+            "fats": 100
+          }
+        }
+      ]
+    },
+    {
+      "name": "Boulettes de dinde air fryer, riz et poivrons",
+      "summary": "De quoi tenir une grosse journée, sans surveiller une poêle.",
+      "category": "meal",
+      "servings": 2,
+      "preparationMinutes": 40,
+      "instructions": "Mélanger la dinde hachée avec l'œuf, la chapelure et le parmesan, former des boulettes. Les cuire 14 minutes à 190 °C avec les poivrons huilés. Servir sur le riz.",
+      "equipment": [
+        "airFryer"
+      ],
+      "ingredients": [
+        {
+          "name": "Dinde hachée",
+          "quantity": 400,
+          "unit": "g",
+          "per100g": {
+            "calories": 111,
+            "proteins": 24,
+            "carbohydrates": 0,
+            "fats": 1.5
+          }
+        },
+        {
+          "name": "Chapelure",
+          "quantity": 40,
+          "unit": "g",
+          "per100g": {
+            "calories": 350,
+            "proteins": 12,
+            "carbohydrates": 70,
+            "fats": 3
+          }
+        },
+        {
+          "name": "Œufs entiers",
+          "quantity": 1,
+          "unit": "pièce",
+          "gramsPerPiece": 50,
+          "per100g": {
+            "calories": 143,
+            "proteins": 12.7,
+            "carbohydrates": 0.7,
+            "fats": 9.8
+          }
+        },
+        {
+          "name": "Parmesan",
+          "quantity": 40,
+          "unit": "g",
+          "per100g": {
+            "calories": 402,
+            "proteins": 35,
+            "carbohydrates": 0,
+            "fats": 28
+          }
+        },
+        {
+          "name": "Riz basmati cuit",
+          "quantity": 500,
+          "unit": "g",
+          "per100g": {
+            "calories": 130,
+            "proteins": 2.7,
+            "carbohydrates": 28,
+            "fats": 0.3
+          }
+        },
+        {
+          "name": "Poivrons",
+          "quantity": 250,
+          "unit": "g",
+          "per100g": {
+            "calories": 26,
+            "proteins": 1,
+            "carbohydrates": 4.6,
+            "fats": 0.3
+          }
+        },
+        {
+          "name": "Huile d'olive",
+          "quantity": 1,
+          "unit": "c. à soupe",
+          "pantryStaple": true,
+          "per100g": {
+            "calories": 900,
+            "proteins": 0,
+            "carbohydrates": 0,
+            "fats": 100
+          }
+        }
+      ]
+    },
+    {
+      "name": "Assiette de saumon fumé, cottage cheese et pain complet",
+      "summary": "Aucune cuisson, beaucoup de protéines : le repas des soirs pressés.",
+      "category": "meal",
+      "servings": 1,
+      "preparationMinutes": 8,
+      "instructions": "Dresser le saumon fumé, le cottage cheese et les crudités sur l'assiette. Poivrer, arroser d'un filet de citron, servir avec le pain grillé ou non.",
+      "equipment": [
+        "none"
+      ],
+      "ingredients": [
+        {
+          "name": "Saumon fumé",
+          "quantity": 120,
+          "unit": "g",
+          "per100g": {
+            "calories": 190,
+            "proteins": 22,
+            "carbohydrates": 0,
+            "fats": 11
+          }
+        },
+        {
+          "name": "Cottage cheese",
+          "quantity": 150,
+          "unit": "g",
+          "per100g": {
+            "calories": 98,
+            "proteins": 11,
+            "carbohydrates": 3.4,
+            "fats": 4.3
+          }
+        },
+        {
+          "name": "Pain complet",
+          "quantity": 70,
+          "unit": "g",
+          "per100g": {
+            "calories": 247,
+            "proteins": 9,
+            "carbohydrates": 41,
+            "fats": 3.5
+          }
+        },
+        {
+          "name": "Concombre",
+          "quantity": 100,
+          "unit": "g",
+          "per100g": {
+            "calories": 15,
+            "proteins": 0.7,
+            "carbohydrates": 3.6,
+            "fats": 0.1
+          }
+        },
+        {
+          "name": "Roquette",
+          "quantity": 40,
+          "unit": "g",
+          "per100g": {
+            "calories": 25,
+            "proteins": 2.6,
+            "carbohydrates": 2,
+            "fats": 0.7
+          }
+        }
+      ]
+    },
+    {
+      "name": "Wrap à la dinde, houmous et crudités",
+      "summary": "Se roule en cinq minutes et s'emporte partout.",
+      "category": "meal",
+      "servings": 1,
+      "preparationMinutes": 10,
+      "instructions": "Tartiner la tortilla de houmous, garnir de dinde, de feta émiettée, de roquette et de tomates cerises coupées en deux. Rouler serré et couper en deux.",
+      "equipment": [
+        "none"
+      ],
+      "ingredients": [
+        {
+          "name": "Tortilla de blé",
+          "quantity": 100,
+          "unit": "g",
+          "per100g": {
+            "calories": 300,
+            "proteins": 8,
+            "carbohydrates": 47,
+            "fats": 8
+          }
+        },
+        {
+          "name": "Blanc de dinde",
+          "quantity": 150,
+          "unit": "g",
+          "per100g": {
+            "calories": 104,
+            "proteins": 22,
+            "carbohydrates": 1,
+            "fats": 1.5
+          }
+        },
+        {
+          "name": "Houmous",
+          "quantity": 60,
+          "unit": "g",
+          "per100g": {
+            "calories": 280,
+            "proteins": 7.5,
+            "carbohydrates": 14,
+            "fats": 22
+          }
+        },
+        {
+          "name": "Feta",
+          "quantity": 30,
+          "unit": "g",
+          "per100g": {
+            "calories": 264,
+            "proteins": 14,
+            "carbohydrates": 4,
+            "fats": 21
+          }
+        },
+        {
+          "name": "Roquette",
+          "quantity": 40,
+          "unit": "g",
+          "per100g": {
+            "calories": 25,
+            "proteins": 2.6,
+            "carbohydrates": 2,
+            "fats": 0.7
+          }
+        },
+        {
+          "name": "Tomates cerises",
+          "quantity": 100,
+          "unit": "g",
+          "per100g": {
+            "calories": 18,
+            "proteins": 0.9,
+            "carbohydrates": 3,
+            "fats": 0.2
+          }
+        }
+      ]
+    },
+    {
+      "name": "Escalope de dinde, courgettes et riz complet",
+      "summary": "Léger sans être maigre : la dinde fait le gros du travail.",
+      "category": "meal",
+      "servings": 2,
+      "preparationMinutes": 25,
+      "instructions": "Saisir les escalopes 4 minutes par face à la poêle huilée, réserver. Faire revenir les courgettes en rondelles dans le même jus. Servir sur le riz complet, parsemer de parmesan.",
+      "equipment": [
+        "stovetop"
+      ],
+      "ingredients": [
+        {
+          "name": "Blanc de dinde",
+          "quantity": 400,
+          "unit": "g",
+          "per100g": {
+            "calories": 104,
+            "proteins": 22,
+            "carbohydrates": 1,
+            "fats": 1.5
+          }
+        },
+        {
+          "name": "Riz complet cuit",
+          "quantity": 350,
+          "unit": "g",
+          "per100g": {
+            "calories": 123,
+            "proteins": 2.6,
+            "carbohydrates": 26,
+            "fats": 1
+          }
+        },
+        {
+          "name": "Courgettes",
+          "quantity": 400,
+          "unit": "g",
+          "per100g": {
+            "calories": 17,
+            "proteins": 1.2,
+            "carbohydrates": 2.1,
+            "fats": 0.3
+          }
+        },
+        {
+          "name": "Parmesan",
+          "quantity": 30,
+          "unit": "g",
+          "per100g": {
+            "calories": 402,
+            "proteins": 35,
+            "carbohydrates": 0,
+            "fats": 28
+          }
+        },
+        {
+          "name": "Huile d'olive",
+          "quantity": 1,
+          "unit": "c. à soupe",
+          "pantryStaple": true,
+          "per100g": {
+            "calories": 900,
+            "proteins": 0,
+            "carbohydrates": 0,
+            "fats": 100
+          }
+        }
       ]
     }
   ]

@@ -95,6 +95,51 @@ struct RecipeCatalogueTests {
         #expect(!(try service.allRecipes().contains { $0.name == name }))
     }
 
+    @Test("Chaque combinaison calories × protéines laisse de quoi composer")
+    func leavesAUsablePoolForEveryPlateCriteria() throws {
+        let meals = try seed().filter { $0.category == .meal }
+
+        for band in CalorieBand.allCases {
+            for floor in ProteinFloor.allCases {
+                var criteria = RecipeCriteria()
+                criteria.calorieBand = band
+                criteria.proteinFloor = floor
+                let eligible = RecipeFilter.eligible(meals, matching: criteria)
+
+                // Un filtre qui vide le vivier ne filtre plus : il bloque.
+                #expect(
+                    eligible.count >= 3,
+                    "\(band.localizedName) + \(floor.localizedName) : \(eligible.count) repas"
+                )
+            }
+        }
+    }
+
+    @Test("Un seul appareil suffit à composer un menu")
+    func leavesAUsablePoolForEveryEquipment() throws {
+        let meals = try seed().filter { $0.category == .meal }
+
+        for equipment in CookingEquipment.allCases where !equipment.isAlwaysAvailable {
+            var criteria = RecipeCriteria()
+            criteria.availableEquipment = [equipment]
+            let eligible = RecipeFilter.eligible(meals, matching: criteria)
+
+            #expect(
+                eligible.count >= 3,
+                "\(equipment.localizedName) seul : \(eligible.count) repas"
+            )
+        }
+    }
+
+    @Test("Le catalogue couvre chaque matériel")
+    func coversEveryPieceOfEquipment() throws {
+        let declared = try loadCatalogue().recipes.reduce(into: Set<CookingEquipment>()) {
+            $0.formUnion($1.equipment ?? [])
+        }
+
+        #expect(declared == Set(CookingEquipment.allCases))
+    }
+
     private func seed() throws -> [Recipe] {
         _ = try RecipeCatalogueSeeder(context: context).seedIfNeeded(installedVersion: 0)
         return try RecipeService(context: context).allRecipes()
