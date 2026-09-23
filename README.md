@@ -29,7 +29,13 @@ xcodebuild test -scheme CalTracker -destination 'platform=iOS Simulator,name=iPh
 ## Installation sans Mac
 
 La CI (`.github/workflows/ci.yml`) compile, teste et produit à chaque push un
-`.ipa` **non signé**, déposé en artefact sous le nom `CalTracker-ipa-non-signe`.
+`.ipa` **non signé**, déposé en artefact sous un nom qui porte sa version, son
+numéro de build et son commit : `CalTracker-1.0-b26-0e65659`.
+
+Le numéro de build est celui de l'exécution qui l'a produit, et il se retrouve
+tel quel dans l'onglet Réglages de l'app installée — « 1.0 (26) ». Savoir quel
+paquet tourne sur le téléphone, et remonter au commit correspondant, ne demande
+donc aucune supposition.
 
 Pour l'installer sur un iPhone depuis Windows ou Linux : télécharge l'artefact
 depuis l'onglet Actions, puis signe-le avec ton propre identifiant Apple via

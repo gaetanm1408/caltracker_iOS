@@ -57,6 +57,26 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             | tee xcodebuild.log
 
+      # Le numéro d'exécution sert de numéro de build : il est unique, croissant,
+      # et se retrouve tel quel dans Réglages une fois l'app installée. Savoir
+      # quel paquet tourne sur le téléphone ne doit pas demander de deviner.
+      - name: Numéroter le build
+        id: version
+        run: |
+          version=$(grep -m1 'MARKETING_VERSION' CalTracker.xcodeproj/project.pbxproj \
+            | sed 's/.*= *//; s/;//' | tr -d ' ')
+          build="${{ github.run_number }}"
+          sha=$(git rev-parse --short HEAD)
+          name="CalTracker-${version}-b${build}-${sha}"
+          {
+            echo "version=$version"
+            echo "build=$build"
+            echo "sha=$sha"
+            echo "name=$name"
+            echo "ipa=${name}.ipa"
+          } >> "$GITHUB_OUTPUT"
+          echo "Version $version, build $build, commit $sha"
+
       # Build appareil sans signature : la signature est apposée sur le PC de
       # l'utilisateur (Sideloadly, AltStore) avec son propre identifiant Apple.
       - name: Construire l'app pour appareil, non signée
@@ -72,6 +92,7 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGN_IDENTITY="" \
+            CURRENT_PROJECT_VERSION=${{ steps.version.outputs.build }} \
             | tee build-appareil.log
 
       - name: Empaqueter en .ipa
@@ -85,8 +106,8 @@ jobs:
           mkdir -p Payload
           cp -R "$app" Payload/
           # Un .ipa n'est qu'une archive zip contenant un dossier Payload.
-          zip -qry CalTracker-non-signe.ipa Payload
-          ls -lh CalTracker-non-signe.ipa
+          zip -qry "${{ steps.version.outputs.ipa }}" Payload
+          ls -lh "${{ steps.version.outputs.ipa }}"
 
       # AltStore lit l'Info.plist du paquet avant de signer ; une erreur de
       # décodage de sa part ne dit pas ce qui cloche, d'où cette inspection.
@@ -103,14 +124,31 @@ jobs:
           plutil -lint "$app/Info.plist"
           echo
           echo "## Structure du .ipa"
-          unzip -l CalTracker-non-signe.ipa | head -40
+          unzip -l "${{ steps.version.outputs.ipa }}" | head -40
 
       - name: Publier le .ipa
         uses: actions/upload-artifact@v4
         with:
-          name: CalTracker-ipa-non-signe
-          path: CalTracker-non-signe.ipa
+          name: ${{ steps.version.outputs.name }}
+          path: ${{ steps.version.outputs.ipa }}
           retention-days: 30
+
+      - name: Résumer le paquet
+        if: success()
+        run: |
+          recettes=$(python3 -c "import json;print(len(json.load(open('CalTracker/Resources/RecipeCatalogue.json'))['recipes']))")
+          catalogue=$(python3 -c "import json;print(json.load(open('CalTracker/Resources/RecipeCatalogue.json'))['version'])")
+          {
+            echo "## CalTracker ${{ steps.version.outputs.version }} (build ${{ steps.version.outputs.build }})"
+            echo
+            echo "| | |"
+            echo "|---|---|"
+            echo "| Paquet | \`${{ steps.version.outputs.ipa }}\` |"
+            echo "| Affiché dans Réglages | ${{ steps.version.outputs.version }} (${{ steps.version.outputs.build }}) |"
+            echo "| Commit | \`${{ steps.version.outputs.sha }}\` |"
+            echo "| Catalogue | version $catalogue, $recettes recettes |"
+            echo "| Taille | $(du -h '${{ steps.version.outputs.ipa }}' | cut -f1) |"
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Résumer les erreurs
         if: failure()
