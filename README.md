@@ -47,6 +47,50 @@ La signature n'est volontairement pas faite en CI : elle demanderait d'y
 déposer un certificat de développeur, alors qu'elle appartient à la machine de
 celui qui installe l'app.
 
+### Choisir entre AltStore et Sideloadly
+
+Les deux signent le même `.ipa` avec le même identifiant Apple et aboutissent au
+même résultat. Ils diffèrent sur ce qu'ils demandent ensuite :
+
+| | AltStore | Sideloadly |
+|---|---|---|
+| Renouvellement des 7 jours | automatique, en Wi-Fi | à refaire à la main |
+| Installation | passe par AltServer, resté ouvert sur le PC | branchement USB direct |
+| Pièces mobiles | AltStore, AltServer, iTunes, iCloud | Sideloadly, iTunes, iCloud |
+
+AltStore rend le renouvellement indolore, au prix d'un serveur de plus entre le
+téléphone et Apple — c'est lui qui produit l'erreur 2005 documentée plus bas.
+Sideloadly supprime cet intermédiaire mais laisse les 7 jours à la charge de
+l'utilisateur. Quand le dépannage d'AltStore coûte plus cher que le
+renouvellement manuel, le second chemin devient le bon.
+
+### Installer avec Sideloadly
+
+Prérequis Windows, à faire une fois :
+
+1. Si iTunes ou iCloud viennent du **Microsoft Store**, les désinstaller :
+   Sideloadly a besoin des versions téléchargées directement chez Apple, seules
+   à fournir les composants d'authentification.
+2. Installer [iTunes](https://www.apple.com/itunes/) et
+   [iCloud](https://support.apple.com/fr-fr/HT204283) depuis le site d'Apple.
+3. Redémarrer l'ordinateur.
+
+Puis, à chaque installation :
+
+1. Télécharger l'artefact depuis l'onglet Actions et **décompresser le `.zip`** :
+   c'est le `.ipa` qu'il contient qu'on fournit, pas l'archive. Les deux font
+   presque la même taille, la confusion est facile.
+2. Brancher l'iPhone en USB et le déverrouiller.
+3. Glisser le `.ipa` dans Sideloadly, saisir l'identifiant Apple et le code de
+   validation en deux étapes.
+4. Sur le téléphone, faire confiance au profil : Réglages → Général → VPN et
+   gestion de l'appareil → l'identifiant Apple → Faire confiance.
+
+Les limites qui suivent viennent d'Apple et non de l'outil : avec un compte
+gratuit, la signature tient 7 jours, trois applications au plus peuvent être
+installées ainsi, et dix identifiants d'app peuvent être enregistrés par
+semaine.
+
 ### Erreur 2005 à l'installation
 
 > *Installation failed — The data couldn't be read because it isn't in the
