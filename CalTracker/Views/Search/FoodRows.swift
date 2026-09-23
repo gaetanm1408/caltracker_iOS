@@ -3,6 +3,10 @@ import SwiftUI
 /// A search result coming from Open Food Facts.
 struct RemoteFoodRow: View {
     let food: RemoteFood
+    /// Quand elle est fournie, la ligne porte un bouton visible vers les
+    /// courses ou une recette. Un balayage seul se découvre trop mal pour
+    /// porter une action principale.
+    var onAddToList: (() -> Void)?
 
     var body: some View {
         HStack(spacing: 12) {
@@ -25,8 +29,19 @@ struct RemoteFoodRow: View {
             }
 
             Spacer(minLength: 0)
-            Image(systemName: "plus.circle.fill")
-                .foregroundStyle(.tint)
+
+            if let onAddToList {
+                Button(action: onAddToList) {
+                    Image(systemName: "cart.badge.plus")
+                        .imageScale(.large)
+                }
+                .buttonStyle(.borderless)
+                .tint(.green)
+                .accessibilityLabel("Ajouter aux courses ou à une recette")
+            } else {
+                Image(systemName: "plus.circle.fill")
+                    .foregroundStyle(.tint)
+            }
         }
         .padding(.vertical, 4)
         .contentShape(Rectangle())

@@ -112,7 +112,7 @@ struct FoodSearchView: View {
                         // Une ligne simple plutôt qu'un bouton : un Button en
                         // style « plain » capte les gestes horizontaux et prive
                         // la liste de son balayage.
-                        RemoteFoodRow(food: food)
+                        RemoteFoodRow(food: food) { productForList = food }
                             .contentShape(Rectangle())
                             .onTapGesture { selectedFood = food }
                             .swipeActions(edge: .leading) {
@@ -165,6 +165,10 @@ private struct CategoryFilterBar: View {
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 8) {
+                Label("Filtrer", systemImage: "line.3.horizontal.decrease")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+
                 ForEach(categories, id: \.self) { category in
                     let isSelected = category == selected
                     Button {
