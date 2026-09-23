@@ -16,14 +16,13 @@ extension Macro {
     }
 }
 
-extension Color {
-    static let macroProtein = Color("MacroProteinColor")
-    static let macroCarb = Color("MacroCarbColor")
-    static let macroFat = Color("MacroFatColor")
-    /// Dépassement d'objectif. Couleur de statut, jamais réutilisée pour une
-    /// macro : elle ne doit pas pouvoir se faire passer pour une série.
-    static let alert = Color("AlertColor")
-}
+// `Color.macroProtein`, `.macroCarb`, `.macroFat` et `.alert` ne sont pas
+// déclarées ici : Xcode les engendre depuis le catalogue d'assets. Les écrire à
+// la main les doublonnerait, et ferait dépendre l'app de chaînes de caractères
+// qu'aucun compilateur ne vérifie.
+//
+// `.alert` est une couleur de statut, jamais réutilisée pour une macro : elle ne
+// doit pas pouvoir se faire passer pour une série.
 
 /// Jauge horizontale à bouts arrondis, posée sur sa piste.
 private struct Meter: View {
