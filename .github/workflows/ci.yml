@@ -88,6 +88,23 @@ jobs:
           zip -qry CalTracker-non-signe.ipa Payload
           ls -lh CalTracker-non-signe.ipa
 
+      # AltStore lit l'Info.plist du paquet avant de signer ; une erreur de
+      # décodage de sa part ne dit pas ce qui cloche, d'où cette inspection.
+      - name: Inspecter le paquet
+        run: |
+          app="build/Build/Products/Release-iphoneos/CalTracker.app"
+          echo "## Contenu du bundle"
+          find "$app" -maxdepth 2 | sed "s|$app|CalTracker.app|"
+          echo
+          echo "## Info.plist"
+          plutil -p "$app/Info.plist"
+          echo
+          echo "## Validation de l'Info.plist"
+          plutil -lint "$app/Info.plist"
+          echo
+          echo "## Structure du .ipa"
+          unzip -l CalTracker-non-signe.ipa | head -40
+
       - name: Publier le .ipa
         uses: actions/upload-artifact@v4
         with:
