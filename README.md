@@ -80,8 +80,9 @@ Swift ne peut pas rattraper. L'app se terminait au lancement du journal.
 - **Recettes** — ingrédients saisis à la main ou importés d'Open Food Facts
   (avec leurs macros), calcul des apports par portion, duplication, ajout d'une
   recette au journal.
-- **Catalogue livré** — quarante recettes protéinées (trente repas, dix
-  collations) décrites dans `Resources/RecipeCatalogue.json`, installées au
+- **Catalogue livré** — soixante-dix-neuf recettes protéinées (cinquante-cinq
+  repas, vingt-quatre collations) décrites dans `Resources/RecipeCatalogue.json`,
+  bâties sur une table de 86 ingrédients de référence, installées au
   premier lancement et complétées à chaque nouvelle version du fichier. Une
   recette supprimée ne revient pas.
 - **Assistant menus** — composition d'un planning sur plusieurs jours à partir
