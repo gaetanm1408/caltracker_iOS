@@ -39,8 +39,16 @@ final class HealthKitActivitySource: ActivityEnergySource, @unchecked Sendable {
         HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)
     }
 
+    /// HealthKit lève une exception Objective-C — impossible à rattraper
+    /// depuis Swift, donc fatale — quand on demande une autorisation de
+    /// lecture sans que la description d'usage soit déclarée. Sa présence sert
+    /// donc à savoir si ce build est configuré pour Santé.
+    private var declaresUsageDescription: Bool {
+        Bundle.main.object(forInfoDictionaryKey: "NSHealthShareUsageDescription") != nil
+    }
+
     var isAvailable: Bool {
-        HKHealthStore.isHealthDataAvailable()
+        HKHealthStore.isHealthDataAvailable() && declaresUsageDescription
     }
 
     func requestAuthorization() async -> Bool {

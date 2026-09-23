@@ -56,7 +56,14 @@ CODE_SIGN_ENTITLEMENTS = CalTracker.entitlements;
 INFOPLIST_KEY_NSHealthShareUsageDescription = "…";
 ```
 
-Le fichier `CalTracker.entitlements` est conservé à la racine pour cela.
+Le fichier `CalTracker.entitlements` est conservé à la racine pour cela, et
+rien d'autre n'est à toucher : la source de données considère HealthKit comme
+indisponible tant que la description d'usage manque, et se réactive d'elle-même
+dès qu'elle est déclarée.
+
+Cette détection n'est pas un raffinement : demander une autorisation de lecture
+sans description d'usage fait lever à HealthKit une exception Objective-C, que
+Swift ne peut pas rattraper. L'app se terminait au lancement du journal.
 
 ## Fonctionnalités
 
