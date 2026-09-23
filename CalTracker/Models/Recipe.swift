@@ -1,6 +1,27 @@
 import Foundation
 import SwiftData
 
+enum RecipeCategory: String, Codable, CaseIterable, Identifiable, Sendable {
+    case meal
+    case snack
+
+    var id: String { rawValue }
+
+    var localizedName: String {
+        switch self {
+        case .meal: return "Repas"
+        case .snack: return "Collation"
+        }
+    }
+
+    var systemImageName: String {
+        switch self {
+        case .meal: return "fork.knife"
+        case .snack: return "takeoutbag.and.cup.and.straw"
+        }
+    }
+}
+
 @Model
 final class Recipe {
     @Attribute(.unique) var id: UUID
@@ -11,6 +32,9 @@ final class Recipe {
     var preparationMinutes: Int
     var createdAt: Date
     var isFavorite: Bool
+    /// Distingue un plat d'une collation, ce dont la planification de menus a
+    /// besoin pour remplir des journées.
+    var categoryRawValue: String = RecipeCategory.meal.rawValue
 
     @Relationship(deleteRule: .cascade, inverse: \RecipeIngredient.recipe)
     var ingredients: [RecipeIngredient] = []
@@ -35,6 +59,11 @@ final class Recipe {
         self.isFavorite = isFavorite
         self.createdAt = createdAt
         self.ingredients = ingredients
+    }
+
+    var category: RecipeCategory {
+        get { RecipeCategory(rawValue: categoryRawValue) ?? .meal }
+        set { categoryRawValue = newValue.rawValue }
     }
 
     /// Nutrition of the whole recipe, i.e. every ingredient added up.

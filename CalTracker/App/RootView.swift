@@ -4,6 +4,7 @@ import SwiftUI
 struct RootView: View {
     @Environment(\.modelContext) private var context
     @Query private var profiles: [UserProfile]
+    @AppStorage("installedRecipeCatalogueVersion") private var catalogueVersion = 0
 
     var body: some View {
         TabView {
@@ -24,6 +25,7 @@ struct RootView: View {
         }
         .task {
             ensureProfileExists()
+            installRecipeCatalogue()
         }
     }
 
@@ -31,6 +33,16 @@ struct RootView: View {
     private func ensureProfileExists() {
         guard profiles.isEmpty else { return }
         context.insert(UserProfile())
+    }
+
+    private func installRecipeCatalogue() {
+        do {
+            catalogueVersion = try RecipeCatalogueSeeder(context: context)
+                .seedIfNeeded(installedVersion: catalogueVersion)
+        } catch {
+            // Les recettes livrées sont un confort de démarrage : si la
+            // ressource manque ou change de forme, l'app reste utilisable.
+        }
     }
 }
 

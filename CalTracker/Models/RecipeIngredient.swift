@@ -14,6 +14,9 @@ final class RecipeIngredient {
     var sortIndex: Int
     var barcode: String?
     var isPantryStaple: Bool
+    /// Poids d'une unité, pour les ingrédients comptés à la pièce. Renseigné,
+    /// il permet d'en calculer les apports ; un œuf pèse 50 g, une banane 120.
+    var gramsPerPiece: Double?
 
     var caloriesPer100g: Double
     var proteinsPer100g: Double
@@ -35,6 +38,7 @@ final class RecipeIngredient {
         sortIndex: Int = 0,
         barcode: String? = nil,
         isPantryStaple: Bool = false,
+        gramsPerPiece: Double? = nil,
         nutritionPer100g: NutritionFacts? = nil
     ) {
         self.id = id
@@ -44,6 +48,7 @@ final class RecipeIngredient {
         self.sortIndex = sortIndex
         self.barcode = barcode
         self.isPantryStaple = isPantryStaple
+        self.gramsPerPiece = gramsPerPiece
         let facts = nutritionPer100g ?? .zero
         self.hasNutritionData = nutritionPer100g != nil
         self.caloriesPer100g = facts.calories
@@ -91,8 +96,8 @@ final class RecipeIngredient {
         )
     }
 
-    /// Quantity converted to grams, `nil` for units that carry no mass
-    /// information (pieces).
+    /// Quantité convertie en grammes, `nil` quand rien ne permet de la déduire :
+    /// une pièce dont le poids unitaire n'est pas renseigné.
     var quantityInGrams: Double? {
         switch unit.dimension {
         case .mass, .volume:
@@ -100,7 +105,8 @@ final class RecipeIngredient {
             // Open Food Facts itself makes for its per-100 ml values.
             return quantity * unit.baseUnitFactor
         case .count:
-            return nil
+            guard let gramsPerPiece, gramsPerPiece > 0 else { return nil }
+            return quantity * gramsPerPiece
         }
     }
 

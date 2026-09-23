@@ -1,0 +1,196 @@
+{
+  "version": 1,
+  "recipes": [
+    {
+      "name": "Poulet grillé, quinoa et brocoli",
+      "summary": "Le classique qui cale, sans rien de compliqué.",
+      "category": "meal",
+      "servings": 2,
+      "preparationMinutes": 25,
+      "instructions": "Cuire le quinoa 12 minutes dans deux fois son volume d'eau.\nSaisir le poulet 6 minutes par face, saler, poivrer.\nCuire le brocoli à la vapeur 8 minutes.\nAssembler et arroser d'huile d'olive.",
+      "ingredients": [
+        { "name": "Blanc de poulet", "quantity": 300, "unit": "g", "per100g": { "calories": 121, "proteins": 25, "carbohydrates": 0, "fats": 2.3 } },
+        { "name": "Quinoa cuit", "quantity": 300, "unit": "g", "per100g": { "calories": 120, "proteins": 4.4, "carbohydrates": 18, "fats": 1.9 } },
+        { "name": "Brocoli", "quantity": 300, "unit": "g", "per100g": { "calories": 34, "proteins": 2.8, "carbohydrates": 4, "fats": 0.4 } },
+        { "name": "Huile d'olive", "quantity": 1, "unit": "c. à soupe", "pantryStaple": true, "per100g": { "calories": 900, "proteins": 0, "carbohydrates": 0, "fats": 100 } }
+      ]
+    },
+    {
+      "name": "Bowl de thon, pois chiches et feta",
+      "summary": "Aucune cuisson, prêt en cinq minutes avec des boîtes.",
+      "category": "meal",
+      "servings": 2,
+      "preparationMinutes": 10,
+      "instructions": "Égoutter le thon et les pois chiches.\nMélanger avec les tomates coupées et la feta émiettée.\nAssaisonner d'huile d'olive et de citron.",
+      "ingredients": [
+        { "name": "Thon au naturel égoutté", "quantity": 280, "unit": "g", "per100g": { "calories": 116, "proteins": 26, "carbohydrates": 0, "fats": 1 } },
+        { "name": "Pois chiches cuits", "quantity": 240, "unit": "g", "per100g": { "calories": 139, "proteins": 7.4, "carbohydrates": 18, "fats": 2.6 } },
+        { "name": "Feta", "quantity": 80, "unit": "g", "per100g": { "calories": 264, "proteins": 14, "carbohydrates": 4, "fats": 21 } },
+        { "name": "Tomates cerises", "quantity": 200, "unit": "g", "per100g": { "calories": 18, "proteins": 0.9, "carbohydrates": 3, "fats": 0.2 } },
+        { "name": "Huile d'olive", "quantity": 1, "unit": "c. à soupe", "pantryStaple": true, "per100g": { "calories": 900, "proteins": 0, "carbohydrates": 0, "fats": 100 } }
+      ]
+    },
+    {
+      "name": "Omelette blancs d'œufs, épinards et parmesan",
+      "summary": "Beaucoup de protéines pour très peu de calories.",
+      "category": "meal",
+      "servings": 1,
+      "preparationMinutes": 10,
+      "instructions": "Faire tomber les épinards à la poêle.\nVerser les blancs battus, cuire à feu doux.\nParsemer de parmesan et plier.",
+      "ingredients": [
+        { "name": "Blancs d'œufs", "quantity": 300, "unit": "g", "per100g": { "calories": 48, "proteins": 10.9, "carbohydrates": 0.7, "fats": 0.2 } },
+        { "name": "Œufs entiers", "quantity": 1, "unit": "pièce", "gramsPerPiece": 50, "per100g": { "calories": 143, "proteins": 12.7, "carbohydrates": 0.7, "fats": 9.8 } },
+        { "name": "Épinards frais", "quantity": 150, "unit": "g", "per100g": { "calories": 23, "proteins": 2.9, "carbohydrates": 1.4, "fats": 0.4 } },
+        { "name": "Parmesan", "quantity": 20, "unit": "g", "per100g": { "calories": 402, "proteins": 35, "carbohydrates": 0, "fats": 28 } }
+      ]
+    },
+    {
+      "name": "Saumon rôti, patate douce et haricots verts",
+      "summary": "Un plat du dimanche qui reste dans les clous.",
+      "category": "meal",
+      "servings": 2,
+      "preparationMinutes": 35,
+      "instructions": "Rôtir les patates douces en cubes 25 minutes à 200 °C.\nAjouter le saumon les 12 dernières minutes.\nCuire les haricots verts à la vapeur.",
+      "ingredients": [
+        { "name": "Pavé de saumon", "quantity": 300, "unit": "g", "per100g": { "calories": 180, "proteins": 20, "carbohydrates": 0, "fats": 11 } },
+        { "name": "Patate douce", "quantity": 400, "unit": "g", "per100g": { "calories": 86, "proteins": 1.6, "carbohydrates": 20, "fats": 0.1 } },
+        { "name": "Haricots verts", "quantity": 300, "unit": "g", "per100g": { "calories": 31, "proteins": 1.8, "carbohydrates": 5, "fats": 0.2 } },
+        { "name": "Huile d'olive", "quantity": 1, "unit": "c. à soupe", "pantryStaple": true, "per100g": { "calories": 900, "proteins": 0, "carbohydrates": 0, "fats": 100 } }
+      ]
+    },
+    {
+      "name": "Chili de dinde aux haricots rouges",
+      "summary": "Se congèle bien, et meilleur réchauffé le lendemain.",
+      "category": "meal",
+      "servings": 4,
+      "preparationMinutes": 40,
+      "instructions": "Faire revenir l'oignon puis la dinde hachée.\nAjouter les tomates concassées, les haricots et les épices.\nLaisser mijoter 25 minutes à couvert.",
+      "ingredients": [
+        { "name": "Dinde hachée", "quantity": 500, "unit": "g", "per100g": { "calories": 111, "proteins": 24, "carbohydrates": 0, "fats": 1.5 } },
+        { "name": "Haricots rouges cuits", "quantity": 400, "unit": "g", "per100g": { "calories": 127, "proteins": 8.7, "carbohydrates": 20, "fats": 0.5 } },
+        { "name": "Tomates concassées", "quantity": 400, "unit": "g", "per100g": { "calories": 24, "proteins": 1.2, "carbohydrates": 4, "fats": 0.2 } },
+        { "name": "Oignon", "quantity": 150, "unit": "g", "per100g": { "calories": 40, "proteins": 1.1, "carbohydrates": 9, "fats": 0.1 } },
+        { "name": "Huile d'olive", "quantity": 1, "unit": "c. à soupe", "pantryStaple": true, "per100g": { "calories": 900, "proteins": 0, "carbohydrates": 0, "fats": 100 } }
+      ]
+    },
+    {
+      "name": "Curry de tofu et lentilles corail",
+      "summary": "Végan et très rassasiant.",
+      "category": "meal",
+      "servings": 4,
+      "preparationMinutes": 30,
+      "instructions": "Dorer le tofu en cubes.\nCuire les lentilles corail 15 minutes avec le lait de coco et le curry.\nRéunir le tout et servir avec du riz.",
+      "ingredients": [
+        { "name": "Tofu ferme", "quantity": 400, "unit": "g", "per100g": { "calories": 145, "proteins": 16, "carbohydrates": 2, "fats": 8.7 } },
+        { "name": "Lentilles corail cuites", "quantity": 500, "unit": "g", "per100g": { "calories": 116, "proteins": 9, "carbohydrates": 17, "fats": 0.4 } },
+        { "name": "Lait de coco allégé", "quantity": 200, "unit": "ml", "per100g": { "calories": 73, "proteins": 0.8, "carbohydrates": 3, "fats": 6.5 } },
+        { "name": "Épinards frais", "quantity": 200, "unit": "g", "per100g": { "calories": 23, "proteins": 2.9, "carbohydrates": 1.4, "fats": 0.4 } }
+      ]
+    },
+    {
+      "name": "Steak haché 5 %, riz basmati et poivrons",
+      "summary": "Vingt minutes, rien à réfléchir.",
+      "category": "meal",
+      "servings": 2,
+      "preparationMinutes": 20,
+      "instructions": "Cuire le riz.\nPoêler les poivrons en lanières.\nSaisir les steaks 3 minutes par face.",
+      "ingredients": [
+        { "name": "Steak haché 5 %", "quantity": 300, "unit": "g", "per100g": { "calories": 137, "proteins": 21, "carbohydrates": 0, "fats": 5 } },
+        { "name": "Riz basmati cuit", "quantity": 300, "unit": "g", "per100g": { "calories": 130, "proteins": 2.7, "carbohydrates": 28, "fats": 0.3 } },
+        { "name": "Poivrons", "quantity": 250, "unit": "g", "per100g": { "calories": 26, "proteins": 1, "carbohydrates": 4.6, "fats": 0.3 } },
+        { "name": "Huile d'olive", "quantity": 1, "unit": "c. à soupe", "pantryStaple": true, "per100g": { "calories": 900, "proteins": 0, "carbohydrates": 0, "fats": 100 } }
+      ]
+    },
+    {
+      "name": "Salade de crevettes, avocat et concombre",
+      "summary": "Léger mais protéiné, parfait quand il fait chaud.",
+      "category": "meal",
+      "servings": 2,
+      "preparationMinutes": 15,
+      "instructions": "Couper le concombre et l'avocat.\nMélanger aux crevettes décortiquées.\nAssaisonner de citron et d'huile d'olive.",
+      "ingredients": [
+        { "name": "Crevettes cuites décortiquées", "quantity": 300, "unit": "g", "per100g": { "calories": 99, "proteins": 24, "carbohydrates": 0.2, "fats": 0.3 } },
+        { "name": "Avocat", "quantity": 150, "unit": "g", "per100g": { "calories": 160, "proteins": 2, "carbohydrates": 9, "fats": 15 } },
+        { "name": "Concombre", "quantity": 300, "unit": "g", "per100g": { "calories": 15, "proteins": 0.7, "carbohydrates": 3.6, "fats": 0.1 } },
+        { "name": "Huile d'olive", "quantity": 1, "unit": "c. à soupe", "pantryStaple": true, "per100g": { "calories": 900, "proteins": 0, "carbohydrates": 0, "fats": 100 } }
+      ]
+    },
+    {
+      "name": "Skyr, myrtilles et amandes",
+      "summary": "La collation la plus rentable en protéines par calorie.",
+      "category": "snack",
+      "servings": 1,
+      "preparationMinutes": 2,
+      "instructions": "Mélanger le tout dans un bol.",
+      "ingredients": [
+        { "name": "Skyr nature", "quantity": 200, "unit": "g", "per100g": { "calories": 63, "proteins": 11, "carbohydrates": 4, "fats": 0.2 } },
+        { "name": "Myrtilles", "quantity": 80, "unit": "g", "per100g": { "calories": 57, "proteins": 0.7, "carbohydrates": 12, "fats": 0.3 } },
+        { "name": "Amandes", "quantity": 15, "unit": "g", "per100g": { "calories": 634, "proteins": 21, "carbohydrates": 7, "fats": 53 } }
+      ]
+    },
+    {
+      "name": "Fromage blanc, beurre de cacahuète et banane",
+      "summary": "À prendre après la séance.",
+      "category": "snack",
+      "servings": 1,
+      "preparationMinutes": 3,
+      "instructions": "Écraser la banane dans le fromage blanc.\nAjouter le beurre de cacahuète.",
+      "ingredients": [
+        { "name": "Fromage blanc 0 %", "quantity": 250, "unit": "g", "per100g": { "calories": 47, "proteins": 8, "carbohydrates": 4, "fats": 0.2 } },
+        { "name": "Banane", "quantity": 1, "unit": "pièce", "gramsPerPiece": 120, "per100g": { "calories": 90, "proteins": 1.1, "carbohydrates": 20, "fats": 0.3 } },
+        { "name": "Beurre de cacahuète", "quantity": 15, "unit": "g", "per100g": { "calories": 600, "proteins": 25, "carbohydrates": 12, "fats": 50 } }
+      ]
+    },
+    {
+      "name": "Œufs durs et tomates cerises",
+      "summary": "Se transporte partout, se prépare à l'avance.",
+      "category": "snack",
+      "servings": 1,
+      "preparationMinutes": 12,
+      "instructions": "Cuire les œufs 9 minutes.\nÉcaler, saler, accompagner des tomates.",
+      "ingredients": [
+        { "name": "Œufs entiers", "quantity": 2, "unit": "pièce", "gramsPerPiece": 50, "per100g": { "calories": 143, "proteins": 12.7, "carbohydrates": 0.7, "fats": 9.8 } },
+        { "name": "Tomates cerises", "quantity": 150, "unit": "g", "per100g": { "calories": 18, "proteins": 0.9, "carbohydrates": 3, "fats": 0.2 } }
+      ]
+    },
+    {
+      "name": "Pudding de chia à la whey",
+      "summary": "À préparer la veille, se garde trois jours.",
+      "category": "snack",
+      "servings": 1,
+      "preparationMinutes": 5,
+      "instructions": "Mélanger les graines de chia au lait et à la whey.\nLaisser prendre une nuit au réfrigérateur.",
+      "ingredients": [
+        { "name": "Graines de chia", "quantity": 25, "unit": "g", "per100g": { "calories": 486, "proteins": 17, "carbohydrates": 42, "fats": 31 } },
+        { "name": "Lait demi-écrémé", "quantity": 200, "unit": "ml", "per100g": { "calories": 46, "proteins": 3.3, "carbohydrates": 4.8, "fats": 1.6 } },
+        { "name": "Protéine whey", "quantity": 30, "unit": "g", "per100g": { "calories": 380, "proteins": 75, "carbohydrates": 8, "fats": 5 } }
+      ]
+    },
+    {
+      "name": "Tartine au cottage cheese et dinde",
+      "summary": "Salé, rapide, rassasiant.",
+      "category": "snack",
+      "servings": 1,
+      "preparationMinutes": 5,
+      "instructions": "Griller le pain.\nTartiner de cottage cheese et couvrir de blanc de dinde.",
+      "ingredients": [
+        { "name": "Pain complet", "quantity": 60, "unit": "g", "per100g": { "calories": 247, "proteins": 9, "carbohydrates": 41, "fats": 3.5 } },
+        { "name": "Cottage cheese", "quantity": 120, "unit": "g", "per100g": { "calories": 98, "proteins": 11, "carbohydrates": 3.4, "fats": 4.3 } },
+        { "name": "Blanc de dinde", "quantity": 60, "unit": "g", "per100g": { "calories": 104, "proteins": 22, "carbohydrates": 1, "fats": 1.5 } }
+      ]
+    },
+    {
+      "name": "Yaourt grec, miel et chocolat noir",
+      "summary": "Quand l'envie de sucré arrive le soir.",
+      "category": "snack",
+      "servings": 1,
+      "preparationMinutes": 3,
+      "instructions": "Verser le miel sur le yaourt.\nRâper le chocolat par-dessus.",
+      "ingredients": [
+        { "name": "Yaourt grec 2 %", "quantity": 200, "unit": "g", "per100g": { "calories": 73, "proteins": 9, "carbohydrates": 4, "fats": 2 } },
+        { "name": "Miel", "quantity": 10, "unit": "g", "per100g": { "calories": 304, "proteins": 0.3, "carbohydrates": 82, "fats": 0 } },
+        { "name": "Chocolat noir 70 %", "quantity": 15, "unit": "g", "per100g": { "calories": 598, "proteins": 7.8, "carbohydrates": 46, "fats": 43 } }
+      ]
+    }
+  ]
+}

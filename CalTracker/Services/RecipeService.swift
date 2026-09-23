@@ -36,6 +36,7 @@ struct RecipeService {
         quantity: Double,
         unit: MeasurementUnit,
         isPantryStaple: Bool = false,
+        gramsPerPiece: Double? = nil,
         nutritionPer100g: NutritionFacts? = nil,
         barcode: String? = nil
     ) -> RecipeIngredient {
@@ -46,6 +47,7 @@ struct RecipeService {
             sortIndex: nextSortIndex(in: recipe),
             barcode: barcode,
             isPantryStaple: isPantryStaple,
+            gramsPerPiece: gramsPerPiece,
             nutritionPer100g: nutritionPer100g
         )
         ingredient.recipe = recipe
@@ -97,6 +99,7 @@ struct RecipeService {
                 quantity: ingredient.quantity,
                 unit: ingredient.unit,
                 isPantryStaple: ingredient.isPantryStaple,
+                gramsPerPiece: ingredient.gramsPerPiece,
                 nutritionPer100g: ingredient.nutritionPer100g,
                 barcode: ingredient.barcode
             )

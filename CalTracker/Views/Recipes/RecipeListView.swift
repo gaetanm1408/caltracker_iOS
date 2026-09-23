@@ -112,6 +112,8 @@ private struct RecipeRow: View {
             }
 
             HStack(spacing: 6) {
+                Label(recipe.category.localizedName, systemImage: recipe.category.systemImageName)
+                Text("·")
                 Label("\(recipe.servings) portions", systemImage: "person.2")
                 if recipe.preparationMinutes > 0 {
                     Text("·")

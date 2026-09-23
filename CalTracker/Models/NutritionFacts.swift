@@ -31,6 +31,34 @@ struct NutritionFacts: Codable, Hashable, Sendable {
         self.salt = salt
     }
 
+    enum CodingKeys: String, CodingKey {
+        case calories
+        case proteins
+        case carbohydrates
+        case fats
+        case fibers
+        case sugars
+        case saturatedFats
+        case salt
+    }
+
+    /// Décodage tolérant : une source qui ne renseigne que les macros
+    /// principales reste exploitable, les champs absents valant zéro.
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        func value(_ key: CodingKeys) throws -> Double {
+            try container.decodeIfPresent(Double.self, forKey: key) ?? 0
+        }
+        calories = try value(.calories)
+        proteins = try value(.proteins)
+        carbohydrates = try value(.carbohydrates)
+        fats = try value(.fats)
+        fibers = try value(.fibers)
+        sugars = try value(.sugars)
+        saturatedFats = try value(.saturatedFats)
+        salt = try value(.salt)
+    }
+
     static let zero = NutritionFacts()
 
     /// Energy recomputed from the macronutrients (Atwater factors), used when

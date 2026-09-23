@@ -10,6 +10,7 @@ struct IngredientDraft: Identifiable, Hashable {
     var unit: MeasurementUnit
     var isPantryStaple: Bool
     var barcode: String?
+    var gramsPerPiece: Double?
     var nutritionPer100g: NutritionFacts?
 
     init(
@@ -19,6 +20,7 @@ struct IngredientDraft: Identifiable, Hashable {
         unit: MeasurementUnit,
         isPantryStaple: Bool = false,
         barcode: String? = nil,
+        gramsPerPiece: Double? = nil,
         nutritionPer100g: NutritionFacts? = nil
     ) {
         self.id = id
@@ -27,6 +29,7 @@ struct IngredientDraft: Identifiable, Hashable {
         self.unit = unit
         self.isPantryStaple = isPantryStaple
         self.barcode = barcode
+        self.gramsPerPiece = gramsPerPiece
         self.nutritionPer100g = nutritionPer100g
     }
 
@@ -38,12 +41,25 @@ struct IngredientDraft: Identifiable, Hashable {
             unit: ingredient.unit,
             isPantryStaple: ingredient.isPantryStaple,
             barcode: ingredient.barcode,
+            gramsPerPiece: ingredient.gramsPerPiece,
             nutritionPer100g: ingredient.nutritionPer100g
         )
     }
 
     var quantityDescription: String {
         "\(QuantityFormatter.string(from: quantity)) \(unit.displayName)"
+    }
+
+    /// Même règle que `RecipeIngredient` : une pièce ne pèse que si son poids
+    /// unitaire est connu.
+    var quantityInGrams: Double? {
+        switch unit.dimension {
+        case .mass, .volume:
+            return quantity * unit.baseUnitFactor
+        case .count:
+            guard let gramsPerPiece, gramsPerPiece > 0 else { return nil }
+            return quantity * gramsPerPiece
+        }
     }
 }
 
@@ -59,6 +75,7 @@ struct RecipeFormView: View {
     @State private var instructions = ""
     @State private var servings = 2
     @State private var preparationMinutes = 0
+    @State private var category: RecipeCategory = .meal
     @State private var drafts: [IngredientDraft] = []
     @State private var isPresentingIngredientPicker = false
     @State private var didLoad = false
@@ -69,10 +86,9 @@ struct RecipeFormView: View {
 
     private var draftNutritionPerServing: NutritionFacts {
         let total = drafts.reduce(NutritionFacts.zero) { partial, draft in
-            guard let facts = draft.nutritionPer100g,
-                  draft.unit.dimension != .count
-            else { return partial }
-            let grams = draft.quantity * draft.unit.baseUnitFactor
+            guard let facts = draft.nutritionPer100g, let grams = draft.quantityInGrams else {
+                return partial
+            }
             return partial + NutritionCalculator.nutrition(for: facts, quantityInGrams: grams)
         }
         return total.scaled(by: 1 / Double(max(1, servings)))
@@ -82,6 +98,13 @@ struct RecipeFormView: View {
         Form {
             Section("Recette") {
                 TextField("Nom", text: $name)
+                Picker("Type", selection: $category) {
+                    ForEach(RecipeCategory.allCases) { category in
+                        Text(category.localizedName).tag(category)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .labelsHidden()
                 TextField("Description courte", text: $summary, axis: .vertical)
                     .lineLimit(1...3)
                 Stepper("Portions : \(servings)", value: $servings, in: 1...20)
@@ -164,6 +187,7 @@ struct RecipeFormView: View {
         instructions = recipe.instructions
         servings = recipe.servings
         preparationMinutes = recipe.preparationMinutes
+        category = recipe.category
         drafts = recipe.ingredients
             .sorted { $0.sortIndex < $1.sortIndex }
             .map(IngredientDraft.init(ingredient:))
@@ -179,6 +203,7 @@ struct RecipeFormView: View {
         target.instructions = instructions
         target.servings = servings
         target.preparationMinutes = preparationMinutes
+        target.category = category
 
         syncIngredients(of: target, using: service)
         dismiss()
@@ -203,6 +228,7 @@ struct RecipeFormView: View {
                 ingredient.quantity = draft.quantity
                 ingredient.unit = draft.unit
                 ingredient.isPantryStaple = draft.isPantryStaple
+                ingredient.gramsPerPiece = draft.gramsPerPiece
                 ingredient.sortIndex = index
             } else {
                 let created = service.addIngredient(
@@ -211,6 +237,7 @@ struct RecipeFormView: View {
                     quantity: draft.quantity,
                     unit: draft.unit,
                     isPantryStaple: draft.isPantryStaple,
+                    gramsPerPiece: draft.gramsPerPiece,
                     nutritionPer100g: draft.nutritionPer100g,
                     barcode: draft.barcode
                 )
@@ -243,6 +270,24 @@ private struct IngredientDraftRow: View {
                 }
                 .labelsHidden()
                 .pickerStyle(.menu)
+            }
+
+            if draft.unit.dimension == .count {
+                HStack {
+                    Text("Poids unitaire")
+                    Spacer()
+                    TextField(
+                        "—",
+                        value: $draft.gramsPerPiece,
+                        format: .number.precision(.fractionLength(0...1))
+                    )
+                    .keyboardType(.decimalPad)
+                    .multilineTextAlignment(.trailing)
+                    .frame(width: 60)
+                    Text("g").foregroundStyle(.secondary)
+                }
+                .font(.caption)
+                .foregroundStyle(.secondary)
             }
 
             Toggle("Produit de placard", isOn: $draft.isPantryStaple)
