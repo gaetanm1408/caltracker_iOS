@@ -80,9 +80,26 @@ Swift ne peut pas rattraper. L'app se terminait au lancement du journal.
 - **Recettes** — ingrédients saisis à la main ou importés d'Open Food Facts
   (avec leurs macros), calcul des apports par portion, duplication, ajout d'une
   recette au journal.
+- **Catalogue livré** — quarante recettes protéinées (trente repas, dix
+  collations) décrites dans `Resources/RecipeCatalogue.json`, installées au
+  premier lancement et complétées à chaque nouvelle version du fichier. Une
+  recette supprimée ne revient pas.
+- **Assistant menus** — composition d'un planning sur plusieurs jours à partir
+  du catalogue, filtré par calories et protéines par assiette, matériel
+  disponible et aliments écartés. Une préparation couvre plusieurs repas, comme
+  on cuisine réellement, et la liste de courses en découle.
 - **Liste de courses** — génération à partir des recettes sélectionnées, mise à
   l'échelle selon le nombre de portions souhaité, fusion des ingrédients
   identiques, exclusion optionnelle des produits de placard, partage en texte.
+- **Objectif calculé** — dépense énergétique estimée depuis le poids, la
+  taille, l'âge et le niveau d'activité (Mifflin-St Jeor), ajustée selon
+  l'objectif choisi (déficit, maintien, prise de masse). Les objectifs saisis à
+  la main restent disponibles.
+- **Dépenses mesurées** — les calories brûlées lues dans Apple Santé
+  s'affichent à côté de l'objectif sans le modifier, pour laisser le choix de
+  les compenser ou non.
+- **Réglages** — profil corporel, objectifs de macros, état de l'accès à Apple
+  Santé, réinstallation du catalogue et version de l'app.
 
 ## Architecture
 
@@ -156,6 +173,15 @@ et les fiches trop incomplètes sont écartées avant d'atteindre l'interface.
 - `JournalServiceTests` — journal sur conteneur SwiftData en mémoire
 - `ShoppingListServiceTests` / `RecipeServiceTests` — persistance et calculs de
   recettes
+- `RecipeCatalogueTests` — cohérence du catalogue livré, part de protéines de
+  chaque recette, installation idempotente, et vivier restant pour chaque
+  combinaison de filtres
+- `RecipeFilterTests` — fourchettes de calories, plancher de protéines,
+  aliments écartés, matériel réclamé
+- `MealPlannerTests` — répartition des recettes sur les jours, couverture d'une
+  préparation, reproductibilité du tirage
+- `EnergyCalculatorTests` — métabolisme de base, dépense totale et objectif
+  calculé
 
 ## Crédits
 
