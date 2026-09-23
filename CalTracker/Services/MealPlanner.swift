@@ -7,6 +7,7 @@ struct MealPlanRequest: Equatable, Sendable {
     var snacksPerDay: Int = 1
     /// Portions consommées à chaque repas : deux si l'on cuisine à deux.
     var servingsPerSlot: Int = 1
+    var criteria: RecipeCriteria = .unrestricted
 
     var mealSlots: Int { max(0, days) * max(0, mealsPerDay) }
     var snackSlots: Int { max(0, days) * max(0, snacksPerDay) }
@@ -64,6 +65,12 @@ enum MealPlanner {
     ) -> MealPlan {
         var generator = SeededGenerator(seed: seed)
         var slots: [MealPlanSlot] = []
+
+        // Les critères s'appliquent au vivier, pas au tirage : une recette
+        // écartée ne doit jamais apparaître, même en fin de planning quand les
+        // recettes viennent à manquer.
+        let meals = RecipeFilter.eligible(meals, matching: request.criteria)
+        let snacks = RecipeFilter.eligible(snacks, matching: request.criteria)
 
         slots += fill(
             slotCount: request.mealSlots,

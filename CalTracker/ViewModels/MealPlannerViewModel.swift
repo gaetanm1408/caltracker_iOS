@@ -22,13 +22,34 @@ final class MealPlannerViewModel {
     var meals: [Recipe] { recipes.filter { $0.category == .meal } }
     var snacks: [Recipe] { recipes.filter { $0.category == .snack } }
 
+    /// Ce qui reste une fois les critères appliqués — le vivier réel.
+    var eligibleMeals: [Recipe] {
+        RecipeFilter.eligible(meals, matching: request.criteria)
+    }
+
+    var eligibleSnacks: [Recipe] {
+        RecipeFilter.eligible(snacks, matching: request.criteria)
+    }
+
+    /// Aliments qu'on peut écarter, tirés des recettes elles-mêmes.
+    var selectableIngredients: [String] {
+        RecipeFilter.selectableIngredients(in: recipes)
+    }
+
     /// Ce qui manque pour composer, le cas échéant.
+    ///
+    /// Distingue « tu n'as pas de recette » de « tes critères n'en laissent
+    /// aucune » : le remède n'est pas le même.
     var blockingMessage: String? {
-        if meals.isEmpty && request.mealsPerDay > 0 {
-            return "Aucune recette de type « repas » : ajoute-en une ou ramène les repas à zéro."
+        if request.mealsPerDay > 0 && eligibleMeals.isEmpty {
+            return meals.isEmpty
+                ? "Aucune recette de type « repas » : ajoute-en une ou ramène les repas à zéro."
+                : "Aucun repas ne passe tes critères. Assouplis-les, ou ramène les repas à zéro."
         }
-        if snacks.isEmpty && request.snacksPerDay > 0 {
-            return "Aucune recette de type « collation » : ajoute-en une ou ramène les collations à zéro."
+        if request.snacksPerDay > 0 && eligibleSnacks.isEmpty {
+            return snacks.isEmpty
+                ? "Aucune recette de type « collation » : ajoute-en une ou ramène les collations à zéro."
+                : "Aucune collation ne passe tes critères."
         }
         if !request.isSatisfiable {
             return "Choisis au moins un repas ou une collation par jour."

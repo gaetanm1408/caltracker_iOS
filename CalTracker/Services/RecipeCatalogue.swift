@@ -26,6 +26,7 @@ struct CatalogueRecipe: Decodable {
     let servings: Int
     let preparationMinutes: Int
     let instructions: String
+    let equipment: [CookingEquipment]?
     let ingredients: [CatalogueIngredient]
 }
 
@@ -61,6 +62,7 @@ struct RecipeCatalogueSeeder {
             recipe.instructions = entry.instructions
             recipe.preparationMinutes = entry.preparationMinutes
             recipe.category = entry.category
+            recipe.equipment = Set(entry.equipment ?? [])
 
             for ingredient in entry.ingredients {
                 service.addIngredient(

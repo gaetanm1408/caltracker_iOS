@@ -35,6 +35,9 @@ final class Recipe {
     /// Distingue un plat d'une collation, ce dont la planification de menus a
     /// besoin pour remplir des journées.
     var categoryRawValue: String = RecipeCategory.meal.rawValue
+    /// Matériel réclamé. Vide par défaut, donc réalisable partout : une recette
+    /// saisie à la main n'a aucune raison d'être écartée faute d'information.
+    var equipmentRawValues: [String] = []
 
     @Relationship(deleteRule: .cascade, inverse: \RecipeIngredient.recipe)
     var ingredients: [RecipeIngredient] = []
@@ -64,6 +67,17 @@ final class Recipe {
     var category: RecipeCategory {
         get { RecipeCategory(rawValue: categoryRawValue) ?? .meal }
         set { categoryRawValue = newValue.rawValue }
+    }
+
+    var equipment: Set<CookingEquipment> {
+        get { Set(equipmentRawValues.compactMap(CookingEquipment.init(rawValue:))) }
+        set { equipmentRawValues = newValue.map(\.rawValue).sorted() }
+    }
+
+    /// Noms d'ingrédients normalisés, pour confronter la recette aux aliments
+    /// que l'utilisateur ne veut pas voir.
+    var normalizedIngredientNames: Set<String> {
+        Set(ingredients.map { ShoppingListBuilder.normalize($0.name) })
     }
 
     /// Nutrition of the whole recipe, i.e. every ingredient added up.
