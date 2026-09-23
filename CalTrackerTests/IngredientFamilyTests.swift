@@ -1,5 +1,4 @@
 import Foundation
-import SwiftData
 import Testing
 
 @testable import CalTracker
@@ -82,49 +81,32 @@ struct IngredientFamilyTests {
     }
 }
 
-@MainActor
 @Suite("Catalogue rangé par famille")
 struct CatalogueIngredientFamilyTests {
-    private let container: ModelContainer
-    private let context: ModelContext
-
-    init() throws {
-        container = try AppSchema.inMemoryContainer()
-        context = container.mainContext
-        _ = try RecipeCatalogueSeeder(context: context).seedIfNeeded(installedVersion: 0)
-    }
-
-    private func recipes() throws -> [Recipe] {
-        try RecipeService(context: context).allRecipes()
+    /// Lit la ressource plutôt que d'installer le catalogue : la famille se
+    /// déduit du seul nom, et un conteneur SwiftData par test coûte cher pour
+    /// une vérification qui n'en a pas besoin.
+    private func catalogueIngredients() throws -> [String] {
+        let catalogue = try RecipeCatalogue.load()
+        let names = catalogue.recipes.flatMap { recipe in
+            recipe.ingredients
+                .filter { !($0.pantryStaple ?? false) }
+                .map(\.name)
+        }
+        return Array(Set(names)).sorted()
     }
 
     @Test("Aucun ingrédient livré ne finit dans « Autres »")
     func classifiesEveryCatalogueIngredient() throws {
-        let orphans = RecipeFilter.selectableIngredients(in: try recipes())
-            .filter { IngredientFamily.of($0) == .other }
+        let orphans = try catalogueIngredients().filter { IngredientFamily.of($0) == .other }
 
         #expect(orphans.isEmpty, "non classés : \(orphans.joined(separator: ", "))")
     }
 
-    @Test("Le regroupement ne perd ni ne duplique personne")
-    func groupsEveryIngredientExactlyOnce() throws {
-        let all = RecipeFilter.selectableIngredients(in: try recipes())
-        let groups = RecipeFilter.groupedSelectableIngredients(in: try recipes())
-        let grouped = groups.flatMap(\.names)
+    @Test("Le catalogue remplit chaque famille nommée")
+    func coversEveryNamedFamily() throws {
+        let families = Set(try catalogueIngredients().map(IngredientFamily.of))
 
-        #expect(Set(grouped) == Set(all))
-        #expect(grouped.count == all.count)
-        #expect(!groups.contains { $0.names.isEmpty })
-    }
-
-    @Test("Les familles sortent dans l'ordre d'affichage")
-    func respectsDisplayOrder() throws {
-        let families = RecipeFilter.groupedSelectableIngredients(in: try recipes()).map(\.family)
-        let expected = IngredientFamily.displayOrder.filter { families.contains($0) }
-
-        #expect(families == expected)
-        // Le catalogue couvre assez large pour remplir toutes les familles
-        // nommées, « Autres » exceptée.
-        #expect(Set(families) == Set(IngredientFamily.allCases).subtracting([.other]))
+        #expect(families == Set(IngredientFamily.allCases).subtracting([.other]))
     }
 }

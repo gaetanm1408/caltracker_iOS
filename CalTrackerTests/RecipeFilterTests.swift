@@ -242,6 +242,20 @@ struct RecipeFilterTests {
         #expect(criteria.isUnrestricted)
     }
 
+    @Test("Les aliments proposés sont rangés par famille, dans l'ordre")
+    func groupsSelectableIngredientsByFamily() throws {
+        makeRecipe(
+            "Plat", caloriesPerServing: 500, proteinsPerServing: 40,
+            ingredients: ["Blanc de poulet", "Riz basmati cuit", "Brocoli", "Yaourt grec 2 %"]
+        )
+
+        let groups = RecipeFilter.groupedSelectableIngredients(in: try service.allRecipes())
+
+        #expect(groups.map(\.family) == [.vegetables, .meat, .dairyAndEggs, .starches])
+        #expect(groups.flatMap(\.names).count == 4)
+        #expect(!groups.contains { $0.names.isEmpty })
+    }
+
     @Test("Les aliments proposés à l'exclusion viennent des recettes")
     func listsSelectableIngredients() {
         makeRecipe("A", caloriesPerServing: 500, proteinsPerServing: 40, ingredients: ["Saumon", "Riz"])
