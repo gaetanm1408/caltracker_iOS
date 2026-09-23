@@ -874,7 +874,7 @@
       "category": "meal",
       "servings": 2,
       "preparationMinutes": 15,
-      "instructions": "Cuire les œufs 9 minutes, les refroidir et les écaler. Mélanger les lentilles, le concombre en dés et les tomates coupées en deux. Émietter la feta, ajouter les œufs en quartiers.",
+      "instructions": "Cuire les œufs 9 minutes, les refroidir et les écaler. Mélanger les lentilles, le concombre en dés et les tomates coupées en deux, arroser d'un filet d'huile. Émietter la feta, ajouter les œufs en quartiers.",
       "equipment": [
         "stovetop"
       ],
@@ -933,6 +933,18 @@
             "proteins": 12.7,
             "carbohydrates": 0.7,
             "fats": 9.8
+          }
+        },
+        {
+          "name": "Huile d'olive",
+          "quantity": 1,
+          "unit": "c. à café",
+          "pantryStaple": true,
+          "per100g": {
+            "calories": 900,
+            "proteins": 0,
+            "carbohydrates": 0,
+            "fats": 100
           }
         }
       ]
@@ -1275,7 +1287,7 @@
       "category": "meal",
       "servings": 2,
       "preparationMinutes": 25,
-      "instructions": "Dorer le tofu en cubes.\nCuire le quinoa et les édamames.\nAssembler avec l'avocat et la carotte râpée.",
+      "instructions": "Dorer le tofu en cubes dans un filet d'huile.\nCuire le quinoa et les édamames.\nAssembler avec l'avocat et la carotte râpée.",
       "equipment": [
         "stovetop"
       ],
@@ -1333,6 +1345,18 @@
             "proteins": 0.9,
             "carbohydrates": 7.6,
             "fats": 0.2
+          }
+        },
+        {
+          "name": "Huile d'olive",
+          "quantity": 1,
+          "unit": "c. à café",
+          "pantryStaple": true,
+          "per100g": {
+            "calories": 900,
+            "proteins": 0,
+            "carbohydrates": 0,
+            "fats": 100
           }
         }
       ]
@@ -1469,7 +1493,7 @@
       "category": "meal",
       "servings": 3,
       "preparationMinutes": 30,
-      "instructions": "Dorer le tofu.\nAjouter pois chiches, tomates, lait de coco et curry.\nMijoter 15 minutes, incorporer les épinards.\nServir avec le riz.",
+      "instructions": "Dorer le tofu dans l'huile chaude.\nAjouter pois chiches, tomates, lait de coco et curry.\nMijoter 15 minutes, incorporer les épinards.\nServir avec le riz.",
       "equipment": [
         "stovetop"
       ],
@@ -1538,6 +1562,18 @@
             "proteins": 2.6,
             "carbohydrates": 26,
             "fats": 1
+          }
+        },
+        {
+          "name": "Huile d'olive",
+          "quantity": 1,
+          "unit": "c. à soupe",
+          "pantryStaple": true,
+          "per100g": {
+            "calories": 900,
+            "proteins": 0,
+            "carbohydrates": 0,
+            "fats": 100
           }
         }
       ]
