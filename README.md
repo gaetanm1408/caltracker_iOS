@@ -47,6 +47,36 @@ La signature n'est volontairement pas faite en CI : elle demanderait d'y
 déposer un certificat de développeur, alors qu'elle appartient à la machine de
 celui qui installe l'app.
 
+### Erreur 2005 à l'installation
+
+> *Installation failed — The data couldn't be read because it isn't in the
+> correct format.*
+
+Le code 2005 est `AltServer.ServerError`, « AltServer received an invalid
+request » : AltServer n'a pas compris ce que l'app lui a envoyé. Le message sur
+le format est l'erreur de décodage sous-jacente, pas un défaut du `.ipa`.
+
+Le paquet n'y est pour rien, et ça se vérifie en une minute : réinstalle un
+`.ipa` plus ancien qui s'était déjà installé. S'il échoue aussi, cherche du côté
+d'AltStore et pas du code. C'est le test qui aurait dû venir en premier.
+
+Dans l'ordre, du moins cher au plus lourd :
+
+1. **Ferme AltServer et relance-le.** C'est ce qui a débloqué la dernière fois,
+   sans certitude absolue — plusieurs choses avaient été tentées de front.
+2. **Ouvre iTunes** — celui d'apple.com, pas celui du Microsoft Store — et
+   laisse-le tourner. AltServer s'en sert pour authentifier l'identifiant Apple,
+   et la documentation d'AltStore insiste sur ce point.
+3. **Lance AltServer en tant qu'administrateur.**
+4. **Branche l'iPhone en USB** plutôt que de passer par le Wi-Fi.
+5. **Installe iCloud pour Windows directement depuis Apple**, pas depuis le
+   Store : c'est lui qui fournit l'authentification. Une procédure de
+   contournement existe si la version Store est imposée.
+
+Références : [codes d'erreur](https://faq.altstore.io/altstore-classic/error-codes)
+et [guide de dépannage](https://faq.altstore.io/altstore-classic/troubleshooting-guide)
+d'AltStore.
+
 ### Apple Santé, en sommeil
 
 La lecture des dépenses énergétiques est écrite et branchée, mais désactivée :
