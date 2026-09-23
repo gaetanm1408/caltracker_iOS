@@ -8,11 +8,9 @@ on:
       - '.gitignore'
   workflow_dispatch:
 
-# Une seule exécution par branche : une exécution rendue obsolète par un push
-# plus récent est annulée plutôt que menée à son terme.
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+# Pas d'annulation des exécutions en cours : le .ipa est le livrable, et
+# couper un build rendu obsolète par un push plus récent détruit l'artefact du
+# commit intermédiaire. Les runners macOS sont gratuits sur un dépôt public.
 
 jobs:
   build:
