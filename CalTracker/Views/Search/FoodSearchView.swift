@@ -13,6 +13,7 @@ struct FoodSearchView: View {
     @State private var selectedFood: RemoteFood?
     @State private var isPresentingScanner = false
     @State private var scannedBarcode: String?
+    @State private var productForList: RemoteFood?
 
     var body: some View {
         Group {
@@ -114,8 +115,29 @@ struct FoodSearchView: View {
                             RemoteFoodRow(food: food)
                         }
                         .buttonStyle(.plain)
+                        .swipeActions(edge: .leading) {
+                            Button {
+                                productForList = food
+                            } label: {
+                                Label("Courses ou recette", systemImage: "cart.badge.plus")
+                            }
+                            .tint(.green)
+                        }
+                        .contextMenu {
+                            Button {
+                                productForList = food
+                            } label: {
+                                Label("Ajouter aux courses ou à une recette", systemImage: "cart.badge.plus")
+                            }
+                        }
                     }
                     .listStyle(.plain)
+                    .sheet(item: $productForList) { food in
+                        NavigationStack {
+                            AddProductToListSheet(food: food)
+                        }
+                        .presentationDetents([.medium, .large])
+                    }
                 }
             }
         case .empty(let query):
