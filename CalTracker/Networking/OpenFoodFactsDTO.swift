@@ -29,6 +29,7 @@ struct OFFSearchHit: Decodable {
     let genericName: String?
     let brands: [String]
     let imageURL: String?
+    let imageThumbURL: String?
     let servingQuantity: Double?
     let nutriments: OFFNutriments?
 
@@ -38,6 +39,7 @@ struct OFFSearchHit: Decodable {
         case genericName = "generic_name"
         case brands
         case imageURL = "image_url"
+        case imageThumbURL = "image_front_small_url"
         case servingQuantity = "serving_quantity"
         case nutriments
     }
@@ -49,6 +51,7 @@ struct OFFSearchHit: Decodable {
         genericName = try container.decodeIfPresent(LocalizedText.self, forKey: .genericName)?.value
         brands = try container.decodeIfPresent(FlexibleStringList.self, forKey: .brands)?.values ?? []
         imageURL = try container.decodeIfPresent(String.self, forKey: .imageURL)
+        imageThumbURL = try container.decodeIfPresent(String.self, forKey: .imageThumbURL)
         servingQuantity = try container.decodeIfPresent(FlexibleNumber.self, forKey: .servingQuantity)?.doubleValue
         nutriments = try container.decodeIfPresent(OFFNutriments.self, forKey: .nutriments)
     }
@@ -152,6 +155,7 @@ struct OFFProduct: Decodable {
 struct OFFNutriments: Decodable {
     let energyKcal100g: Double?
     let energyKj100g: Double?
+    let energyKjExplicit100g: Double?
     let proteins100g: Double?
     let carbohydrates100g: Double?
     let fat100g: Double?
@@ -163,6 +167,9 @@ struct OFFNutriments: Decodable {
     enum CodingKeys: String, CodingKey {
         case energyKcal100g = "energy-kcal_100g"
         case energyKj100g = "energy_100g"
+        // Le service de recherche nomme l'énergie en kilojoules autrement que
+        // l'API produit.
+        case energyKjExplicit100g = "energy-kj_100g"
         case proteins100g = "proteins_100g"
         case carbohydrates100g = "carbohydrates_100g"
         case fat100g = "fat_100g"
@@ -179,6 +186,7 @@ struct OFFNutriments: Decodable {
         }
         energyKcal100g = try value(.energyKcal100g)
         energyKj100g = try value(.energyKj100g)
+        energyKjExplicit100g = try value(.energyKjExplicit100g)
         proteins100g = try value(.proteins100g)
         carbohydrates100g = try value(.carbohydrates100g)
         fat100g = try value(.fat100g)

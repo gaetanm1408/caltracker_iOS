@@ -16,6 +16,7 @@ final class OpenFoodFactsClient: FoodDatabaseClient {
     private let userAgent: String
     private let pageSize: Int
     private let maxAttempts: Int
+    private let language: String
 
     /// Only the fields the app actually reads, which keeps responses small.
     private static let productFields = [
@@ -37,9 +38,17 @@ final class OpenFoodFactsClient: FoodDatabaseClient {
         "generic_name",
         "brands",
         "serving_quantity",
+        "image_front_small_url",
         "image_url",
         "nutriments"
     ].joined(separator: ",")
+
+    /// Langue du téléphone, sur laquelle le service classe les résultats. Sans
+    /// elle il interroge les libellés anglais et remonte des produits vendus
+    /// à l'étranger.
+    static var deviceLanguage: String {
+        Locale.current.language.languageCode?.identifier ?? "fr"
+    }
 
     init(
         session: URLSession = .shared,
@@ -50,7 +59,8 @@ final class OpenFoodFactsClient: FoodDatabaseClient {
         // personnelle dans un dépôt public.
         userAgent: String = "CalTracker/1.0 (iOS; +https://github.com/gaetanm1408/caltracker_iOS)",
         pageSize: Int = 25,
-        maxAttempts: Int = 3
+        maxAttempts: Int = 3,
+        language: String = OpenFoodFactsClient.deviceLanguage
     ) {
         self.session = session
         self.baseURL = baseURL
@@ -58,6 +68,7 @@ final class OpenFoodFactsClient: FoodDatabaseClient {
         self.userAgent = userAgent
         self.pageSize = pageSize
         self.maxAttempts = max(1, maxAttempts)
+        self.language = language
     }
 
     func searchProducts(query: String, page: Int) async throws -> [RemoteFood] {
@@ -70,6 +81,7 @@ final class OpenFoodFactsClient: FoodDatabaseClient {
         )
         components?.queryItems = [
             URLQueryItem(name: "q", value: trimmed),
+            URLQueryItem(name: "langs", value: language),
             URLQueryItem(name: "page", value: String(max(1, page))),
             URLQueryItem(name: "page_size", value: String(pageSize)),
             URLQueryItem(name: "fields", value: Self.searchFields)

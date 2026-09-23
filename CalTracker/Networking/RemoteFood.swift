@@ -77,8 +77,9 @@ extension OFFSearchHit {
         return RemoteFood(
             barcode: barcode,
             name: name,
-            brand: brands.first,
-            imageURLString: imageURL,
+            // Les marques arrivent parfois en minuscules ("ferrero").
+            brand: brands.first?.capitalizedFirstLetter,
+            imageURLString: imageThumbURL ?? imageURL,
             servingSizeInGrams: servingQuantity.flatMap { $0 > 0 ? $0 : nil },
             nutritionPer100g: facts
         )
@@ -93,8 +94,9 @@ extension OFFNutriments {
         let carbohydrates = carbohydrates100g ?? 0
         let fats = fat100g ?? 0
 
+        let kilojoules = energyKjExplicit100g ?? energyKj100g
         var calories = energyKcal100g
-            ?? energyKj100g.map { $0 / EnergyConversion.kilojoulesPerKilocalorie }
+            ?? kilojoules.map { $0 / EnergyConversion.kilojoulesPerKilocalorie }
             ?? 0
         let facts = NutritionFacts(
             calories: calories,

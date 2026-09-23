@@ -268,6 +268,50 @@ struct OFFSearchHitsTests {
     func decodesEmptyResponse() throws {
         #expect(try decode(#"{"hits":[],"count":0}"#).hits.isEmpty)
     }
+
+    @Test("Le produit français renvoyé avec langs=fr est correctement lu")
+    func decodesFrenchResult() throws {
+        // Extrait de la réponse réelle pour `q=nutella&langs=fr`.
+        let response = try decode(
+            """
+            {"hits":[{"code":"80050698","brands":["ferrero","Nutella"],\
+            "lang":"fr","quantity":"200g","countries_tags":["en:france","en:germany"],\
+            "nutriments":{"carbohydrates_100g":57.3,"energy-kcal_100g":544,\
+            "energy-kj_100g":2278,"fat_100g":31.6,"proteins_100g":6,"salt_100g":0.11,\
+            "saturated-fat_100g":11,"sugars_100g":56.8},\
+            "product_name":"Nutella","product_name_fr":"Nutella",\
+            "image_front_small_url":"https://images.openfoodfacts.org/images/products/80050698/front.15.200.jpg",\
+            "image_url":"https://images.openfoodfacts.org/images/products/80050698/front.15.400.jpg"}],\
+            "count":692,"page":1}
+            """
+        )
+
+        let food = try #require(response.hits.compactMap { $0.toRemoteFood() }.first)
+        #expect(food.barcode == "80050698")
+        #expect(food.name == "Nutella")
+        // La première marque arrive en minuscules dans l'index.
+        #expect(food.brand == "Ferrero")
+        // La vignette est préférée à l'image pleine taille dans une liste.
+        #expect(food.imageURLString?.contains("front.15.200") == true)
+        #expect(food.nutritionPer100g.calories == 544)
+        #expect(food.nutritionPer100g.sugars == 56.8)
+        // Absent de cette fiche : ne doit pas empêcher l'import.
+        #expect(food.nutritionPer100g.fibers == 0)
+    }
+
+    @Test("L'énergie en kilojoules du service de recherche est convertie")
+    func convertsSearchKilojoules() throws {
+        // Ce service nomme le champ `energy-kj_100g`, l'API produit `energy_100g`.
+        let response = try decode(
+            """
+            {"hits":[{"code":"1","product_name":"Sans kcal",
+              "nutriments":{"energy-kj_100g":2278,"proteins_100g":6}}]}
+            """
+        )
+
+        let food = try #require(response.hits.first?.toRemoteFood())
+        #expect(abs(food.nutritionPer100g.calories - 544.4) < 1)
+    }
 }
 
 @Suite("Client Open Food Facts")
