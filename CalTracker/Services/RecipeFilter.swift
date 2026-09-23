@@ -7,10 +7,45 @@ struct RecipeCriteria: Equatable, Sendable {
     /// Noms d'aliments écartés, sous leur forme normalisée.
     var excludedIngredients: Set<String> = []
     var availableEquipment: Set<CookingEquipment> = Set(CookingEquipment.allCases)
+    /// Types de recettes retenus. Tous par défaut : l'assistant menus tire les
+    /// repas et les collations dans des viviers séparés et n'a pas à trancher.
+    var categories: Set<RecipeCategory> = Set(RecipeCategory.allCases)
 
     static let unrestricted = RecipeCriteria()
 
     var isUnrestricted: Bool { self == .unrestricted }
+
+    /// Nombre de critères réellement posés, pour signaler à l'écran qu'un
+    /// filtrage est en cours — sans quoi une liste courte passe pour un bug.
+    var activeCount: Int {
+        var count = 0
+        if categories != Set(RecipeCategory.allCases) { count += 1 }
+        if calorieBand != .any { count += 1 }
+        if proteinFloor != .any { count += 1 }
+        if availableEquipment != Set(CookingEquipment.allCases) { count += 1 }
+        if !excludedIngredients.isEmpty { count += 1 }
+        return count
+    }
+
+    /// Les critères posés, énoncés en clair.
+    var summaryComponents: [String] {
+        var parts: [String] = []
+        if categories != Set(RecipeCategory.allCases) {
+            parts.append(categories.map(\.localizedName).sorted().joined(separator: ", "))
+        }
+        if calorieBand != .any { parts.append(calorieBand.localizedName) }
+        if proteinFloor != .any { parts.append("protéines \(proteinFloor.localizedName)") }
+        let missing = Set(CookingEquipment.allCases)
+            .subtracting(availableEquipment)
+            .filter { !$0.isAlwaysAvailable }
+        if !missing.isEmpty {
+            parts.append("sans " + missing.map { $0.localizedName.lowercased() }.sorted().joined(separator: ", "))
+        }
+        if !excludedIngredients.isEmpty {
+            parts.append("\(excludedIngredients.count) aliment(s) écarté(s)")
+        }
+        return parts
+    }
 
     mutating func exclude(_ ingredientName: String) {
         excludedIngredients.insert(ShoppingListBuilder.normalize(ingredientName))
@@ -32,6 +67,7 @@ enum RecipeFilter {
     }
 
     static func isEligible(_ recipe: Recipe, matching criteria: RecipeCriteria) -> Bool {
+        guard criteria.categories.contains(recipe.category) else { return false }
         guard hasAvailableEquipment(recipe, matching: criteria) else { return false }
         guard avoidsExcludedIngredients(recipe, matching: criteria) else { return false }
         return matchesNutrition(recipe, matching: criteria)

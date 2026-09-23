@@ -79,7 +79,9 @@ Swift ne peut pas rattraper. L'app se terminait au lancement du journal.
   quotidiens paramétrables.
 - **Recettes** — ingrédients saisis à la main ou importés d'Open Food Facts
   (avec leurs macros), calcul des apports par portion, duplication, ajout d'une
-  recette au journal.
+  recette au journal. La liste se filtre par type, calories et protéines par
+  assiette, matériel disponible et aliments écartés — les mêmes critères que
+  l'assistant menus, servis par les mêmes sections de formulaire.
 - **Catalogue livré** — soixante-dix-neuf recettes protéinées (cinquante-cinq
   repas, vingt-quatre collations) décrites dans `Resources/RecipeCatalogue.json`,
   bâties sur une table de 86 ingrédients de référence, installées au

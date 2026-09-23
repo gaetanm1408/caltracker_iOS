@@ -193,6 +193,55 @@ struct RecipeFilterTests {
         #expect(RecipeFilter.isEligible(recipe, matching: criteria))
     }
 
+    @Test("Le type de recette restreint ce qui est affiché")
+    func filtersByCategory() {
+        let recipes = [
+            makeRecipe("Assiette", caloriesPerServing: 500, proteinsPerServing: 40),
+            makeRecipe("Encas", caloriesPerServing: 250, proteinsPerServing: 20, category: .snack)
+        ]
+
+        // Par défaut, les deux types passent : l'assistant menus tire ses
+        // viviers séparément et ne doit rien perdre.
+        #expect(RecipeFilter.eligible(recipes, matching: .unrestricted).count == 2)
+
+        var criteria = RecipeCriteria()
+        criteria.categories = [.meal]
+        #expect(RecipeFilter.eligible(recipes, matching: criteria).map(\.name) == ["Assiette"])
+
+        criteria.categories = [.snack]
+        #expect(RecipeFilter.eligible(recipes, matching: criteria).map(\.name) == ["Encas"])
+    }
+
+    @Test("Les critères posés se comptent et s'énoncent")
+    func describesActiveCriteria() {
+        var criteria = RecipeCriteria()
+        #expect(criteria.activeCount == 0)
+        #expect(criteria.summaryComponents.isEmpty)
+
+        criteria.calorieBand = .hearty
+        criteria.proteinFloor = .forty
+        criteria.categories = [.meal]
+        criteria.availableEquipment.remove(.oven)
+        criteria.exclude("Saumon")
+
+        #expect(criteria.activeCount == 5)
+        let summary = criteria.summaryComponents.joined(separator: " · ")
+        #expect(summary.contains("Repas"))
+        #expect(summary.contains("Costaud"))
+        #expect(summary.contains("sans four"))
+        #expect(summary.contains("1 aliment"))
+    }
+
+    @Test("Retirer puis remettre un appareil ne laisse aucune trace")
+    func equipmentReturnsToUnrestricted() {
+        var criteria = RecipeCriteria()
+        criteria.availableEquipment.remove(.airFryer)
+        #expect(criteria.activeCount == 1)
+
+        criteria.availableEquipment.insert(.airFryer)
+        #expect(criteria.isUnrestricted)
+    }
+
     @Test("Les aliments proposés à l'exclusion viennent des recettes")
     func listsSelectableIngredients() {
         makeRecipe("A", caloriesPerServing: 500, proteinsPerServing: 40, ingredients: ["Saumon", "Riz"])

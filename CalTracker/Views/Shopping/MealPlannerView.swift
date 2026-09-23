@@ -33,50 +33,12 @@ struct MealPlannerView: View {
                 )
             }
 
-            Section("Ce que je veux dans l'assiette") {
-                Picker("Calories", selection: $viewModel.request.criteria.calorieBand) {
-                    ForEach(CalorieBand.allCases) { band in
-                        if let detail = band.detail {
-                            Text("\(band.localizedName) — \(detail)").tag(band)
-                        } else {
-                            Text(band.localizedName).tag(band)
-                        }
-                    }
-                }
-                Picker("Protéines", selection: $viewModel.request.criteria.proteinFloor) {
-                    ForEach(ProteinFloor.allCases) { floor in
-                        Text(floor.localizedName).tag(floor)
-                    }
-                }
-            }
-
-            Section {
-                ForEach(CookingEquipment.allCases.filter { !$0.isAlwaysAvailable }) { equipment in
-                    Toggle(isOn: equipmentBinding(equipment)) {
-                        Label(equipment.localizedName, systemImage: equipment.systemImageName)
-                    }
-                }
-            } header: {
-                Text("Mon matériel")
-            } footer: {
-                Text("Les recettes sans cuisson restent proposées quoi qu'il arrive.")
-            }
-
-            Section {
-                NavigationLink {
-                    ExcludedIngredientsView(
-                        ingredients: viewModel.selectableIngredients,
-                        excluded: $viewModel.request.criteria.excludedIngredients
-                    )
-                } label: {
-                    LabeledContent("Aliments que je ne veux pas") {
-                        Text(excludedSummary)
-                            .foregroundStyle(.secondary)
-                    }
-                }
-            } footer: {
-                Text("\(viewModel.eligibleMeals.count) repas et \(viewModel.eligibleSnacks.count) collations passent tes critères.")
-            }
+            RecipeCriteriaSections(
+                criteria: $viewModel.request.criteria,
+                selectableIngredients: viewModel.selectableIngredients,
+                matchSummary: "\(viewModel.eligibleMeals.count) repas et "
+                    + "\(viewModel.eligibleSnacks.count) collations passent tes critères."
+            )
 
             Section {
                 Button {
@@ -122,24 +84,6 @@ struct MealPlannerView: View {
                 .disabled(viewModel.plan == nil)
             }
         }
-    }
-
-    private func equipmentBinding(_ equipment: CookingEquipment) -> Binding<Bool> {
-        Binding(
-            get: { viewModel.request.criteria.availableEquipment.contains(equipment) },
-            set: { isOn in
-                if isOn {
-                    viewModel.request.criteria.availableEquipment.insert(equipment)
-                } else {
-                    viewModel.request.criteria.availableEquipment.remove(equipment)
-                }
-            }
-        )
-    }
-
-    private var excludedSummary: String {
-        let count = viewModel.request.criteria.excludedIngredients.count
-        return count == 0 ? "Aucun" : "\(count) écarté(s)"
     }
 
     private func planSection(_ plan: MealPlan) -> some View {
@@ -205,66 +149,6 @@ struct MealPlannerView: View {
         } footer: {
             if let errorMessage = viewModel.errorMessage {
                 Text(errorMessage).foregroundStyle(.red)
-            }
-        }
-    }
-}
-
-/// Choix des aliments à ne pas voir proposer, pris dans les ingrédients des
-/// recettes existantes.
-private struct ExcludedIngredientsView: View {
-    let ingredients: [String]
-    @Binding var excluded: Set<String>
-
-    @State private var search = ""
-
-    private var visible: [String] {
-        guard !search.isEmpty else { return ingredients }
-        return ingredients.filter { $0.localizedCaseInsensitiveContains(search) }
-    }
-
-    var body: some View {
-        List {
-            if ingredients.isEmpty {
-                ContentUnavailableView(
-                    "Aucun ingrédient",
-                    systemImage: "carrot",
-                    description: Text("Les aliments proposés ici viennent de tes recettes.")
-                )
-            } else {
-                ForEach(visible, id: \.self) { ingredient in
-                    let key = ShoppingListBuilder.normalize(ingredient)
-                    Button {
-                        if excluded.contains(key) {
-                            excluded.remove(key)
-                        } else {
-                            excluded.insert(key)
-                        }
-                    } label: {
-                        HStack {
-                            Text(ingredient)
-                                .foregroundStyle(excluded.contains(key) ? .secondary : .primary)
-                                .strikethrough(excluded.contains(key))
-                            Spacer()
-                            if excluded.contains(key) {
-                                Image(systemName: "xmark.circle.fill")
-                                    .foregroundStyle(.red)
-                            }
-                        }
-                        .contentShape(Rectangle())
-                    }
-                    .buttonStyle(.plain)
-                }
-            }
-        }
-        .searchable(text: $search, prompt: "Chercher un aliment")
-        .navigationTitle("Aliments écartés")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            if !excluded.isEmpty {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("Réinitialiser") { excluded.removeAll() }
-                }
             }
         }
     }
