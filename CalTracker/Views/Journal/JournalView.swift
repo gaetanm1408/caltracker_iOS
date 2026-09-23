@@ -7,7 +7,6 @@ struct JournalView: View {
 
     @State private var selectedDate: Date = Date.now.startOfDay()
     @State private var isPresentingSearch = false
-    @State private var isPresentingGoals = false
     @State private var activeEnergyBurned: Double?
     @State private var didRequestHealthAccess = false
     @State private var hasHealthAccess = false
@@ -30,13 +29,6 @@ struct JournalView: View {
                     DayNavigationBar(selectedDate: $selectedDate)
                 }
                 .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        Button {
-                            isPresentingGoals = true
-                        } label: {
-                            Label("Objectifs", systemImage: "target")
-                        }
-                    }
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
                             isPresentingSearch = true
@@ -49,12 +41,6 @@ struct JournalView: View {
                     NavigationStack {
                         FoodSearchView(targetDate: selectedDate, isEmbeddedInSheet: true)
                     }
-                }
-                .sheet(isPresented: $isPresentingGoals) {
-                    NavigationStack {
-                        GoalsView()
-                    }
-                    .presentationDetents([.medium, .large])
                 }
         }
     }

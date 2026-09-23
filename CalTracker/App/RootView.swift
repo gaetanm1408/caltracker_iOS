@@ -22,6 +22,9 @@ struct RootView: View {
             Tab("Courses", systemImage: "cart") {
                 ShoppingListView()
             }
+            Tab("Réglages", systemImage: "gearshape") {
+                SettingsView()
+            }
         }
         .task {
             ensureProfileExists()

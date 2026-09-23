@@ -89,12 +89,9 @@ struct GoalsView: View {
                 }
             }
         }
-        .navigationTitle("Objectifs")
+        .navigationTitle("Profil et objectifs")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                Button("Annuler") { dismiss() }
-            }
             ToolbarItem(placement: .confirmationAction) {
                 Button("Enregistrer", action: save)
                     .disabled(!canSave)
