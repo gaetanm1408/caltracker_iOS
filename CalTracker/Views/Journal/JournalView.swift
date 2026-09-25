@@ -163,6 +163,7 @@ private struct JournalDayView: View {
             }
         }
         .listStyle(.insetGrouped)
+        .appBackground()
         .sheet(item: $entryBeingEdited) { entry in
             NavigationStack {
                 EditEntrySheet(entry: entry)

@@ -104,18 +104,33 @@ Le paquet n'y est pour rien, et ça se vérifie en une minute : réinstalle un
 `.ipa` plus ancien qui s'était déjà installé. S'il échoue aussi, cherche du côté
 d'AltStore et pas du code. C'est le test qui aurait dû venir en premier.
 
-Dans l'ordre, du moins cher au plus lourd :
+Deux épisodes, et ce qu'on en sait :
 
-1. **Ferme AltServer et relance-le.** C'est ce qui a débloqué la dernière fois,
-   sans certitude absolue — plusieurs choses avaient été tentées de front.
-2. **Ouvre iTunes** — celui d'apple.com, pas celui du Microsoft Store — et
-   laisse-le tourner. AltServer s'en sert pour authentifier l'identifiant Apple,
-   et la documentation d'AltStore insiste sur ce point.
-3. **Lance AltServer en tant qu'administrateur.**
-4. **Branche l'iPhone en USB** plutôt que de passer par le Wi-Fi.
-5. **Installe iCloud pour Windows directement depuis Apple**, pas depuis le
-   Store : c'est lui qui fournit l'authentification. Une procédure de
-   contournement existe si la version Store est imposée.
+- Le premier s'est résolu après avoir fermé et relancé AltServer, sans
+  certitude : plusieurs pistes avaient été tentées de front.
+- Le second n'a pas cédé au redémarrage. Il a disparu après avoir désinstallé
+  les versions Microsoft Store d'iTunes et d'iCloud, réinstallé celles d'Apple,
+  **et** être passé à Sideloadly. Deux changements à la fois, donc là non plus
+  on ne sait pas lequel a compté.
+
+Ce que la répétition apprend quand même : un redémarrage qui débloque puis un
+échec qui revient exclut l'incompatibilité de version, laquelle échouerait à
+tous les coups. C'est un état, pas une incompatibilité.
+
+Dans l'ordre, du plus probable au moins :
+
+1. **Vérifie d'où viennent iTunes et iCloud.** S'ils sortent du Microsoft
+   Store, désinstalle-les et reprends-les chez Apple — ce sont eux qui
+   fournissent l'authentification, et c'est le suspect numéro un. En
+   désinstallant, **ne touche pas** à « Apple Mobile Device Support » ni à
+   « Apple Application Support » : ce sont eux qui font voir le téléphone à
+   Windows.
+2. **Ouvre iTunes et laisse-le tourner** pendant l'installation.
+3. **Ferme AltServer et relance-le.**
+4. **Lance AltServer en tant qu'administrateur.**
+5. **Branche l'iPhone en USB** plutôt que de passer par le Wi-Fi.
+6. **Passe à Sideloadly**, qui n'a pas d'AltServer entre le téléphone et Apple
+   et ne peut donc pas produire cette erreur.
 
 Références : [codes d'erreur](https://faq.altstore.io/altstore-classic/error-codes)
 et [guide de dépannage](https://faq.altstore.io/altstore-classic/troubleshooting-guide)

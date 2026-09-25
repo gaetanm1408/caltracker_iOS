@@ -21,6 +21,7 @@ struct SettingsView: View {
                 catalogueSection
                 aboutSection
             }
+            .appBackground()
             .navigationTitle("Réglages")
         }
     }

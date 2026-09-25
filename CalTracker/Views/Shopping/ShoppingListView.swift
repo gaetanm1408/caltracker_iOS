@@ -64,6 +64,7 @@ struct ShoppingListView: View {
                     }
                 }
             }
+            .appBackground()
             .navigationTitle("Courses")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {

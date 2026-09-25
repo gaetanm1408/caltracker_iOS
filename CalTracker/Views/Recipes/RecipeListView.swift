@@ -67,6 +67,7 @@ struct RecipeListView: View {
                     }
                 }
             }
+            .appBackground()
             .searchable(text: $searchText, prompt: "Chercher une recette")
             .safeAreaInset(edge: .top) { activeCriteriaBar }
             .navigationTitle("Recettes")

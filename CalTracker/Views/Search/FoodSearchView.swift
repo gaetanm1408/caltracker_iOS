@@ -32,6 +32,7 @@ struct FoodSearchView: View {
                 Color.clear
             }
         }
+        .appBackground()
         .navigationTitle("Recherche")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
