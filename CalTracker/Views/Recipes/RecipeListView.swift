@@ -202,20 +202,25 @@ private struct RecipeRow: View {
                 }
             }
 
-            HStack(spacing: 6) {
+            // Les mots « portions » et « ingrédients » ne disent rien que
+            // l'icône ne dise déjà, et ils faisaient couper la ligne en deux :
+            // « por-tions », « Colla-tion ». Les chiffres suffisent, le
+            // libellé complet reste pour VoiceOver.
+            HStack(spacing: 12) {
                 Label(recipe.category.localizedName, systemImage: recipe.category.systemImageName)
-                Text("·")
-                Label("\(recipe.servings) portions", systemImage: "person.2")
+                Label("\(recipe.servings)", systemImage: "person.2")
                 if recipe.preparationMinutes > 0 {
-                    Text("·")
                     Label("\(recipe.preparationMinutes) min", systemImage: "clock")
                 }
-                Text("·")
-                Text("\(recipe.ingredients.count) ingrédients")
+                Label("\(recipe.ingredients.count)", systemImage: "carrot")
             }
             .font(.caption)
             .foregroundStyle(.secondary)
             .labelStyle(.titleAndIcon)
+            .lineLimit(1)
+            .minimumScaleFactor(0.85)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(metadataDescription)
 
             if recipe.hasNutritionData {
                 MacroSummaryLine(facts: recipe.nutritionPerServing)
@@ -225,6 +230,18 @@ private struct RecipeRow: View {
             }
         }
         .padding(.vertical, 2)
+    }
+
+    private var metadataDescription: String {
+        var parts = [
+            recipe.category.localizedName,
+            "\(recipe.servings) portions"
+        ]
+        if recipe.preparationMinutes > 0 {
+            parts.append("\(recipe.preparationMinutes) minutes")
+        }
+        parts.append("\(recipe.ingredients.count) ingrédients")
+        return parts.joined(separator: ", ")
     }
 }
 

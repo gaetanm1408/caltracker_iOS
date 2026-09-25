@@ -5,6 +5,7 @@ struct RootView: View {
     @Environment(\.modelContext) private var context
     @Query private var profiles: [UserProfile]
     @AppStorage("installedRecipeCatalogueVersion") private var catalogueVersion = 0
+    @AppStorage(AppearancePreference.storageKey) private var appearance = AppearancePreference.system
 
     var body: some View {
         TabView {
@@ -26,6 +27,7 @@ struct RootView: View {
                 SettingsView()
             }
         }
+        .preferredColorScheme(appearance.colorScheme)
         .task {
             ensureProfileExists()
             installRecipeCatalogue()

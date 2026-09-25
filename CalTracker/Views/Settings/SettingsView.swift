@@ -8,6 +8,7 @@ struct SettingsView: View {
     @Query private var profiles: [UserProfile]
     @Query(sort: [SortDescriptor(\Recipe.name)]) private var recipes: [Recipe]
     @AppStorage("installedRecipeCatalogueVersion") private var catalogueVersion = 0
+    @AppStorage(AppearancePreference.storageKey) private var appearance = AppearancePreference.system
 
     @State private var catalogueMessage: String?
 
@@ -17,6 +18,7 @@ struct SettingsView: View {
         NavigationStack {
             List {
                 profileSection
+                appearanceSection
                 healthSection
                 catalogueSection
                 aboutSection
@@ -51,6 +53,24 @@ struct SettingsView: View {
         Dépense estimée \(QuantityFormatter.calories(profile.totalDailyEnergyExpenditure)), \
         cible \(QuantityFormatter.calories(profile.goals.calories)).
         """
+    }
+
+    private var appearanceSection: some View {
+        Section {
+            Picker(selection: $appearance) {
+                ForEach(AppearancePreference.allCases) { choice in
+                    Label(choice.localizedName, systemImage: choice.systemImageName)
+                        .tag(choice)
+                }
+            } label: {
+                Label("Thème", systemImage: "circle.lefthalf.filled")
+            }
+            .pickerStyle(.menu)
+        } header: {
+            Text("Apparence")
+        } footer: {
+            Text("« Système » suit le réglage de l'iPhone, y compris son basculement automatique le soir.")
+        }
     }
 
     private var healthSection: some View {
